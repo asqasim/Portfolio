@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "qasim",                    // becomes https://qasim.<your-subdomain>.workers.dev (change it if you like; lowercase letters, digits, dashes)
+  "name": "me",                    // becomes https://qasim.<your-subdomain>.workers.dev (change it if you like; lowercase letters, digits, dashes)
   "main": "worker/index.js",
   "compatibility_date": "2026-01-01",
 
@@ -18,7 +18,7 @@
 
   // Free database that stores the per-IP counters.
   "d1_databases": [
-    { "binding": "DB", "database_name": "portfolio-limits", "database_id": "PASTE_ID_FROM_wrangler_d1_create" }
+    { "binding": "portfolio_limits", "database_name": "portfolio-limits", "database_id": "7ce8d980-7b26-40c6-a871-80167a5eb666" }
   ],
 
   // Free request logs in the dashboard (Workers & Pages > qasim > Logs).
