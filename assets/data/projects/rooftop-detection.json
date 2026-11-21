@@ -1,0 +1,156 @@
+{
+  "tagline": "A desktop GIS viewer that layers rasters and vectors and runs YOLO rooftop segmentation on large GeoTIFFs.",
+  "banner": "banner.jpg",
+  "type": "Desktop GIS tool",
+  "role": "Developer",
+  "built": "",
+  "os": [
+    "Windows",
+    "Linux"
+  ],
+  "stack": [
+    "Python",
+    "PySide6",
+    "PyTorch",
+    "Rasterio",
+    "GeoPandas",
+    "PyQtGraph",
+    "Ultralytics YOLO",
+    "Docker"
+  ],
+  "version": "0.3.0",
+  "updated": "2026-08-14",
+  "status": "In development",
+  "license": "MIT",
+  "links": {
+    "github": "https://github.com/asqasim/rooftop-detection",
+    "website": "https://geo-viewer.example.com",
+    "docker": "https://hub.docker.com/r/asqasim/geo-viewer"
+  },
+  "content": [
+    {
+      "type": "split",
+      "side": "right",
+      "image": {
+        "src": "shot1.jpg",
+        "alt": "Main window with a satellite image and layer sidebar",
+        "caption": "Main window"
+      },
+      "md": [
+        "A desktop app for working with satellite and aerial imagery. It stacks raster and vector layers in one map view and can run a YOLO segmentation model to find rooftops, then digitize them into a map.\n\n[Add a sentence on who it is for and what problem it solves.]",
+        "- Layer management with a collapsible sidebar\n- Rooftop detection on large GeoTIFF files\n- Results exported as vectors you can open in QGIS"
+      ]
+    },
+    {
+      "type": "video",
+      "src": "demo.mp4",
+      "caption": "Loading a GeoTIFF and running rooftop detection"
+    },
+    {
+      "type": "h2",
+      "text": "Features"
+    },
+    {
+      "type": "features",
+      "items": [
+        {
+          "title": "Raster and vector layers",
+          "text": "Load GeoTIFFs and vector files together and toggle or reorder them."
+        },
+        {
+          "title": "Rooftop detection",
+          "text": "Runs a PyTorch YOLO segmentation model on the loaded imagery."
+        },
+        {
+          "title": "Large-image tiling",
+          "text": "Splits big GeoTIFFs into tiles for inference and stitches the results back."
+        },
+        {
+          "title": "Responsive UI",
+          "text": "Loaders run in background threads so the window stays usable."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Keeping masks aligned with the map"
+    },
+    {
+      "type": "split",
+      "side": "left",
+      "title": "Georeferencing",
+      "image": {
+        "src": "shot2.jpg",
+        "alt": "Detected rooftops overlaid on imagery",
+        "caption": "Detections overlaid on the source image"
+      },
+      "md": "Model output is a pixel mask, so each tile has to be mapped back to its real coordinates. [Explain how you handle the transform and what went wrong at first.]"
+    },
+    {
+      "type": "text",
+      "md": "[A full-width paragraph about tiling, memory use or performance.]"
+    },
+    {
+      "type": "h2",
+      "text": "Run it with Docker"
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "file": "terminal",
+      "code": [
+        "docker pull asqasim/geo-viewer",
+        "docker run --rm asqasim/geo-viewer --help"
+      ]
+    },
+    {
+      "type": "callout",
+      "title": "Note",
+      "text": "[Mention GPU support, model weights or anything people must set up first.]"
+    },
+    {
+      "type": "h2",
+      "text": "Trade-offs"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Chose",
+        "Over",
+        "Why",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "PySide6 desktop app",
+          "A web map",
+          "[Reason]",
+          "[What you gave up]"
+        ],
+        [
+          "Tiled inference",
+          "Whole-image inference",
+          "[Reason]",
+          "[What you gave up]"
+        ]
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "FAQ"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which file formats does it open?",
+          "a": "[List supported raster and vector formats.]"
+        },
+        {
+          "q": "Does it need a GPU?",
+          "a": "[Answer.]"
+        }
+      ]
+    }
+  ]
+}

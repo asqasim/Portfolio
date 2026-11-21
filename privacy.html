@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy | Qasim</title>
+<meta name="description" content="What this portfolio records about visits and AI chats, and how to opt out.">
+<link rel="icon" href="assets/favicons/favicon.svg" type="image/svg+xml">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('pf-theme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+.pv{max-width:42rem;margin:0 auto;padding:4rem 20px 5rem;line-height:1.7}
+.pv h1{margin:0 0 6px;font:400 clamp(2.4rem,6vw,3.4rem)/1.1 "Instrument Serif",Georgia,serif}
+.pv h2{margin:2rem 0 .4rem;font-size:1.05rem}
+.pv p,.pv li{color:color-mix(in srgb,var(--fg) 82%,transparent)}
+.pv .m{color:var(--muted);font-size:.9rem}
+.pv a{color:inherit;text-underline-offset:3px}
+</style>
+<script src="assets/js/track.js" defer></script>
+</head>
+<body>
+<main class="pv">
+  <p class="m"><a href="index.html">← Back to the portfolio</a></p>
+  <h1>Privacy</h1>
+  <p class="m">Short version: I count visits to learn which parts of this site are useful. I don’t sell or share any of it, and there are no ads or third-party trackers.</p>
+
+  <h2>What is recorded</h2>
+  <ul>
+    <li><strong>Visits:</strong> pages opened, buttons and links clicked, sections viewed, searches typed into the site’s own search boxes, time on page and how fast pages loaded.</li>
+    <li><strong>About your device:</strong> approximate location (country and city, worked out from your IP address by Cloudflare), browser, operating system, screen size, language and time zone.</li>
+    <li><strong>Where you came from:</strong> the link or website that sent you here (for example LinkedIn or GitHub).</li>
+    <li><strong>AI chats:</strong> every message you send to ASQ Ai and its reply, so I can see what people ask and improve the answers. Please don’t type personal or sensitive information into the chat.</li>
+    <li><strong>An anonymous ID</strong> stored in your browser (local storage) so repeat visits can be recognised. It is random and not linked to your name.</li>
+  </ul>
+  <h2>What is not recorded</h2>
+  <p>Your IP address is not stored in the analytics. A one-way, salted hash of it is used only to enforce the daily AI message limit and to block abuse. The contents of the contact form go only to my inbox, not into the analytics.</p>
+
+  <h2>How long</h2>
+  <p>Analytics and chats are deleted automatically after 90 days. I may keep an anonymised export of the numbers for long-term analysis.</p>
+
+  <h2>Opting out</h2>
+  <ul>
+    <li>Turn on <strong>Do Not Track</strong> or <strong>Global Privacy Control</strong> in your browser and nothing is recorded, including AI chats.</li>
+    <li>Or clear this site’s storage in your browser to reset your anonymous ID.</li>
+  </ul>
+  <h2>Your data</h2>
+  <p>To see or delete what was recorded about you, send me your anonymous ID (open your browser’s developer tools, Application, Local Storage, key <code>asq_vid</code>) using the contact form on the home page.</p>
+  <p class="m">Hosting and the AI model run on Cloudflare.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "qasim",                    // becomes https://qasim.<your-subdomain>.workers.dev (change it if you like; lowercase letters, digits, dashes)
+  "main": "worker/index.js",
+  "compatibility_date": "2026-01-01",
+
+  // Your static site (everything in this folder except what .assetsignore lists) is served free and unlimited.
+  // Only /api/* runs the Worker.
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
+    "not_found_handling": "404-page"
+  },
+
+  // Free AI model (10,000 neurons/day on the free plan; stops, never bills).
+  "ai": { "binding": "AI" },
+
+  // Free database that stores the per-IP counters.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "portfolio-limits", "database_id": "PASTE_ID_FROM_wrangler_d1_create" }
+  ],
+
+  // Free request logs in the dashboard (Workers & Pages > qasim > Logs).
+  "observability": { "enabled": true },
+
+  "vars": {
+    "DAILY_LIMIT": "10",          // messages per visitor per day
+    "GLOBAL_DAILY_CAP": "150",    // total messages per day across everyone (you expect ~80; this also keeps you far below the free AI allowance)
+    "MAX_INPUT_CHARS": "1000",
+    "MAX_OUTPUT_TOKENS": "350",
+    "EVENT_DAILY_LIMIT": "1500",  // tracked events per visitor per day (stops junk filling the database)
+    "GLOBAL_EVENT_CAP": "8000",   // tracked events per day across everyone
+    "RETENTION_DAYS": "90",       // analytics older than this is deleted every night
+    "ADMIN_READ_BUDGET": "3000000" // stops the admin panel before it could use up the free database read allowance (5 million/day)
+  },
+
+  // Nightly cleanup at 03:23 UTC (free).
+  "triggers": { "crons": ["23 3 * * *"] }
+}

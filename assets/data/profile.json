@@ -1,0 +1,44 @@
+{
+  "name": "Ahmad Sohaib Qasim",
+  "short": "Qasim",
+  "role": "Data Scientist",
+  "location": "Lahore, Pakistan",
+  "remote": true,
+  "email": "qasim.datadev@gmail.com",
+  "resume": "assets/docs/resume.pdf",
+  "replyTime": "within a day",
+  "bio": "Ahmad Sohaib Qasim is a Data Scientist based in Pakistan, working remotely. He works across data science, backend, cloud data engineering and agentic AI.",
+  "skills": {
+    "Data Science": [
+      "Python",
+      "PyTorch",
+      "TensorFlow",
+      "Pandas",
+      "NumPy",
+      "Jupyter",
+      "OpenCV"
+    ],
+    "Core & Backend": [
+      "C++",
+      "FastAPI",
+      "Bash",
+      "Linux",
+      "Ubuntu",
+      "Git"
+    ],
+    "Cloud & Data Eng": [
+      "GCP",
+      "Docker",
+      "Kubernetes",
+      "Spark",
+      "PostgreSQL",
+      "SQL"
+    ],
+    "Agentic AI": [
+      "Tool Calling",
+      "RAG",
+      "pgvector",
+      "Pinecone"
+    ]
+  }
+}

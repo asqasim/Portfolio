@@ -1,0 +1,131 @@
+{
+  "tagline": "An ASCII-based terminal media player with a clean API, so you can drop a player into your own TUI apps.",
+  "banner": "banner.jpg",
+  "type": "Python library",
+  "role": "Developer",
+  "built": "",
+  "os": [
+    "Windows",
+    "Linux",
+    "macOS"
+  ],
+  "stack": [
+    "Python",
+    "PyPI",
+    "Bash"
+  ],
+  "version": "0.1.0",
+  "updated": "2026-10-21",
+  "status": "Active",
+  "license": "MIT",
+  "links": {
+    "github": "https://github.com/asqasim/termflix",
+    "pypi": "https://pypi.org/project/termflix/"
+  },
+  "related": [
+    "nero",
+    "rooftop-detection"
+  ],
+  "content": [
+    {
+      "type": "split",
+      "side": "right",
+      "image": {
+        "src": "shot1.jpg",
+        "alt": "termflix playing a video in a terminal",
+        "caption": "termflix running in a terminal"
+      },
+      "md": [
+        "termflix is a Python library that plays media in the terminal as ASCII art. It comes with a clean API, so developers can embed a media player in their own TUI apps.\n\n[Add a sentence on who it is for and why you built it.]",
+        "- Install with `pip install termflix`\n- Use it as a command or as a library\n- Small API that fits into existing TUI apps"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Features"
+    },
+    {
+      "type": "features",
+      "items": [
+        {
+          "title": "One-line install",
+          "text": "Published on PyPI: `pip install termflix`."
+        },
+        {
+          "title": "Clean API",
+          "text": "A small, documented interface for adding a player to your own TUI."
+        },
+        {
+          "title": "Runs anywhere",
+          "text": "Works in any terminal on Windows, Linux and macOS."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "How it works"
+    },
+    {
+      "type": "split",
+      "side": "left",
+      "title": "Frames to characters",
+      "image": {
+        "src": "shot2.jpg",
+        "alt": "",
+        "caption": ""
+      },
+      "md": "[Explain one part of the design, for example how frames become ASCII characters. Image on the left this time.]"
+    },
+    {
+      "type": "text",
+      "md": "[A plain full-width paragraph, no image.]"
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "file": "terminal",
+      "code": [
+        "pip install termflix",
+        "termflix --help"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Trade-offs"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Chose",
+        "Over",
+        "Why",
+        "Cost"
+      ],
+      "rows": [
+        [
+          "[Decision]",
+          "[Alternative]",
+          "[Reason]",
+          "[What you gave up]"
+        ]
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "FAQ"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I install it?",
+          "a": "Run `pip install termflix`, then start it with `termflix`."
+        },
+        {
+          "q": "[Another question]",
+          "a": "[Short answer.]"
+        }
+      ]
+    }
+  ]
+}

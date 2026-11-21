@@ -1,0 +1,133 @@
+{
+  "profileUrl": "https://www.credly.com/users/asqasim",
+  "certificates": [
+    {
+      "title": "Data Visualization and Dashboards with Excel and Cognos",
+      "issuer": "IBM",
+      "category": "Data Analytics",
+      "date": "",
+      "id": "",
+      "url": "https://www.credly.com/users/asqasim",
+      "image": "data-visualization-and-dashboards-with-excel-and-cognos.jpg",
+      "pdf": "data-visualization-and-dashboards-with-excel-and-cognos.pdf"
+    },
+    {
+      "title": "Data Analytics",
+      "issuer": "DigiSkills",
+      "category": "Data Analytics",
+      "date": "",
+      "id": "",
+      "url": "https://www.credly.com/users/asqasim",
+      "image": "data-analytics-digiskills.jpg",
+      "pdf": "data-analytics-digiskills.pdf"
+    },
+    {
+      "title": "Data Analysis Bootcamp-Master Data Science Skills",
+      "issuer": "Udemy",
+      "category": "Data Analytics",
+      "date": "2026-11",
+      "id": "UC-d863d365-9a29-4e22-82b3-c4bfa8afbb70",
+      "url": "https://www.udemy.com/certificate/UC-d863d365-9a29-4e22-82b3-c4bfa8afbb70/",
+      "image": "data-analysis-bootcamp-master-data-science-skills.jpg",
+      "pdf": "data-analysis-bootcamp-master-data-science-skills.pdf"
+    },
+    {
+      "title": "Machine Learning Specialty",
+      "issuer": "Amazon Web Services",
+      "category": "AI & Machine Learning",
+      "date": "2026-02",
+      "id": "Credential ID: AWS-MLS-000000",
+      "url": "https://www.credly.com/users/asqasim"
+    },
+    {
+      "title": "Data Engineer Associate",
+      "issuer": "Databricks",
+      "category": "Cloud & Data Engineering",
+      "date": "2025-11",
+      "id": "Credential ID: DBX-DEA-000000",
+      "url": "https://www.credly.com/users/asqasim"
+    },
+    {
+      "title": "SnowPro Core Certification",
+      "issuer": "Snowflake",
+      "category": "Cloud & Data Engineering",
+      "date": "2025-08",
+      "id": "Credential ID: SNOW-CORE-000000",
+      "url": "https://www.credly.com/users/asqasim"
+    }
+  ],
+  "badges": [
+    {
+      "title": "AI for Product Management",
+      "issuer": "Pendo",
+      "category": "AI & Machine Learning",
+      "date": "2026-08",
+      "url": "https://www.credly.com/users/asqasim",
+      "image": "ai-for-product-management.png"
+    },
+    {
+      "title": "Data Science Methodology",
+      "issuer": "IBM",
+      "category": "Data Science",
+      "date": "2025-11",
+      "url": "https://www.credly.com/badges/e805883a-b26c-49eb-b0dc-499c337318b4/public_url",
+      "image": "data-science-methodology.png"
+    },
+    {
+      "title": "Data Visualization & Dashboard Essentials",
+      "issuer": "IBM",
+      "category": "Data Analytics",
+      "date": "2025-08",
+      "url": "https://www.credly.com/badges/9daa8d84-b1f8-4c9b-a181-5c661db1a36f/public_url",
+      "image": "data-visualization-dashboard-essentials.png"
+    },
+    {
+      "title": "Python project for Data Science",
+      "issuer": "IBM",
+      "category": "Data Science",
+      "date": "2024-12",
+      "url": "https://www.credly.com/users/asqasim",
+      "image": "python-project-for-data-science.png"
+    },
+    {
+      "title": "Data Science Orientation",
+      "issuer": "IBM",
+      "category": "Data Science",
+      "date": "2024-10",
+      "url": "https://www.credly.com/users/asqasim",
+      "image": "data-science-orientation.png"
+    },
+    {
+      "title": "Ai Explorer",
+      "issuer": "Google",
+      "category": "AI & Machine Learning",
+      "date": "2024-08",
+      "url": "https://me.developers.google.com/u/asqasim",
+      "image": "ai-explorer.svg"
+    },
+    {
+      "title": "Code Whisperer",
+      "issuer": "Google",
+      "category": "AI & Machine Learning",
+      "date": "2024-06",
+      "url": "https://me.developers.google.com/u/asqasim",
+      "image": "code-whisperer.svg"
+    },
+    {
+      "title": "Google Cloud Innovator",
+      "issuer": "Google",
+      "category": "Cloud & Data Engineering",
+      "date": "2024-04",
+      "url": "https://me.developers.google.com/u/asqasim",
+      "image": "google-cloud-innovator.svg"
+    },
+    {
+      "title": "Google Developer Group Member",
+      "issuer": "Google",
+      "category": "Community",
+      "date": "2024-02",
+      "url": "https://me.developers.google.com/u/asqasim",
+      "image": "google-developer-group-member.svg"
+    }
+  ]
+}

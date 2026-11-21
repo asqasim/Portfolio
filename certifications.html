@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="assets/favicons/favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/favicons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicons/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="assets/favicons/favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="assets/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="assets/favicons/site.webmanifest">
+<meta name="theme-color" content="#f6f6f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+<title>Certifications | Qasim</title>
+<meta name="description" content="Certificates and badges earned by Qasim, searchable by category.">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('pf-theme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/certifications.css">
+<script src="assets/js/track.js" defer></script>
+</head>
+<body>
+<a class="cp-home" href="index.html" aria-label="Back to the home page" title="Home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></a>
+
+<main class="cp">
+  <header class="cp-hero">
+    <p class="cp-eyebrow">Credentials</p>
+    <h1><span class="grad">Certifications</span></h1>
+  </header>
+
+  <div class="cp-tools">
+    <label class="cp-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="cpQ" type="search" placeholder="Search certificates" aria-label="Search certificates" autocomplete="off"><kbd>/</kbd></label>
+    <label class="cp-select"><span class="sr">Category</span>
+      <select id="cpCat" aria-label="Filter by category"><option value="">All categories</option></select>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></label>
+  </div>
+  <p class="cp-count" id="cpCount" aria-live="polite"></p>
+
+  <div class="cp-grid" id="cpGrid"></div>
+</main>
+<script src="assets/js/certifications-page.js"></script>
+</body>
+</html>

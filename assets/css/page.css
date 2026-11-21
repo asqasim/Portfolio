@@ -1,0 +1,11 @@
+/* Shared by the sub-pages (projects.html, and later certifications/skills). Needs base.css. */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.pg-top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;height:60px;padding:0 max(16px,calc((100% - 72rem)/2 + 20px));background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb,var(--fg) 8%,transparent)}
+.pg-back{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 13px 0 9px;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);border-radius:9999px;color:var(--muted);font-size:.84rem;text-decoration:none;transition:color .2s,background-color .2s,border-color .2s}
+.pg-back:hover{color:var(--fg);background:color-mix(in srgb,var(--fg) 6%,transparent);border-color:color-mix(in srgb,var(--fg) 22%,transparent)}
+.pg-crumb{margin-right:auto;font-size:.84rem;color:var(--muted)}.pg-crumb b{color:var(--fg);font-weight:500}
+.pg-theme{width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--muted);transition:color .2s,background-color .2s}
+.pg-theme:hover{color:var(--fg);background:color-mix(in srgb,var(--fg) 8%,transparent)}
+:root[data-theme="dark"] .pg-sun,:root:not([data-theme="dark"]) .pg-moon{display:none}
+@media (max-width:640px){.pg-back span{display:none}.pg-back{padding:0 9px}}

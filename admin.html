@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Admin</title>
+<link rel="icon" href="assets/favicons/favicon.svg" type="image/svg+xml">
+<script src="assets/js/theme-init.js"></script>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+<div id="login" class="lg" hidden>
+  <form id="lgForm" class="lg-card" autocomplete="on">
+    <h1>Admin</h1>
+    <p class="muted">Enter your admin key and the 6-digit code from your authenticator app.</p>
+    <label>Admin key<input id="lgKey" name="password" type="password" autocomplete="current-password" required spellcheck="false"></label>
+    <label>Authenticator code<input id="lgCode" name="otp" inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code" required placeholder="123456"></label>
+    <p id="lgErr" class="err" role="alert"></p>
+    <button class="btn pri" type="submit">Sign in</button>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header class="top">
+    <strong class="brand">Admin</strong>
+    <nav id="tabs" aria-label="Sections">
+      <a href="#overview">Overview</a><a href="#visitors">Visitors</a><a href="#chats">AI chats</a><a href="#sources">Sources</a>
+      <a href="#logs">Logs</a><a href="#security">Security</a><a href="#export">Export</a><a href="#system">System</a>
+    </nav>
+    <span class="grow"></span>
+    <span id="live" class="live" title="Visitors active in the last 5 minutes"></span>
+    <button id="themeBtn" class="btn ghost" type="button" aria-label="Toggle theme">Theme</button>
+    <button id="logoutBtn" class="btn ghost" type="button">Sign out</button>
+  </header>
+  <main id="main" class="main" tabindex="-1"></main>
+</div>
+
+<aside id="drawer" class="drawer" hidden aria-label="Visitor journey">
+  <div class="drawer-bar"><strong id="drTitle">Journey</strong><span class="grow"></span><label class="chk"><input id="drTech" type="checkbox"> technical events</label><button id="drClose" class="btn ghost" type="button">Close</button></div>
+  <div id="drBody" class="drawer-body"></div>
+</aside>
+<div id="toast" class="toast" role="status" hidden></div>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

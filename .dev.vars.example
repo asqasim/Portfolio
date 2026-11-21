@@ -1,0 +1,6 @@
+# Copy this file to ".dev.vars" for local testing with `npm run dev`.
+# ".dev.vars" is git-ignored. Never commit real values.
+# Generate fresh values with:  node tools/setup-secrets.mjs --print
+ADMIN_KEY_HASH=
+TOTP_SECRET=
+IP_SALT=

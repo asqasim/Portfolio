@@ -1,0 +1,192 @@
+{
+  "projects": [
+    {
+      "name": "termflix",
+      "cat": "Developer Tools",
+      "lang": "Python",
+      "featured": true,
+      "desc": "ASCII-based terminal media player with a clean API, so developers can drop a media player into their own TUI apps. Install with pip install termflix.",
+      "tags": [
+        "Python",
+        "TUI",
+        "ASCII",
+        "CLI",
+        "PyPI",
+        "Media player"
+      ],
+      "url": "https://github.com/asqasim/termflix",
+      "thumb": "termflix.png"
+    },
+    {
+      "name": "Nero",
+      "cat": "Web Apps",
+      "lang": "JavaScript",
+      "featured": true,
+      "desc": "Web-based tool for building logic circuits and listening to them: it turns logical patterns into music.",
+      "tags": [
+        "Logic circuits",
+        "Sonification",
+        "Music",
+        "Interactive",
+        "Web app"
+      ],
+      "url": "https://github.com/asqasim/nero",
+      "thumb": "nero.png"
+    },
+    {
+      "name": "Rooftop detection & map digitization",
+      "cat": "Computer Vision",
+      "lang": "Python",
+      "featured": true,
+      "desc": "Native Windows and Linux app: load drone or satellite imagery and get a digitized map back, with rooftops detected automatically.",
+      "tags": [
+        "Computer Vision",
+        "Segmentation",
+        "GIS",
+        "Desktop app",
+        "Windows",
+        "Linux"
+      ],
+      "url": "https://github.com/asqasim/rooftop-detection",
+      "thumb": "rooftop-detection.png"
+    },
+    {
+      "name": "TechMart sales dashboard",
+      "cat": "Analytics",
+      "lang": "Power BI",
+      "desc": "Power BI dashboard for a global Electronics and Furniture retailer: compares countries and teams, tracks sales trends, ranks top categories and products, evaluates salesperson efficiency and shows changes across periods.",
+      "tags": [
+        "Power BI",
+        "Sales performance",
+        "KPIs",
+        "Time series",
+        "Dashboards"
+      ],
+      "url": "https://github.com/asqasim/techmart-dashboard",
+      "thumb": "techmart-dashboard.png"
+    },
+    {
+      "name": "Khaddi brands historical sales analysis",
+      "cat": "Analytics",
+      "lang": "Power BI",
+      "desc": "Power BI dashboard analysing the historical sales of Khaddi brands.",
+      "tags": [
+        "Power BI",
+        "Sales analysis",
+        "Historical trends",
+        "Dashboards"
+      ],
+      "url": "https://github.com/asqasim/khaddi-sales-analysis",
+      "thumb": "khaddi-sales-analysis.png"
+    },
+    {
+      "name": "NovaRetail sales analysis",
+      "cat": "Analytics",
+      "lang": "Power BI",
+      "desc": "Power BI dashboard analysing NovaRetail sales performance.",
+      "tags": [
+        "Power BI",
+        "Sales analysis",
+        "Retail",
+        "Dashboards"
+      ],
+      "url": "https://github.com/asqasim/novaretail-sales-analysis",
+      "thumb": "novaretail-sales-analysis.png"
+    },
+    {
+      "name": "AI impact on education: statistical analysis",
+      "cat": "Analytics",
+      "lang": "Statistics",
+      "desc": "Statistical analysis of how AI affects learning, based on a survey of 150 university students.",
+      "tags": [
+        "Statistics",
+        "Survey data",
+        "Education",
+        "AI"
+      ],
+      "url": "https://github.com/asqasim/ai-education-analysis",
+      "thumb": "ai-education-analysis.png"
+    },
+    {
+      "name": "School database & dashboard pipeline",
+      "cat": "Data Engineering",
+      "lang": "SQL",
+      "desc": "Database and automated dashboard pipeline built from scratch for schools: online attendance, a reporting system, dedicated student, teacher and principal portals, plus marks and attendance dashboards and reports.",
+      "tags": [
+        "Database",
+        "Dashboards",
+        "Attendance",
+        "Reports",
+        "Portals",
+        "Automation"
+      ],
+      "url": "https://github.com/asqasim/school-data-platform",
+      "thumb": "school-data-platform.png"
+    },
+    {
+      "name": "E-commerce data warehouse template",
+      "cat": "Data Engineering",
+      "lang": "SQL",
+      "desc": "Complete data warehouse design template that fits any e-commerce store.",
+      "tags": [
+        "Data warehouse",
+        "Dimensional modelling",
+        "SQL",
+        "E-commerce"
+      ],
+      "url": "https://github.com/asqasim/ecommerce-data-warehouse",
+      "thumb": "ecommerce-data-warehouse.png"
+    },
+    {
+      "name": "research-agent",
+      "cat": "AI Agents",
+      "lang": "Python",
+      "stars": 23,
+      "updated": "2026-10-18",
+      "desc": "An agent that plans a research question, calls search and data tools, and returns a cited answer along with the steps it took.",
+      "tags": [
+        "LangChain",
+        "LLMs",
+        "Tool use",
+        "Docker",
+        "RAG"
+      ],
+      "url": "https://github.com/asqasim/research-agent",
+      "_dummy": true
+    },
+    {
+      "name": "churn-prediction",
+      "cat": "ML",
+      "lang": "Jupyter Notebook",
+      "stars": 17,
+      "updated": "2026-05-30",
+      "desc": "Predicts which customers are likely to leave and explains why, using gradient boosting with SHAP explanations.",
+      "tags": [
+        "scikit-learn",
+        "Pandas",
+        "SHAP",
+        "XGBoost",
+        "Classification"
+      ],
+      "url": "https://github.com/asqasim/churn-prediction",
+      "_dummy": true
+    },
+    {
+      "name": "airflow-etl",
+      "cat": "Data Engineering",
+      "lang": "Python",
+      "stars": 9,
+      "updated": "2026-09-03",
+      "desc": "Scheduled pipeline that pulls raw files, validates and cleans them, and loads a warehouse table for analysts.",
+      "tags": [
+        "Airflow",
+        "Docker",
+        "SQL",
+        "Pandas",
+        "ETL"
+      ],
+      "url": "https://github.com/asqasim/airflow-etl",
+      "_dummy": true
+    }
+  ]
+}
