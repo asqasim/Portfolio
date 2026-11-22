@@ -174,6 +174,7 @@
 
   async function* respond(history, signal) {
     await initBackend();
+    if (!backend) { backend = null; await initBackend() }   // the first check can fail (e.g. a tab opened before a fix): try once more before falling back
     if (!backend) {                                    // no Worker reachable (plain files / local static server): scripted answers
       const s = root.querySelector('.ai-ht p'), f = root.querySelector('.ai-foot');
       s.innerHTML = '<i class="ai-dot"></i>Demo mode · scripted replies'; f.querySelector('.ai-fn').textContent = 'Demo only: replies are scripted.';

@@ -1161,10 +1161,9 @@ fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);r
 }
 
 /* ---- footer: local clock, copy email, contact form ----
-   The form posts to the same Google Apps Script web app as your other portfolio (type:'contact', fields name/email/message).
-   Visitor tracking / IP lookup from that site is NOT included. */
+   The form posts to this site's own Worker (/api/contact), which saves the message in your database (admin > Messages)
+   and emails you through your own Google Apps Script (apps-script/Code.gs). */
 {
-  const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyYGwKs1dngtwXDv8g7zOdh8pwkUb8y9RxtW1D6J7YvLvwS_ZevN1vKIPmy4vaQDA7d/exec';
   const MAIL='qasim.datadev@gmail.com';
   const clock=$('#ftClock'),tick=()=>{clock.textContent=new Date().toLocaleTimeString('en-US',{timeZone:'Asia/Karachi',hour:'numeric',minute:'2-digit'})+' PKT'};
   tick();setInterval(tick,30000);
@@ -1178,16 +1177,18 @@ fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);r
 
   const form=$('#contactForm'),status=$('#contactStatus'),btn=$('#contactSubmitBtn'),label=btn.querySelector('.btn-label');
   const say=(t,c)=>{status.textContent=t;status.className='ft-status'+(c?' '+c:'')};
-  const visitor=(()=>{try{let v=sessionStorage.getItem('portfolio_visitor_id');if(!v){v='Visitor-'+Math.random().toString(36).substring(2,6).toUpperCase();sessionStorage.setItem('portfolio_visitor_id',v)}return v}catch(e){return 'Visitor-NA'}})();
+  let touched=0;form.addEventListener('focusin',()=>{if(!touched)touched=Date.now()});   /* bots "fill" the form instantly; the server ignores anything under 2.5 s */
   form.addEventListener('submit',e=>{
     e.preventDefault();
-    const f=new FormData(form);if(f.get('website'))return;   /* honeypot: bots fill the hidden field */
+    const f=new FormData(form);
     const name=String(f.get('name')).trim(),email=String(f.get('email')).trim(),message=String(f.get('message')).trim();
     if(!name||!email||!message){say('Please fill in every field.','err');return}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){say('That email address doesn’t look right.','err');return}
     btn.disabled=true;label.textContent='Sending…';say('');
-    fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({type:'contact',visitorId:visitor,name,email,message,page:location.pathname})})
-      .then(()=>{form.reset();say('Message sent. Thanks, I’ll get back to you soon.','ok')})   /* no-cors hides the response, so a resolved request counts as sent */
+    fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name,email,message,website:String(f.get('website')||''),t:touched?Date.now()-touched:0,ctx:window.asqTrack?asqTrack.ctx():{}})})
+      .then(async r=>{
+        if(r.ok){form.reset();touched=0;say('Message sent. Thanks, I’ll get back to you soon.','ok');return}
+        const j=await r.json().catch(()=>({}));say(j.message||'Couldn’t send that. Please email me directly instead.','err')})
       .catch(()=>say('Couldn’t send that. Please email me directly instead.','err'))
       .finally(()=>{btn.disabled=false;label.textContent='Send message'});
   });

@@ -2,11 +2,13 @@
    /api/chat    AI assistant, 10 messages per visitor per day (chat.js)
    /api/quota   messages left today (chat.js)
    /api/track   visitor analytics events (track.js)
+   /api/contact contact form: saved in your database + emailed through your Apps Script (contact.js)
    /api/admin/* private analytics panel API (admin.js)
    everything else is the static site, served by Cloudflare's asset layer. */
 import { json, num, secLog } from './lib.js';
 import { chat, quota } from './chat.js';
 import { handleTrack } from './track.js';
+import { handleContact } from './contact.js';
 import { handleAdmin } from './admin.js';
 
 export { ipKey } from './lib.js';
@@ -19,6 +21,7 @@ export default {
         case '/api/chat': return request.method === 'POST' ? await chat(request, env, ctx, url) : json({ error: 'method_not_allowed' }, 405, { Allow: 'POST' });
         case '/api/quota': return request.method === 'GET' ? await quota(request, env) : json({ error: 'method_not_allowed' }, 405, { Allow: 'GET' });
         case '/api/track': return await handleTrack(request, env, url);
+        case '/api/contact': return await handleContact(request, env, ctx, url);
       }
       if (url.pathname.startsWith('/api/admin/')) return await handleAdmin(request, env, url);
       if (url.pathname.startsWith('/api/')) return json({ error: 'not_found' }, 404);
@@ -38,6 +41,8 @@ export default {
       env.DB.prepare('DELETE FROM chats WHERE ts < ?1').bind(cut),
       env.DB.prepare('DELETE FROM sessions WHERE last_seen < ?1').bind(cut),
       env.DB.prepare('DELETE FROM security_log WHERE ts < ?1').bind(cut),
+      env.DB.prepare('DELETE FROM messages WHERE ts < ?1').bind(Date.now() - num(env.MESSAGE_RETENTION_DAYS, 365) * 864e5),
+      env.DB.prepare("DELETE FROM messages WHERE status = 'spam' AND ts < ?1").bind(Date.now() - 30 * 864e5),
       env.DB.prepare('DELETE FROM admin_sessions WHERE expires < ?1').bind(Date.now()),
       env.DB.prepare('DELETE FROM usage WHERE day < ?1').bind(old)
     ]).catch(e => console.error('retention job failed', e && e.message)));

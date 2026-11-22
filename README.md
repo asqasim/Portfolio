@@ -5,7 +5,8 @@ Personal portfolio site running entirely on Cloudflare's free tier:
 - **Static site**: home, projects (with per-project pages), certifications, privacy.
 - **ASQ Ai**: a chat assistant (Workers AI) that answers questions about my work, limited to 10 messages per visitor per day by IP.
 - **First-party analytics**: visits, journeys, sources (LinkedIn, GitHub...) and AI chats, stored in my own D1 database with 90-day retention.
-- **Private admin panel** at `/admin`: admin key + authenticator-app login, dashboards, journeys, logs, CSV/JSON export.
+- **Contact form** saved in the database (inbox in the admin panel) and emailed to me through my own Google Apps Script.
+- **Private admin panel** at `/admin`: admin key + authenticator-app login, dashboards, journeys, messages, logs, CSV/JSON export.
 
 No third-party trackers, no ads, no cost.
 
@@ -19,6 +20,7 @@ No third-party trackers, no ads, no cost.
 | `worker/` | Cloudflare Worker: chat + rate limit, event tracking, admin API |
 | `schema.sql` | D1 database tables |
 | `tools/setup-secrets.mjs` | Creates the admin key, authenticator secret and IP salt |
+| `tools/setup-contact.mjs`, `apps-script/Code.gs` | Connects the contact form to your own Google Apps Script for email notifications |
 | `wrangler.jsonc` | Cloudflare configuration (limits, bindings, nightly cleanup) |
 | `_headers`, `.assetsignore`, `robots.txt` | Security headers and what is (not) published |
 | `DEPLOY.md` | Step-by-step deployment checklist |
@@ -33,6 +35,7 @@ npx wrangler d1 create portfolio-limits   # paste the database_id into wrangler.
 npm run db:init
 npm run deploy
 npm run secrets                            # admin key + authenticator setup
+npm run contact                            # optional: email notifications for the contact form
 ```
 
 Full checklist: see [DEPLOY.md](DEPLOY.md). Local preview: `npm run db:init:local && npm run dev`

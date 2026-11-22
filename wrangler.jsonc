@@ -18,7 +18,7 @@
 
   // Free database that stores the per-IP counters.
   "d1_databases": [
-    { "binding": "portfolio_limits", "database_name": "portfolio-limits", "database_id": "7ce8d980-7b26-40c6-a871-80167a5eb666" }
+    { "binding": "DB", "database_name": "portfolio-limits", "database_id": "7ce8d980-7b26-40c6-a871-80167a5eb666" }
   ],
 
   // Free request logs in the dashboard (Workers & Pages > qasim > Logs).

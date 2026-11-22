@@ -45,6 +45,20 @@ Done when: the last command prints `"success": true`.
 
 Done when: the script prints "Done". (Re-running it replaces everything; your old key and authenticator entry stop working.)
 
+## Phase 6b: Contact form emails (Google Apps Script)
+Messages are always saved in your admin panel (Messages tab). This phase also emails each one to you.
+- [ ] Go to https://script.google.com, sign in with the Gmail that should receive the emails, click **New project**.
+- [ ] Delete the sample code, paste the whole of `apps-script/Code.gs`, check `OWNER_EMAIL` at the top, press Save (disk icon).
+- [ ] In the function dropdown choose **authorize**, press **Run**, and accept the permission screens ("Advanced" > "Go to project" if Google warns that the app is unverified: it's your own script).
+- [ ] In a terminal in the project folder run `npm run contact`. It prints a **SECRET** and waits.
+- [ ] Back in Apps Script: gear icon (Project Settings) > Script properties > **Add script property**, name `SECRET`, value = the printed secret > Save.
+- [ ] Deploy > **New deployment** > gear icon > **Web app** > Execute as **Me**, Who has access **Anyone** > Deploy. Copy the **Web app URL** (ends in `/exec`).
+- [ ] Paste that URL into the waiting terminal and press Enter. It uploads the URL and secret to Cloudflare.
+- [ ] Open `/admin` > System > **Send a test email**. Check your inbox (and spam).
+
+If you later edit the script: Deploy > Manage deployments > pencil icon > Version: **New version** > Deploy. If you re-run `npm run contact`, paste the new secret into Script properties again.
+Anyone can open a Web app URL, so the shared secret is what stops strangers from using your script; never share it or the URL.
+
 ## Phase 7: Verify (do all of these)
 **Site**
 - [ ] Home, Projects, a project page, Certifications, Privacy and `/ai` load; icons show; light/dark works.
@@ -66,7 +80,7 @@ Done when: the script prints "Done". (Re-running it replaces everything; your ol
 - [ ] A wrong password or code is refused. After 5 wrong tries the login locks for 15 minutes.
 - [ ] Export downloads a CSV.
 - [ ] System > **Ignore this browser** so your own testing stops counting (also works on any page with `?asq_ignore=1`).
-- [ ] Contact form: send yourself a test message and confirm it arrives.
+- [ ] Contact form: send a test message from the home page (wait a few seconds after typing). It should appear in admin > Messages as "emailed to you" and arrive in your inbox.
 
 ## Phase 8: Share it
 - [ ] In admin > Sources > "Make a trackable link", build one link per place (LinkedIn post, GitHub README, CV, email signature).
@@ -89,14 +103,16 @@ Edit any file (the JSON data files also feed the AI), then run `wrangler deploy`
 | Surprise bill | Free plan hard-stops, no payment method, caps: 150 AI chats/day, 8,000 tracked events/day, admin read budget |
 | Someone breaking into /admin | 2 factors (random 256-bit key + authenticator code), one-time codes, lockout after 5 failures, 12-hour sessions, secure cookie (HttpOnly, Secure, SameSite=Strict, `__Host-`), same-origin only, every attempt logged |
 | Other sites using your AI or tracker | Server accepts calls only from your own site, JSON only, size limits, per-visitor limits |
+| Contact form spam | Hidden trap field, "too fast" check, 3 messages per visitor per day, 30 per day overall, duplicate filter; the browser never talks to Google directly |
 | Fake or junk analytics | Bots and headless browsers ignored, per-visitor event cap, input length limits |
 | Leaking visitor IPs | Never stored; only a salted hash for rate limits and abuse control |
 | Injection / clickjacking | CSP (the admin page has a stricter one with no inline code), X-Frame-Options, nosniff, HSTS |
 | Source leaking | `worker/`, `tools/`, config and notes are excluded from the public site |
 
-Known limits: pages still allow inline scripts (the site uses them); the contact form talks to a public Google Apps Script URL, so anyone could send it junk; IP limits are shared on shared networks and can be bypassed with a VPN; the visitor's city is approximate (from their IP).
+Known limits: pages still allow inline scripts (the site uses them); IP limits are shared on shared networks and can be bypassed with a VPN; the visitor's city is approximate (from their IP).
 
 ## Troubleshooting
+- **Messages arrive in admin but not by email:** open the message: the red tag shows Google's reply. "forbidden" = the `SECRET` in Script properties doesn't match; "unable to open" / HTML = the Web app isn't deployed as "Anyone" or the URL is wrong; then use **Retry email** on the message. Check Apps Script > Executions for errors.
 - **/admin says "Admin is not set up yet":** run `node tools/setup-secrets.mjs` (Phase 6) after deploying.
 - **Sign-in says invalid:** check your phone's clock is automatic; codes change every 30 seconds and each can be used once, so wait for the next one.
 - **Locked out:** wait 15 minutes. If you lost the key or authenticator, run `node tools/setup-secrets.mjs` again.

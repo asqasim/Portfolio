@@ -63,6 +63,12 @@ Columns: `id, ts, sid, vid, type, path, label, target, section, value, meta` (`m
 - `turn`: how many questions the visitor had asked in that conversation so far. `ttfb_ms`: time to first word.
 - Chats from visitors with Do Not Track / Global Privacy Control, or from your own "ignored" browser, are not saved.
 
+## Table `messages` (contact form)
+`id, ts, name, email, message, vid, sid, country, city, page, status, notified, notify_error, fp`
+- `status`: `new`, `read`, `archived`, `spam`. `notified` = 1 once your Apps Script confirmed the email; otherwise `notify_error` holds the reason.
+- `vid`/`sid` link a message to the visitor's journey (empty if they use Do Not Track). `fp` is only a duplicate-detection hash.
+- Kept 365 days (`MESSAGE_RETENTION_DAYS`); spam is deleted after 30 days.
+
 ## Table `security_log`
 `login_ok, login_fail, login_locked, logout, admin_purge, forbidden_origin`, with time, hashed visitor key, country, city, provider, browser and a short detail (`key:bad code:ok` for failed logins).
 
@@ -95,7 +101,7 @@ In HTML: add `data-track="Name of the thing"` to any button or link to control i
 In JavaScript: `window.asqTrack && asqTrack.event('custom-type-not-allowed', ...)`: only the event types in the table above are stored (the server ignores unknown types). To add a type, add it to `TYPES` in `worker/track.js`.
 
 ## Privacy and retention
-- Stored: everything in the tables above. **Not stored:** IP addresses (only a salted one-way hash, used for rate limits and abuse control), contact form contents, anything typed into the AI box except what's sent as a chat.
+- Stored: everything in the tables above, including contact-form messages. **Not stored:** IP addresses (only a salted one-way hash, used for rate limits and abuse control), anything typed into the AI box except what's sent as a chat.
 - Do Not Track and Global Privacy Control are honoured (nothing is stored, including chats). `/privacy` explains this to visitors; the AI chat shows "Chats are saved for review."
 - Deletion: nightly job removes rows older than `RETENTION_DAYS` (90). Admin > System can delete one visitor's data on request.
 - This is a technical summary, not legal advice. If you expect many visitors from the EU/UK, read up on consent rules for analytics and consider adding a consent banner.

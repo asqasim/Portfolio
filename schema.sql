@@ -53,3 +53,14 @@ CREATE TABLE IF NOT EXISTS admin_sessions (
 );
 
 CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY, v TEXT);
+
+-- Messages sent through the contact form (kept MESSAGE_RETENTION_DAYS, default 365; spam is purged after 30 days).
+CREATE TABLE IF NOT EXISTS messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, ts INTEGER NOT NULL, name TEXT, email TEXT, message TEXT,
+  vid TEXT, sid TEXT, country TEXT, city TEXT, page TEXT,            -- vid/sid link the message to the visitor's journey (empty if they opted out)
+  status TEXT NOT NULL DEFAULT 'new',                                -- new | read | archived | spam
+  notified INTEGER NOT NULL DEFAULT 0, notify_error TEXT,            -- did the email notification (Apps Script) go out?
+  fp TEXT                                                            -- hash used to ignore accidental double-submits
+);
+CREATE INDEX IF NOT EXISTS idx_messages_ts ON messages(ts);
+CREATE INDEX IF NOT EXISTS idx_messages_status ON messages(status, ts);

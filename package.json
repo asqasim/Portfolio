@@ -9,7 +9,8 @@
     "db:init": "wrangler d1 execute portfolio-limits --remote --file=schema.sql",
     "db:init:local": "wrangler d1 execute portfolio-limits --local --file=schema.sql",
     "secrets": "node tools/setup-secrets.mjs",
-    "check": "wrangler deploy --dry-run --outdir .wrangler/dry-run"
+    "check": "wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "contact": "node tools/setup-contact.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.162.0"

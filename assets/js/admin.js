@@ -38,6 +38,9 @@
   $('#logoutBtn').addEventListener('click', async () => { try { await api('logout', null, { method: 'POST' }) } catch (e) { } showLogin() });
   $('#themeBtn').addEventListener('click', () => { const d = document.documentElement, n = d.dataset.theme === 'dark' ? 'light' : 'dark'; d.dataset.theme = n; try { localStorage.setItem('pf-theme', n) } catch (e) { } });
 
+  const setUnread = n => { const b = $('#unread'); b.textContent = n; b.hidden = !n };
+  const refreshUnread = () => api('me').then(m => setUnread(m.unread || 0)).catch(() => { });
+
   /* ---------- UI pieces ---------- */
   const kpi = (label, value, sub) => `<div class="card kpi"><span>${label}</span><b>${value}</b>${sub ? `<i>${sub}</i>` : ''}</div>`;
   function barList(title, rows, { label = r => r.k, value = r => r.visits, fmt = nf, sub = '', empty = 'No data yet' } = {}) {
@@ -90,7 +93,7 @@
       <div class="grid kpis">${kpi('Visits', nf(t.visits), `${nf(t.visitors)} unique visitors`)}${kpi('Pageviews', nf(t.pageviews), `${(t.avg_pages || 0).toFixed(1)} per visit`)}
         ${kpi('New vs returning', pct(s.new_visitors.n, t.visitors) + ' new', `${nf(t.returning_sessions)} return visits`)}${kpi('Avg active time', dur(t.avg_active_ms), `scroll depth ${Math.round(t.avg_scroll || 0)}%`)}
         ${kpi('Bounce rate', pct(t.bounces, t.visits), 'one page, no click')}${kpi('Clicks', nf(t.clicks), `${t.visits ? (t.clicks / t.visits).toFixed(1) : 0} per visit`)}
-        ${kpi('AI users', pct(t.ai_sessions, t.visits), `${nf(t.ai_msgs)} messages · ${nf(c.askers)} people`)}${kpi('Contact intent', nf(t.converted), pct(t.converted, t.visits) + ' of visits')}</div>
+        ${kpi('AI users', pct(t.ai_sessions, t.visits), `${nf(t.ai_msgs)} messages · ${nf(c.askers)} people`)}${kpi('Contact intent', nf(t.converted), pct(t.converted, t.visits) + ' of visits')}${kpi('Messages received', nf(s.messages.total), s.messages.unread ? s.messages.unread + ' unread' : 'all read')}</div>
       <div class="card"><h3>Visits per day <small>days in your local time</small></h3>${days > 1 ? bars(series, { two: true }) + '<div class="legend"><span><i class="l1"></i>visits</span><span><i class="l2"></i>unique visitors</span></div>' : '<div class="empty">Pick 7 days or more for the daily chart.</div>'}</div>
       <div class="grid two mt"><div class="card"><h3>Busiest hours <small>your local time</small></h3>${bars(hrs, { h: 110 })}</div><div class="card"><h3>Weekdays</h3>${bars(wd, { h: 110 })}</div></div>
       <div class="card"><h3>Journey funnel <small>share of visits</small></h3><div class="funnel">${steps.map(([n, v]) => `<div><span>${n}</span><span class="bar"><i data-w="${f.visits ? (v / f.visits * 100).toFixed(1) : 0}"></i></span><span class="v">${nf(v)} · ${pct(v, f.visits)}</span></div>`).join('')}</div>
@@ -167,13 +170,16 @@
       const tech = $('#drTech').checked, byS = new Map(j.sessions.map(s => [s.sid, { s, items: [] }]));
       j.events.forEach(e => { if (byS.has(e.sid) && (tech || !TECH.has(e.type))) byS.get(e.sid).items.push({ ts: e.ts, e }) });
       j.chats.forEach(c => { if (byS.has(c.sid)) byS.get(c.sid).items.push({ ts: c.ts, c }) });
+      (j.messages || []).forEach(m => { if (byS.has(m.sid)) byS.get(m.sid).items.push({ ts: m.ts, m }) });
       const vid = j.sessions[0] && j.sessions[0].vid;
       $('#drBody').innerHTML = (q.sid && vid ? `<p><button class="btn sm" id="allv">Show all visits of visitor ${vshort(vid)}</button></p>` : '') + [...byS.values()].map(({ s, items }) => {
         items.sort((a, b) => a.ts - b.ts);
         return `<section class="sess"><div class="sess-h"><b>${when(s.started)} · ${where(s)}</b><span>${esc(s.device)} · ${esc(s.browser)} ${esc(s.browser_v || '')} · ${esc(s.os)} ${esc(s.os_v || '')} · ${esc(s.screen || '')} · ${esc(s.lang || '')}${s.in_app ? ' · in-app: ' + esc(s.in_app) : ''}<br>
           Source: <b>${esc(s.source)}</b> (${esc(s.via || '')})${s.referrer ? ' from ' + esc(s.referrer) : ''}${s.campaign ? ' · campaign ' + esc(s.campaign) : ''} · visit #${s.visit_no} · ${esc(s.isp || '')} · ${esc(s.tz || '')}<br>
           ${s.pageviews} pages · ${s.clicks} clicks · ${dur(s.active_ms)} active · scrolled ${s.max_scroll}% · ID <span class="mono">${esc(s.sid)}</span></span></div>
-          <ul class="tl">${items.map(({ ts, e, c }) => c
+          <ul class="tl">${items.map(({ ts, e, c, m }) => m
+            ? `<li><time>${clock(ts)}</time><span class="dot conv"></span><div class="t"><span class="tag ok">message</span> Sent you a message as <b>${esc(m.name)}</b> <small>(${esc(m.email)})</small><details open><summary>Message</summary><div class="qa">${esc(m.message)}</div></details></div></li>`
+            : c
             ? `<li><time>${clock(ts)}</time><span class="dot chat"></span><div class="t"><span class="tag acc">ai chat</span> Asked ASQ Ai${c.status !== 'ok' ? ` <span class="tag warn">${esc(c.status)}</span>` : ''}: <b>“${esc(c.question)}”</b><details><summary>Reply${c.total_ms ? ` · ${(c.total_ms / 1000).toFixed(1)}s` : ''}</summary><div class="qa">${esc(c.answer || '(no answer)')}</div></details></div></li>`
             : `<li><time>${clock(ts)}</time><span class="dot ${isConv(e) ? 'conv' : e.type}"></span><div class="t"><span class="tag">${CHIP[e.type] || esc(e.type)}</span> ${describe(e)}</div></li>`).join('') || '<li><div class="t muted">No events</div></li>'}</ul></section>`;
       }).join('') || '<p class="muted">No data (it may have been deleted).</p>';
@@ -198,6 +204,36 @@
     $('#cs').addEventListener('change', e => { cf.status = e.target.value; cf.offset = 0; views.chats() });
     main.querySelectorAll('.vj').forEach(a => a.addEventListener('click', ev => { ev.preventDefault(); if (a.dataset.sid) openJourney({ sid: a.dataset.sid }) }));
     main.querySelectorAll('[data-pg]').forEach(b => b.addEventListener('click', () => { cf.offset = +b.dataset.pg; views.chats() }));
+  };
+
+  /* ----- contact messages ----- */
+  let mf = { status: 'inbox', q: '', offset: 0 };
+  views.messages = async () => {
+    loading(); let r; try { r = await api('messages', { ...mf, limit: 20 }) } catch (e) { return fail(e) }
+    const cn = r.counts || {}, tabs = [['inbox', 'Inbox', (cn.new || 0) + (cn.read || 0)], ['new', 'Unread', cn.new || 0], ['archived', 'Archived', cn.archived || 0], ['spam', 'Spam', cn.spam || 0], ['all', 'All', Object.values(cn).reduce((a, b) => a + b, 0)]];
+    const btn = (act, id, label, cls = '') => `<button class="btn sm ${cls}" data-act="${act}" data-id="${id}">${label}</button>`;
+    main.innerHTML = `<div class="head"><h2>Messages</h2><div class="pills" role="group" aria-label="Filter">${tabs.map(([k, n, c]) => `<button data-st="${k}" class="${mf.status === k ? 'on' : ''}">${n} ${c ? '(' + c + ')' : ''}</button>`).join('')}</div></div>
+      <div class="bar-tools"><input id="mq" placeholder="Search name, email or text…" value="${esc(mf.q)}" size="34"></div>
+      ${r.rows.map(m => { const sub = encodeURIComponent('Re: your message on my portfolio'), body = encodeURIComponent(`\n\n--- ${m.name} wrote on ${new Date(m.ts).toLocaleString()}:\n` + m.message.split('\n').map(l => '> ' + l).join('\n'));
+        return `<div class="card msg ${m.status === 'new' ? 'unread' : ''}"><div class="meta"><b>${esc(m.name)}</b><a href="mailto:${esc(m.email)}?subject=${sub}&body=${body}" data-reply="${m.id}">${esc(m.email)}</a><span>${when(m.ts)}</span>
+          ${m.city || m.country ? `<span>${[m.city, m.country].filter(Boolean).map(esc).join(', ')}</span>` : ''}${m.source ? `<span class="tag">from ${esc(m.source)}</span>` : ''}
+          ${m.status === 'new' ? '<span class="tag acc">new</span>' : m.status !== 'read' ? `<span class="tag warn">${esc(m.status)}</span>` : ''}
+          ${m.notified ? '<span class="tag ok" title="Email notification sent">emailed to you</span>' : `<span class="tag bad" title="${esc(m.notify_error || '')}">email failed${m.notify_error ? ': ' + esc(m.notify_error) : ''}</span>`}</div>
+          <div class="body">${esc(m.message)}</div>
+          <div class="acts"><a class="btn sm pri" href="mailto:${esc(m.email)}?subject=${sub}&body=${body}" data-reply="${m.id}">Reply</a>
+            ${m.status === 'new' ? btn('read', m.id, 'Mark read') : btn('unread', m.id, 'Mark unread')}${m.status === 'archived' ? btn('inbox', m.id, 'Move to inbox') : btn('archive', m.id, 'Archive')}${m.status === 'spam' ? btn('inbox', m.id, 'Not spam') : btn('spam', m.id, 'Spam')}
+            ${m.notified ? '' : btn('resend', m.id, 'Retry email')}${m.sid ? btn('journey', m.sid, 'View journey') : ''}${btn('delete', m.id, 'Delete')}</div></div>`}).join('') || '<div class="empty">No messages here yet.</div>'}${pager(r.total, r.limit, r.offset)}`;
+    main.querySelectorAll('[data-st]').forEach(b => b.addEventListener('click', () => { mf.status = b.dataset.st; mf.offset = 0; views.messages() }));
+    let tm; $('#mq').addEventListener('input', e => { clearTimeout(tm); tm = setTimeout(() => { mf.q = e.target.value.trim(); mf.offset = 0; views.messages() }, 400) });
+    main.querySelectorAll('[data-pg]').forEach(b => b.addEventListener('click', () => { mf.offset = +b.dataset.pg; views.messages() }));
+    main.querySelectorAll('[data-reply]').forEach(a => a.addEventListener('click', () => { api('message', null, { method: 'POST', body: { id: +a.dataset.reply, action: 'read' } }).then(refreshUnread).catch(() => { }) }));
+    main.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', async () => {
+      const act = b.dataset.act, id = b.dataset.id;
+      if (act === 'journey') return openJourney({ sid: id });
+      if (act === 'delete' && !confirm('Delete this message permanently?')) return;
+      b.disabled = true;
+      try { const x = await api('message', null, { method: 'POST', body: { id: +id, action: act } }); if (act === 'resend') toast(x.ok ? 'Email sent' : 'Email failed: ' + x.error); views.messages(); refreshUnread() } catch (e) { toast(e.message); b.disabled = false }
+    }));
   };
 
   /* ----- sources + tracked-link builder ----- */
@@ -253,7 +289,7 @@
   const csvCell = v => { if (v == null) return ''; const s = String(v); return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s };
   views.export = () => {
     main.innerHTML = `<div class="head"><h2>Export</h2></div><div class="card"><h3>Download your data</h3><p class="muted">Keep a copy before the 90-day cleanup. Every table is exported with all columns (see ANALYTICS.md for what each column means).</p>
-      <div class="form-row"><label>Dataset<select id="xt"><option value="sessions">Sessions (one row per visit)</option><option value="events">Events (every click, view, search…)</option><option value="chats">AI chats (questions and answers)</option><option value="security">Security log</option></select></label>
+      <div class="form-row"><label>Dataset<select id="xt"><option value="sessions">Sessions (one row per visit)</option><option value="events">Events (every click, view, search…)</option><option value="chats">AI chats (questions and answers)</option><option value="messages">Contact messages</option><option value="security">Security log</option></select></label>
       <label>Period<select id="xr"><option value="90">All kept data (90 days)</option><option value="30">Last 30 days</option><option value="7">Last 7 days</option><option value="1">Last 24 hours</option></select></label>
       <label>Format<select id="xf"><option value="csv">CSV</option><option value="json">JSON</option></select></label><button class="btn pri" id="xg">Download</button></div><p id="xs" class="muted"></p></div>`;
     $('#xg').addEventListener('click', async () => {
@@ -275,9 +311,12 @@
       <div class="grid three">${m('AI usage today (estimate)', s.today.est_neurons, s.today.neuron_free, `${s.today.chats} of ${s.today.chat_cap} chats allowed today (≈25 neurons each)`)}${m('Database reads today (admin guard)', s.today.d1_reads, s.today.d1_read_free, `Admin panel stops at ${nf(s.today.read_budget)}`)}${m('Tracked events today', s.today.events, s.today.event_cap, 'site-wide safety cap')}</div>
       <div class="grid two"><div class="card"><h3>Stored data</h3>${table([{ h: 'Table', f: r => r[0] }, { h: 'Rows', num: 1, f: r => nf(r[1]) }], Object.entries(s.tables))}<p class="muted">Oldest visit: ${s.oldest ? when(s.oldest) : '–'} · newest: ${s.newest ? when(s.newest) : '–'} · cleanup keeps ${s.config.retention_days} days (runs nightly 03:23 UTC).</p></div>
       <div class="card"><h3>Settings in effect</h3><p>Messages per visitor per day: <b>${s.config.daily_limit}</b><br>Model: <span class="mono">${esc(s.config.model)}</span><br>Change limits in <span class="mono">wrangler.jsonc</span>, then run <span class="mono">wrangler deploy</span>.</p></div></div>
-      <div class="grid two"><div class="card"><h3>Your own visits</h3><p class="muted">Exclude this browser from analytics and chat logs (so your testing doesn’t pollute the numbers). Works on this device only; you can also open any page once with <span class="mono">?asq_ignore=1</span>.</p><button class="btn ${ignored ? '' : 'pri'}" id="ig">${ignored ? 'Start tracking this browser again' : 'Ignore this browser'}</button></div>
+      <div class="card"><h3>Contact form email notifications</h3><p class="m0">${s.contact.email_notifications ? '<span class="tag ok">connected</span> Every new message is also emailed to you through your Google Apps Script.' : '<span class="tag warn">not connected</span> Messages are still saved here in the Messages tab. To also get an email, set up your Apps Script (see DEPLOY.md, “Contact form emails”).'}</p>
+        <p class="muted">Limit: ${s.contact.daily_limit} messages per visitor per day · messages kept ${s.contact.retention_days} days.</p>${s.contact.email_notifications ? '<button class="btn" id="tn">Send a test email</button>' : ''}</div>
+      <div class="grid two mt"><div class="card"><h3>Your own visits</h3><p class="muted">Exclude this browser from analytics and chat logs (so your testing doesn’t pollute the numbers). Works on this device only; you can also open any page once with <span class="mono">?asq_ignore=1</span>.</p><button class="btn ${ignored ? '' : 'pri'}" id="ig">${ignored ? 'Start tracking this browser again' : 'Ignore this browser'}</button></div>
       <div class="card"><h3>Delete a visitor’s data</h3><p class="muted">For privacy requests: paste the visitor’s full anonymous ID (shown in a journey’s session ID row is a visit ID; the visitor ID is the <span class="mono">asq_vid</span> they send you).</p><div class="form-row"><input id="pv" placeholder="visitor ID" size="28"><button class="btn" id="pb">Delete</button></div></div></div>`;
     fit(main);
+    if ($('#tn')) $('#tn').addEventListener('click', async e => { e.target.disabled = true; try { const x = await api('test-notify', null, { method: 'POST', body: {} }); toast(x.ok ? 'Test email sent. Check your inbox (and spam).' : 'Failed: ' + x.error) } catch (err) { toast(err.message) } e.target.disabled = false });
     $('#ig').addEventListener('click', () => { try { ignored ? localStorage.removeItem('asq_ignore') : localStorage.setItem('asq_ignore', '1') } catch (e) { } views.system() });
     $('#pb').addEventListener('click', async () => { const v = $('#pv').value.trim(); if (!v || !confirm('Delete all data for this visitor? This cannot be undone.')) return; try { const r = await api('purge', null, { method: 'POST', body: { vid: v } }); toast(`Deleted ${r.deleted.events} events, ${r.deleted.chats} chats, ${r.deleted.sessions} visits`) } catch (e) { toast(e.message) } });
   };
@@ -286,7 +325,7 @@
   function route() {
     const name = (location.hash || '#overview').slice(1).split('/')[0], v = views[name] ? name : 'overview';
     document.querySelectorAll('#tabs a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + v));
-    $('#drawer').hidden = true; views[v]();
+    $('#drawer').hidden = true; views[v](); refreshUnread();
   }
   addEventListener('hashchange', route);
   async function start() { $('#login').hidden = true; $('#app').hidden = false; route() }
