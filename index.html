@@ -502,15 +502,17 @@ html:has(.ct-modal[open]){overflow:hidden}
 .more-menu.glass-pill{position:absolute;z-index:2;top:calc(100% + 10px);right:0;min-width:14.5rem;padding:.375rem;border-radius:22px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px) scale(.97);transform-origin:top right;transition:opacity .2s,transform .3s var(--ease),visibility 0s .3s}
 .more-menu.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .2s,transform .3s var(--ease),visibility 0s}
 .more-menu ul,.nav-menu ul{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
-.more-menu .nav-link,.nav-menu .nav-link{display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left}
-.more-menu .nav-link{padding:.625rem 1rem;font-size:14.5px}
+.more-menu .nav-link,.nav-menu .nav-link{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left}
+.more-menu .nav-link{padding:.5rem .75rem;font-size:14px}
 .menu-sep{height:1px;margin:.25rem .75rem;background:color-mix(in srgb,var(--fg) 12%,transparent)}
-.more-menu.glass-pill{min-width:16rem;max-height:min(74vh,34rem);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
-.menu-label{padding:.55rem 1rem .15rem;font:600 11px/1.2 "Bricolage Grotesque",Geist,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--n-muted);opacity:.7}
+.more-menu.glass-pill{width:min(25rem,calc(100vw - 24px));max-height:min(74vh,34rem);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.mm-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 .25rem}
+.mm-cols>ul+ul{border-left:1px solid color-mix(in srgb,var(--fg) 10%,transparent);padding-left:.25rem}
+@media (max-width:330px){.mm-cols{grid-template-columns:minmax(0,1fr)}.mm-cols>ul+ul{border-left:0;padding-left:0}}
+.menu-label{padding:.5rem .75rem .15rem;font:600 11px/1.2 "Bricolage Grotesque",Geist,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--n-muted);opacity:.7}
 .menu-sep+.menu-label{padding-top:.4rem}
 .more-menu button.nav-link{width:100%;border:0;background-color:transparent;cursor:pointer;-webkit-appearance:none;appearance:none}
 .more-menu button.nav-link:disabled{opacity:.55;cursor:default}
-.nav-link.soon{cursor:default;opacity:.5;user-select:none}
 .mm-pill{flex:none;font-style:normal;font-size:11.5px;line-height:1;padding:4px 9px;border-radius:9999px;border:1px solid color-mix(in srgb,var(--fg) 16%,transparent);color:var(--n-muted)}
 .mm-state{color:var(--n-main);background:color-mix(in srgb,var(--fg) 6%,transparent)}
 .nav-link .ext{flex:none;opacity:.55}
@@ -1027,28 +1029,24 @@ fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);r
   const reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
   /* phone menu: the burger opens a small glass list; it closes on a link, Esc, a tap outside, or when the screen grows */
   const menu=$('#navMenu'),burger=$('#navToggle');
-  /* the "More" drop-down list. Groups come from {g:'Title'}; items are:
+  /* the "More" drop-down: two columns (left, right), each a list of groups. {g:'Title'} starts a group. Items are:
        {t,h}            a link (add x:1 to open in a new tab and show the arrow)
-       {t,h,soon:1}     planned, not live yet: shows greyed out with "Soon". When it exists, delete soon:1 and set h
        {t,act:'theme'}  / {t,act:'analytics'}  switches that show their current state */
   const MORE=[
-    {g:'Browse'},{t:'All projects',h:'projects.html'},{t:'All certificates',h:'certifications.html'},{t:'Blog & writing',soon:1},
-    {g:'Find me elsewhere'},{t:'GitHub',h:'https://github.com/asqasim',x:1},{t:'LinkedIn',h:'https://linkedin.com/in/asqasim',x:1},{t:'Credly badges',h:'https://www.credly.com/users/asqasim',x:1},{t:'Kaggle',soon:1},{t:'Hugging Face',soon:1},
-    {g:'Downloads'},{t:'Resume (PDF)',h:'assets/docs/resume.pdf',x:1},{t:'Certificates pack (ZIP)',soon:1},{t:'Press kit: photo & bio',soon:1},
-    {g:'Site'},{t:'Privacy & data',h:'privacy.html'},{t:'Theme',act:'theme'},{t:'Analytics',act:'analytics'}
+    [{g:'Browse'},{t:'All projects',h:'projects.html'},{t:'All certificates',h:'certifications.html'},
+     {g:'Site'},{t:'Privacy & data',h:'privacy.html'},{t:'Theme',act:'theme'},{t:'Analytics',act:'analytics'}],
+    [{g:'Find me elsewhere'},{t:'GitHub',h:'https://github.com/asqasim',x:1},{t:'LinkedIn',h:'https://linkedin.com/in/asqasim',x:1},{t:'Kaggle',h:'https://www.kaggle.com/asqasim',x:1},{t:'Hugging Face',h:'https://huggingface.co/asqasim',x:1},{t:'Credly badges',h:'https://www.credly.com/users/asqasim',x:1},
+     {g:'Downloads'},{t:'Resume (PDF)',h:'assets/docs/resume.pdf',x:1}]
   ];
   const extIc='<svg class="ext" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
   const dnt=navigator.doNotTrack==='1'||window.doNotTrack==='1'||navigator.globalPrivacyControl===true;
   const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
   const mmState=act=>act==='theme'?(document.documentElement.dataset.theme==='dark'?'Dark':'Light'):(dnt?'Off (Do Not Track)':lsGet('asq_ignore')==='1'?'Off':'On');
-  let moreHTML='';
-  MORE.forEach((m,i)=>{
-    if(m.g){moreHTML+=(i?'<li class="menu-sep" role="separator"></li>':'')+`<li class="menu-label" role="presentation">${m.g}</li>`;return}
-    if(m.soon)moreHTML+=`<li><span class="nav-link soon" aria-disabled="true">${m.t}<em class="mm-pill">Soon</em></span></li>`;
-    else if(m.act)moreHTML+=`<li><button class="nav-link style_btn_hover" type="button" data-act="${m.act}"${m.act==='analytics'&&dnt?' disabled':''}>${m.t}<em class="mm-pill mm-state" data-state="${m.act}">${mmState(m.act)}</em></button></li>`;
-    else moreHTML+=`<li><a class="nav-link style_btn_hover" href="${m.h}"${m.x?' target="_blank" rel="noopener noreferrer"':''}>${m.t}${m.x?extIc:''}</a></li>`;
-  });
-  $('#moreMenu ul').innerHTML=moreHTML;
+  $('#moreMenu').innerHTML='<div class="mm-cols">'+MORE.map(col=>'<ul>'+col.map((m,i)=>{
+    if(m.g)return(i?'<li class="menu-sep" role="separator"></li>':'')+`<li class="menu-label" role="presentation">${m.g}</li>`;
+    if(m.act)return `<li><button class="nav-link style_btn_hover" type="button" data-act="${m.act}"${m.act==='analytics'&&dnt?' disabled':''}>${m.t}<em class="mm-pill mm-state" data-state="${m.act}">${mmState(m.act)}</em></button></li>`;
+    return `<li><a class="nav-link style_btn_hover" href="${m.h}"${m.x?' target="_blank" rel="noopener noreferrer"':''}>${m.t}${m.x?extIc:''}</a></li>`;
+  }).join('')+'</ul>').join('')+'</div>';
   window.pfSyncMenu=()=>document.querySelectorAll('#moreMenu [data-state]').forEach(el=>el.textContent=mmState(el.dataset.state));
   const more=$('#moreMenu'),moreBtn=$('#moreBtn');
   function setMore(open){more.classList.toggle('is-open',open);moreBtn.setAttribute('aria-expanded',open);if(open)setMenu(false)}
