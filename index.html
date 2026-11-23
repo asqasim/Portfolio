@@ -440,7 +440,7 @@ html,body{overflow-x:clip}   /* the full-width fade below is 100vw, which counts
 .ct-pdf{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;min-width:11rem;padding:0 26px;border-radius:9999px;background:var(--fg);color:var(--bg);font-size:.95rem;font-weight:500;text-decoration:none;transition:opacity .2s,transform .25s var(--ease)}
 .ct-pdf:hover{opacity:.86}.ct-pdf:active{transform:scale(.97)}
 @media (max-width:640px){.ct-m-head{padding:16px 14px 10px 18px}.ct-m-view{padding:4px 12px 14px}.ct-m-foot{padding:4px 14px 16px}.ct-pdf{width:100%}.ct-m-view>img{max-height:calc(100dvh - 230px)}}
-html:has(.ct-modal[open],.ai[open]){overflow:hidden}
+html:has(.ct-modal[open]){overflow:hidden}
 /* thumbnails: no gradient frame around project screenshots or certificate images */
 .ph:has(.shot){background:var(--card)}
 .ph .shot{inset:0;border-radius:0;box-shadow:none}
@@ -482,86 +482,6 @@ html:has(.ct-modal[open],.ai[open]){overflow:hidden}
 .badge.pri{background:var(--ft-bg);color:var(--ft-fg);border-color:var(--ft-bd)}
 .btn{background:color-mix(in srgb,var(--fg) 4%,transparent);border-color:color-mix(in srgb,var(--fg) 13%,transparent);color:var(--fg)}
 .btn:hover,.card:hover .btn:hover{background:color-mix(in srgb,var(--fg) 13%,transparent);border-color:color-mix(in srgb,var(--fg) 30%,transparent);color:var(--fg)}
-/* ASQ Ai chat: right-hand sheet on desktop, full screen on phones */
-.ai{position:fixed;inset:12px 12px 12px auto;margin:0;width:min(31rem,calc(100vw - 24px));max-width:none;height:calc(100dvh - 24px);max-height:none;padding:0;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);border-radius:24px;background:color-mix(in srgb,var(--card) 94%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);color:var(--fg);overflow:hidden;box-shadow:0 14px 34px -22px rgba(0,0,0,.5)}
-.ai[open]{display:flex;flex-direction:column;animation:aiIn .4s var(--ease)}
-.ai::backdrop{background:rgba(8,8,14,.34);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);animation:aiFade .3s}
-@keyframes aiIn{from{opacity:0;transform:translateX(26px) scale(.985)}}
-@keyframes aiFade{from{opacity:0}}
-.ai-head{display:flex;align-items:center;gap:12px;padding:14px 12px 14px 18px;border-bottom:1px solid color-mix(in srgb,var(--fg) 8%,transparent)}
-.ai-ht{flex:1;min-width:0}
-.ai-ht h2{margin:0;font-size:1rem;font-weight:600;letter-spacing:-.01em;line-height:1.2}
-.ai-ht p{display:flex;align-items:center;gap:6px;margin:3px 0 0;font-size:.75rem;color:var(--muted)}
-.ai-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:aiPulse 2.4s infinite}
-@keyframes aiPulse{70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
-.ai-av{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background-image:var(--n-hov-bg);box-shadow:var(--n-hov-sh);color:var(--fg)}
-.ai-av .ai-ic{width:18px;height:18px}
-.ai-hbtn{flex:none;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--muted);transition:color .2s,background-color .2s}
-.ai-hbtn:hover{color:var(--fg);background:color-mix(in srgb,var(--fg) 8%,transparent)}
-.ai-main{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
-.ai-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 18px 6px;outline:0}
-.ai-welcome{text-align:center;padding:26px 2px 8px}
-.ai-welcome[hidden]{display:none}
-.ai-av-lg{width:52px;height:52px;margin:0 auto}.ai-av-lg .ai-ic{width:26px;height:26px}
-.ai-welcome h3{margin:16px 0 6px;font:400 2.4rem/1.1 "Instrument Serif","Instrument Serif Fallback",Georgia,serif;letter-spacing:-.01em}
-.ai-welcome p{margin:0 auto;max-width:21rem;font-size:.92rem;line-height:1.6;color:var(--muted)}
-.ai-sugs{display:grid;gap:8px;margin-top:24px;text-align:left}
-.ai-sug{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);border-radius:16px;background:color-mix(in srgb,var(--fg) 3%,transparent);color:var(--fg);font:inherit;font-size:.9rem;text-align:left;transition:background-color .25s,border-color .25s,transform .3s var(--ease)}
-.ai-sug:hover{background:color-mix(in srgb,var(--fg) 7%,transparent);border-color:color-mix(in srgb,var(--fg) 20%,transparent);transform:translateX(2px)}
-.ai-sic{flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--fg) 7%,transparent);color:var(--muted)}
-.ai-msg{display:flex;gap:10px;margin:0 0 20px;animation:aiPop .4s var(--ease)}
-@keyframes aiPop{from{opacity:0;transform:translateY(8px)}}
-.ai-msg.user{justify-content:flex-end}
-.ai-msg.user .ai-b{max-width:84%;padding:10px 14px;border:1px solid color-mix(in srgb,var(--fg) 8%,transparent);border-radius:18px 18px 6px 18px;background:color-mix(in srgb,var(--fg) 8%,transparent);font-size:.93rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
-.ai-msg .ai-av{width:28px;height:28px;margin-top:1px}.ai-msg .ai-av .ai-ic{width:14px;height:14px}
-.ai-body{flex:1;min-width:0}
-.ai-text{font-size:.93rem;line-height:1.65;overflow-wrap:anywhere}
-.ai-text p{margin:0 0 .65em}.ai-text p:last-child{margin-bottom:0}
-.ai-text ul{margin:.2em 0 .65em;padding-left:1.15em}.ai-text li{margin:.2em 0}
-.ai-text a{color:var(--fg);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--fg) 35%,transparent);text-underline-offset:3px}
-.ai-text a:hover{text-decoration-color:currentColor}
-.ai-text code{padding:1px 6px;border-radius:6px;background:color-mix(in srgb,var(--fg) 8%,transparent);font:.85em "JetBrains Mono",ui-monospace,monospace}
-.ai-text.live>:last-child::after{content:"";display:inline-block;width:7px;height:1.05em;margin-left:3px;vertical-align:-2px;border-radius:2px;background:currentColor;opacity:.45;animation:aiCaret 1s steps(2) infinite}
-@keyframes aiCaret{50%{opacity:0}}
-.ai-stopped{display:block;margin-top:6px;font-size:.76rem;color:var(--muted)}
-.ai-think{display:flex;align-items:center;gap:8px;height:28px;color:var(--muted);font-size:.85rem}
-.ai-dots{display:inline-flex;gap:4px}.ai-dots i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:aiBounce 1.2s infinite}
-.ai-dots i:nth-child(2){animation-delay:.15s}.ai-dots i:nth-child(3){animation-delay:.3s}
-@keyframes aiBounce{0%,60%,100%{transform:none;opacity:.4}30%{transform:translateY(-4px);opacity:1}}
-.ai-step{display:inline-flex;align-items:center;gap:7px;margin:0 0 8px;padding:4px 11px 4px 9px;border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);border-radius:9999px;font-size:.76rem;color:var(--muted)}
-.ai-step svg{color:#22c55e}
-.ai-spin{width:11px;height:11px;border:2px solid color-mix(in srgb,var(--fg) 25%,transparent);border-top-color:var(--fg);border-radius:50%;animation:aiSpin .7s linear infinite}
-@keyframes aiSpin{to{transform:rotate(360deg)}}
-.ai-cards{display:grid;gap:8px;margin-top:10px}
-.ai-card{display:block;padding:11px 13px;border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);border-radius:14px;background:color-mix(in srgb,var(--fg) 3%,transparent);color:inherit;text-decoration:none;transition:background-color .25s,border-color .25s}
-.ai-card:hover{background:color-mix(in srgb,var(--fg) 7%,transparent);border-color:color-mix(in srgb,var(--fg) 20%,transparent)}
-.ai-card b{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.9rem;font-weight:600}
-.ai-card b svg{flex:none;color:var(--muted);transition:transform .3s var(--ease)}.ai-card:hover b svg{transform:translate(2px,-2px)}
-.ai-card small{display:block;margin-top:2px;font-size:.74rem;color:var(--muted)}
-.ai-card p{margin:6px 0 0;font-size:.83rem;line-height:1.5;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ai-acts{display:flex;gap:2px;margin:6px 0 0 -6px;opacity:0;transition:opacity .2s}
-.ai-msg:hover .ai-acts,.ai-acts:focus-within,.ai-msg.last .ai-acts{opacity:1}
-@media (hover:none){.ai-acts{opacity:1}}
-.ai-act{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:var(--muted);transition:color .2s,background-color .2s}
-.ai-act:hover{color:var(--fg);background:color-mix(in srgb,var(--fg) 8%,transparent)}
-.ai-act[aria-pressed="true"]{color:var(--fg);background:color-mix(in srgb,var(--fg) 10%,transparent)}
-.ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.ai-chip{padding:6px 12px;border:1px solid color-mix(in srgb,var(--fg) 13%,transparent);border-radius:9999px;background:none;color:var(--fg);font:inherit;font-size:.8rem;transition:background-color .2s,border-color .2s}
-.ai-chip:hover{background:color-mix(in srgb,var(--fg) 7%,transparent);border-color:color-mix(in srgb,var(--fg) 24%,transparent)}
-.ai-down{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 14px 0 11px;border:1px solid color-mix(in srgb,var(--fg) 14%,transparent);border-radius:9999px;background:var(--card);color:var(--fg);font:inherit;font-size:.8rem;animation:aiPop .3s var(--ease)}
-.ai-down[hidden]{display:none}
-.ai-composer{padding:8px 14px 14px}
-.ai-box{display:flex;align-items:flex-end;gap:8px;padding:7px 7px 7px 16px;border:1px solid color-mix(in srgb,var(--fg) 14%,transparent);border-radius:24px;background:color-mix(in srgb,var(--fg) 3%,transparent);transition:border-color .25s,box-shadow .25s}
-.ai-box:focus-within{border-color:color-mix(in srgb,var(--fg) 32%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--fg) 7%,transparent)}
-.ai .ai-box textarea{flex:1;min-width:0;max-height:9rem;padding:7px 0;border:0;border-radius:0;background:none;box-shadow:none;outline:0;resize:none;color:var(--fg);font:inherit;font-size:.95rem;line-height:1.5}
-.ai .ai-box textarea::placeholder{color:var(--muted);opacity:.8}
-.ai-send{flex:none;width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:50%;background:linear-gradient(135deg,rgb(255,128,0),rgb(255,0,153));color:#fff;transition:opacity .2s,transform .2s var(--ease),background .2s}
-.ai-send:hover{transform:scale(1.06)}.ai-send:active{transform:scale(.94)}
-.ai-send:disabled{background:color-mix(in srgb,var(--fg) 10%,transparent);color:var(--muted);transform:none}
-.ai-send.stop{background:color-mix(in srgb,var(--fg) 14%,transparent);color:var(--fg)}
-.ai-foot{margin:8px 0 0;text-align:center;font-size:.72rem;line-height:1.5;color:var(--muted)}
-.ai-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media (max-width:640px){.ai{inset:0;width:100vw;height:100dvh;border:0;border-radius:0}.ai-composer{padding-bottom:max(14px,env(safe-area-inset-bottom))}.ai-foot span{display:none}.ai-welcome h3{font-size:2.1rem}}
 /* toolbox top: starts as the hero's white and fades into the page colour (hero itself is untouched) */
 #tech-stack{--tk-fade:255,255,255;position:relative}
 :root:not([data-theme="light"]) #tech-stack{--tk-fade:10,10,10}
@@ -585,6 +505,14 @@ html:has(.ct-modal[open],.ai[open]){overflow:hidden}
 .more-menu .nav-link,.nav-menu .nav-link{display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left}
 .more-menu .nav-link{padding:.625rem 1rem;font-size:14.5px}
 .menu-sep{height:1px;margin:.25rem .75rem;background:color-mix(in srgb,var(--fg) 12%,transparent)}
+.more-menu.glass-pill{min-width:16rem;max-height:min(74vh,34rem);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.menu-label{padding:.55rem 1rem .15rem;font:600 11px/1.2 "Bricolage Grotesque",Geist,system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--n-muted);opacity:.7}
+.menu-sep+.menu-label{padding-top:.4rem}
+.more-menu button.nav-link{width:100%;border:0;background-color:transparent;cursor:pointer;-webkit-appearance:none;appearance:none}
+.more-menu button.nav-link:disabled{opacity:.55;cursor:default}
+.nav-link.soon{cursor:default;opacity:.5;user-select:none}
+.mm-pill{flex:none;font-style:normal;font-size:11.5px;line-height:1;padding:4px 9px;border-radius:9999px;border:1px solid color-mix(in srgb,var(--fg) 16%,transparent);color:var(--n-muted)}
+.mm-state{color:var(--n-main);background:color-mix(in srgb,var(--fg) 6%,transparent)}
 .nav-link .ext{flex:none;opacity:.55}
 /* phones: no pill. Three separate round/wide buttons: menu, AI, More */
 .burger-wrap,.btn-ai{display:none}
@@ -667,7 +595,7 @@ button:disabled,[aria-disabled="true"]{cursor:var(--cur-not-allowed)}
                 <li><a class="nav-link style_btn_hover" href="#projects">Projects</a></li>
                 <li><a class="nav-link style_btn_hover" href="#certifications">Certs</a></li>
                 <li><a class="nav-link style_btn_hover" href="#contact">Contact</a></li>
-                <li class="cta-item"><a class="btn-cta" href="#ask-ai" aria-label="Open ASQ Ai chat" aria-haspopup="dialog" data-ai-open><span class="ai-ic" aria-hidden="true"></span><span class="cta-txt">ASQ Ai</span></a></li>   <!-- set this link to wherever "ASQ Ai" should go -->
+                <li class="cta-item"><a class="btn-cta" href="ai.html" aria-label="Chat with ASQ Ai"><span class="ai-ic" aria-hidden="true"></span><span class="cta-txt">ASQ Ai</span></a></li>
               </ul>
             </nav>
           </div>
@@ -688,7 +616,7 @@ button:disabled,[aria-disabled="true"]{cursor:var(--cur-not-allowed)}
         </ul>
         </div>
       </div>
-      <a class="glass-pill btn-ai" href="#ask-ai" aria-label="Open ASQ Ai chat" aria-haspopup="dialog" data-ai-open><span class="ai-ic" aria-hidden="true"></span></a>
+      <a class="glass-pill btn-ai" href="ai.html" aria-label="Chat with ASQ Ai"><span class="ai-ic" aria-hidden="true"></span></a>
       <div class="more-wrap">
         <button class="glass-pill btn-more" type="button" id="moreBtn" aria-haspopup="true" aria-expanded="false" aria-controls="moreMenu"><span>More</span><svg class="caret" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M208,96l-80,80L48,96Z" opacity="0.2"></path><path d="M215.39,92.94A8,8,0,0,0,208,88H48a8,8,0,0,0-5.66,13.66l80,80a8,8,0,0,0,11.32,0l80-80A8,8,0,0,0,215.39,92.94ZM128,164.69,67.31,104H188.69Z"></path></svg></button>
         <div class="more-menu glass-pill" id="moreMenu"><ul></ul></div>
@@ -865,40 +793,6 @@ button:disabled,[aria-disabled="true"]{cursor:var(--cur-not-allowed)}
     <a class="ct-all" id="ctCred" href="https://www.credly.com/users/asqasim" target="_blank" rel="noopener noreferrer">All badges on Credly <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
   <div class="ct-small" id="ctSmall"></div>
 </section>
-
-<dialog class="ai" id="aiChat" aria-labelledby="aiTitle">
-  <header class="ai-head">
-    <span class="ai-av" aria-hidden="true"><span class="ai-ic"></span></span>
-    <div class="ai-ht"><h2 id="aiTitle">ASQ Ai</h2><p><i class="ai-dot"></i>Demo mode · scripted replies</p></div>
-    <button class="ai-hbtn" id="aiNew" type="button" aria-label="New chat" title="New chat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
-    <button class="ai-hbtn" type="button" data-ai-close aria-label="Close chat" title="Close (Esc)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-  </header>
-  <div class="ai-main">
-    <div class="ai-scroll" id="aiScroll" tabindex="-1">
-      <div class="ai-welcome" id="aiWelcome">
-        <span class="ai-av ai-av-lg" aria-hidden="true"><span class="ai-ic"></span></span>
-        <h3>Hi, I’m <span class="grad">ASQ Ai</span></h3>
-        <p>Ask me about Qasim’s projects, skills and certificates, or how to work with him.</p>
-        <div class="ai-sugs">
-          <button class="ai-sug" type="button" data-q="What projects has Qasim built?"><span class="ai-sic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span>What projects has Qasim built?</span></button>
-          <button class="ai-sug" type="button" data-q="What is in his toolbox?"><span class="ai-sic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span>What is in his toolbox?</span></button>
-          <button class="ai-sug" type="button" data-q="Which certificates does he have?"><span class="ai-sic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></svg></span><span>Which certificates does he have?</span></button>
-          <button class="ai-sug" type="button" data-q="How can I contact him?"><span class="ai-sic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><span>How can I contact him?</span></button>
-        </div>
-      </div>
-      <div class="ai-msgs" id="aiMsgs"></div>
-    </div>
-    <button class="ai-down" id="aiDown" type="button" hidden aria-label="Jump to latest message"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m7-7-7 7-7-7"/></svg><span>Latest</span></button>
-  </div>
-  <form class="ai-composer" id="aiForm" autocomplete="off">
-    <div class="ai-box">
-      <textarea id="aiInput" rows="1" maxlength="1000" placeholder="Ask about projects, skills, certificates…" aria-label="Message ASQ Ai"></textarea>
-      <button class="ai-send" id="aiSend" type="submit" aria-label="Send message" disabled></button>
-    </div>
-    <p class="ai-foot">Demo only: replies are scripted for now. <span>Enter to send · Shift+Enter for a new line</span></p>
-  </form>
-  <div class="ai-sr" id="aiLive" aria-live="polite"></div>
-</dialog>
 
 <dialog class="ct-modal" id="ctModal" aria-labelledby="ctmTitle">
   <div class="ct-m-head"><div><h3 id="ctmTitle"></h3><p id="ctmMeta"></p></div>
@@ -1133,16 +1027,39 @@ fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);r
   const reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
   /* phone menu: the burger opens a small glass list; it closes on a link, Esc, a tap outside, or when the screen grows */
   const menu=$('#navMenu'),burger=$('#navToggle');
-  /* the "More" drop-down list */
-  const MORE=[{t:'All projects',h:'projects.html'},{t:'All certificates',h:'certifications.html'},{sep:1},
-    {t:'Resume (PDF)',h:'assets/docs/resume.pdf',x:1},{t:'GitHub',h:'https://github.com/asqasim',x:1},{t:'LinkedIn',h:'https://linkedin.com/in/asqasim',x:1}];
+  /* the "More" drop-down list. Groups come from {g:'Title'}; items are:
+       {t,h}            a link (add x:1 to open in a new tab and show the arrow)
+       {t,h,soon:1}     planned, not live yet: shows greyed out with "Soon". When it exists, delete soon:1 and set h
+       {t,act:'theme'}  / {t,act:'analytics'}  switches that show their current state */
+  const MORE=[
+    {g:'Browse'},{t:'All projects',h:'projects.html'},{t:'All certificates',h:'certifications.html'},{t:'Blog & writing',soon:1},
+    {g:'Find me elsewhere'},{t:'GitHub',h:'https://github.com/asqasim',x:1},{t:'LinkedIn',h:'https://linkedin.com/in/asqasim',x:1},{t:'Credly badges',h:'https://www.credly.com/users/asqasim',x:1},{t:'Kaggle',soon:1},{t:'Hugging Face',soon:1},
+    {g:'Downloads'},{t:'Resume (PDF)',h:'assets/docs/resume.pdf',x:1},{t:'Certificates pack (ZIP)',soon:1},{t:'Press kit: photo & bio',soon:1},
+    {g:'Site'},{t:'Privacy & data',h:'privacy.html'},{t:'Theme',act:'theme'},{t:'Analytics',act:'analytics'}
+  ];
   const extIc='<svg class="ext" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
-  const moreHTML=MORE.map(m=>m.sep?'<li class="menu-sep" role="separator"></li>':`<li><a class="nav-link style_btn_hover" href="${m.h}"${m.x?' target="_blank" rel="noopener noreferrer"':''}>${m.t}${m.x?extIc:''}</a></li>`).join('');
+  const dnt=navigator.doNotTrack==='1'||window.doNotTrack==='1'||navigator.globalPrivacyControl===true;
+  const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+  const mmState=act=>act==='theme'?(document.documentElement.dataset.theme==='dark'?'Dark':'Light'):(dnt?'Off (Do Not Track)':lsGet('asq_ignore')==='1'?'Off':'On');
+  let moreHTML='';
+  MORE.forEach((m,i)=>{
+    if(m.g){moreHTML+=(i?'<li class="menu-sep" role="separator"></li>':'')+`<li class="menu-label" role="presentation">${m.g}</li>`;return}
+    if(m.soon)moreHTML+=`<li><span class="nav-link soon" aria-disabled="true">${m.t}<em class="mm-pill">Soon</em></span></li>`;
+    else if(m.act)moreHTML+=`<li><button class="nav-link style_btn_hover" type="button" data-act="${m.act}"${m.act==='analytics'&&dnt?' disabled':''}>${m.t}<em class="mm-pill mm-state" data-state="${m.act}">${mmState(m.act)}</em></button></li>`;
+    else moreHTML+=`<li><a class="nav-link style_btn_hover" href="${m.h}"${m.x?' target="_blank" rel="noopener noreferrer"':''}>${m.t}${m.x?extIc:''}</a></li>`;
+  });
   $('#moreMenu ul').innerHTML=moreHTML;
+  window.pfSyncMenu=()=>document.querySelectorAll('#moreMenu [data-state]').forEach(el=>el.textContent=mmState(el.dataset.state));
   const more=$('#moreMenu'),moreBtn=$('#moreBtn');
   function setMore(open){more.classList.toggle('is-open',open);moreBtn.setAttribute('aria-expanded',open);if(open)setMenu(false)}
   moreBtn.addEventListener('click',()=>setMore(!more.classList.contains('is-open')));
-  more.addEventListener('click',e=>{if(e.target.closest('a'))setMore(false)});
+  more.addEventListener('click',e=>{
+    if(e.target.closest('a'))setMore(false);
+    const b=e.target.closest('button[data-act]');if(!b)return;
+    if(b.dataset.act==='theme')switchTheme(b);                                      /* same circle reveal as the footer button, starting from this row */
+    else{ if(dnt)return;try{if(lsGet('asq_ignore')==='1')localStorage.removeItem('asq_ignore');else localStorage.setItem('asq_ignore','1')}catch(x){}   /* read by track.js: takes effect from the next page */
+      pfSyncMenu();b.title='Applies from the next page you open'}
+  });
   function setMenu(open){menu.classList.toggle('is-open',open);burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Close menu':'Menu');if(open)setMore(false)}
   burger.addEventListener('click',()=>setMenu(!menu.classList.contains('is-open')));
   addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(menu.classList.contains('is-open')){setMenu(false);burger.focus()}if(more.classList.contains('is-open')){setMore(false);moreBtn.focus()}});
@@ -1203,12 +1120,12 @@ const VT_VARS=['--vt-x','--vt-y','--vt-r','--vt-ms'];
 let waving=false;
 const themeLabel=()=>themeBtn.setAttribute('aria-label',root.dataset.theme==='dark'?'Switch to light theme':'Switch to dark theme');
 themeLabel();
-themeBtn.addEventListener('click',()=>{
+function switchTheme(src){
   if(waving)return;
   const next=root.dataset.theme==='dark'?'light':'dark';
-  const apply=()=>{root.dataset.theme=next;themeLabel();try{localStorage.setItem('pf-theme',next)}catch(e){}};
+  const apply=()=>{root.dataset.theme=next;themeLabel();if(window.pfSyncMenu)pfSyncMenu();try{localStorage.setItem('pf-theme',next)}catch(e){}};
   if(!document.startViewTransition||matchMedia('(prefers-reduced-motion:reduce)').matches){apply();return}
-  const r=themeBtn.getBoundingClientRect(),ox=r.left+r.width/2,oy=r.top+r.height/2,vw=innerWidth,vh=innerHeight;
+  const r=src.getBoundingClientRect(),ox=r.left+r.width/2,oy=r.top+r.height/2,vw=innerWidth,vh=innerHeight;
   const radius=Math.max(Math.hypot(ox,oy),Math.hypot(vw-ox,oy),Math.hypot(ox,vh-oy),Math.hypot(vw-ox,vh-oy));
   [ox+'px',oy+'px',radius+'px',THEME_MS+'ms'].forEach((v,i)=>root.style.setProperty(VT_VARS[i],v));
   waving=true;
@@ -1218,7 +1135,8 @@ themeBtn.addEventListener('click',()=>{
     /* safety net: drop any leftover transition animations so nothing piles up across toggles */
     try{document.getAnimations().forEach(a=>{const p=a.effect&&a.effect.pseudoElement;if(p&&p.startsWith('::view-transition'))a.cancel()})}catch(e){}
   });
-});
+}
+themeBtn.addEventListener('click',()=>switchTheme(themeBtn));
 
   /* toolbox marquee: clone each row's chips so the loop is seamless at any width */
   (function(){
@@ -1250,133 +1168,6 @@ themeBtn.addEventListener('click',()=>{
     }else stage.classList.add('is-in');
   })();
 
-  /* ===== ASQ Ai chat =====
-     The interface is finished; the answers are scripted. To connect a real model, replace respond() below (it yields
-     {type:'step',text}, {type:'token',text} and {type:'done',cards,chips}) and keep everything else. */
-  (function(){
-    const dlg=$('#aiChat'); if(!dlg) return;
-    const scroll=$('#aiScroll'),msgs=$('#aiMsgs'),welcome=$('#aiWelcome'),form=$('#aiForm'),ta=$('#aiInput'),send=$('#aiSend'),down=$('#aiDown'),live=$('#aiLive');
-    const svg=(p,w=16)=>`<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
-    const IC={copy:svg('<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',15),check:svg('<path d="M20 6 9 17l-5-5"/>',15),
-      up:svg('<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',15),
-      down:svg('<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>',15),
-      redo:svg('<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',15),
-      out:svg('<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',14),arrow:svg('<path d="m5 12 7-7 7 7M12 19V5"/>',18),stop:svg('<rect x="6" y="6" width="12" height="12" rx="2.5" fill="currentColor"/>',16)};
-    const reduce=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const sleep=ms=>new Promise(r=>setTimeout(r,reduce()?0:ms));
-    let hist=[],busy=false,ctrl=null,opener=null,stick=true;
-
-    /* ---- tiny markdown: **bold**, `code`, [text](link), "- " lists ---- */
-    const inline=t=>t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code>$1</code>')
-      .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,(m,l,u)=>u[0]==='#'?`<a href="${u}" data-go>${l}</a>`:`<a href="${u}" target="_blank" rel="noopener noreferrer">${l}</a>`);
-    function md(t){let h='',ul=false;for(const raw of esc(t).split('\n')){const li=raw.match(/^\s*-\s+(.*)/);
-      if(li){if(!ul){h+='<ul>';ul=true}h+=`<li>${inline(li[1])}</li>`}else{if(ul){h+='</ul>';ul=false}if(raw.trim())h+=`<p>${inline(raw)}</p>`}}
-      return h+(ul?'</ul>':'')}
-
-    /* ---- the scripted brain (reads the real page data, so answers stay correct when you edit the JSON files) ---- */
-    const has=(t,...w)=>w.some(x=>t.includes(x));
-    const projCard=p=>({title:p.name,meta:[p.cat,p.lang].filter(Boolean).join(' · '),desc:p.desc,href:p.page||'#projects'});
-    function plan(q){
-      const t=q.toLowerCase(),projects=(typeof P!=='undefined'&&P)||[],certs=window.CERTS;
-      const named=projects.find(p=>{const n=p.name.toLowerCase(),f=n.split(/[\s:&]+/)[0];return t.includes(n)||(f.length>=4&&t.includes(f))});
-      if(named)return{step:`Looked up ${named.name}`,text:`**${named.name}** is a ${named.cat.toLowerCase()} project${named.lang?` built with ${named.lang}`:''}.\n${named.desc}`,cards:[projCard(named)],chips:['Show other projects','What is in his toolbox?']};
-      if(has(t,'project','built','build','portfolio','work')&&!has(t,'work with','work together','working')){
-        const list=(projects.filter(p=>p.featured).length?projects.filter(p=>p.featured):projects).slice(0,3);
-        return{step:`Searched ${projects.length||'all'} projects`,text:`Here are a few highlights. Browse everything in the [Projects](#projects) section, where you can filter by category.`,cards:list.map(projCard),chips:['Tell me about termflix','Which certificates does he have?']}}
-      if(has(t,'certif','badge','credential','course')){
-        const c=(certs&&certs.certificates)||[],b=(certs&&certs.badges)||[];
-        return{step:'Checked certifications',text:`Qasim has ${c.length} featured certificates and ${b.length} more badges. A few of them:\n${c.slice(0,3).map(x=>`- **${x.title}** (${x.issuer})`).join('\n')}\nOpen any of them in [Certifications](#certifications) to view the full certificate and PDF.`,chips:['What projects has Qasim built?','How can I contact him?']}}
-      if(has(t,'skill','stack','tool','tech','toolbox','python','know','language')){
-        const rows=[...document.querySelectorAll('#tk .tk-row')].map(r=>`- **${r.querySelector('h3').textContent}:** ${[...r.querySelectorAll('.mq-track>li:not([data-clone])')].map(l=>l.textContent.trim()).join(', ')}`);
-        return{step:'Read the Toolbox',text:`His toolbox is split into four areas:\n${rows.join('\n')}`,chips:['What projects has Qasim built?','Which certificates does he have?']}}
-      if(has(t,'resume','cv'))return{step:'Found the resume',text:'You can read his resume here: [View resume (PDF)](assets/docs/resume.pdf).',chips:['How can I contact him?','What projects has Qasim built?']};
-      if(has(t,'contact','hire','email','reach','available','availability','freelance','work with','work together','talk','call'))
-        return{step:'Looked up contact details',text:`The quickest way is email: **qasim.datadev@gmail.com**. He is based in Lahore, Pakistan, works remotely, and usually replies within a day.\nYou can also use the form in the [Contact](#contact) section.`,chips:['View resume','What projects has Qasim built?']};
-      if(has(t,'who','about','background','experience','tell me about qasim','yourself'))
-        return{step:'Read the profile',text:`Ahmad Sohaib Qasim is a Data Scientist based in Pakistan, working remotely. He works across data science, backend, cloud data engineering and agentic AI.\nSee [Experience](#experience) for the timeline.`,chips:['What projects has Qasim built?','What is in his toolbox?']};
-      if(/^(hi|hey|hello|salam|yo|hola)\b/.test(t))return{text:'Hi! I’m ASQ Ai, Qasim’s portfolio assistant. Ask me about his projects, skills, certificates, or how to get in touch.',chips:['What projects has Qasim built?','What is in his toolbox?']};
-      if(has(t,'thank'))return{text:'You’re welcome! Anything else you’d like to know?',chips:['How can I contact him?']};
-      return{text:'I’m in demo mode, so I only understand a few topics for now: **projects**, **skills**, **certificates**, **contact** and **resume**. Real AI answers will be connected soon.',chips:['What projects has Qasim built?','What is in his toolbox?','Which certificates does he have?']};
-    }
-    /* swap this generator for a real model call (stream tokens as {type:'token',text}) */
-    async function* respond(history,signal){
-      const r=plan(history[history.length-1].text);
-      await sleep(550);if(signal.aborted)return;
-      if(r.step){yield{type:'step',text:r.step};await sleep(650);if(signal.aborted)return}
-      for(const w of r.text.split(/(\s+)/)){if(signal.aborted)return;yield{type:'token',text:w};if(w.trim())await sleep(16+Math.random()*26)}
-      yield{type:'done',cards:r.cards,chips:r.chips};
-    }
-
-    /* ---- rendering ---- */
-    const atEnd=()=>scroll.scrollHeight-scroll.scrollTop-scroll.clientHeight<70;
-    const toEnd=(force)=>{if(force||stick)scroll.scrollTop=scroll.scrollHeight};
-    scroll.addEventListener('scroll',()=>{stick=atEnd();down.hidden=stick||!hist.length},{passive:true});
-    down.onclick=()=>{scroll.scrollTo({top:scroll.scrollHeight,behavior:reduce()?'auto':'smooth'})};
-    function cardsHTML(c){return c&&c.length?`<div class="ai-cards">${c.map(x=>`<a class="ai-card" href="${esc(x.href)}" ${x.href[0]==='#'?'data-go':/^https?:/.test(x.href)?'target="_blank" rel="noopener noreferrer"':''}><b><span>${esc(x.title)}</span>${IC.out}</b>${x.meta?`<small>${esc(x.meta)}</small>`:''}${x.desc?`<p>${esc(x.desc)}</p>`:''}</a>`).join('')}</div>`:''}
-    function chipsHTML(c){return c&&c.length?`<div class="ai-chips">${c.map(x=>`<button class="ai-chip" type="button" data-q="${esc(x)}">${esc(x)}</button>`).join('')}</div>`:''}
-    const botShell=()=>{const el=document.createElement('div');el.className='ai-msg bot';
-      el.innerHTML='<span class="ai-av" aria-hidden="true"><span class="ai-ic"></span></span><div class="ai-body"><div class="ai-think"><span class="ai-dots"><i></i><i></i><i></i></span>Thinking…</div></div>';return el};
-    function setLast(){msgs.querySelectorAll('.ai-msg.last').forEach(m=>m.classList.remove('last'));const l=[...msgs.querySelectorAll('.ai-msg.bot')].pop();if(l&&!busy)l.classList.add('last')}
-    function actions(el,m){
-      const a=document.createElement('div');a.className='ai-acts';
-      a.innerHTML=`<button class="ai-act" type="button" data-a="copy" aria-label="Copy reply" title="Copy">${IC.copy}</button><button class="ai-act" type="button" data-a="up" aria-label="Good reply" aria-pressed="false" title="Good reply">${IC.up}</button><button class="ai-act" type="button" data-a="down" aria-label="Bad reply" aria-pressed="false" title="Bad reply">${IC.down}</button><button class="ai-act" type="button" data-a="redo" aria-label="Regenerate reply" title="Regenerate">${IC.redo}</button>`;
-      a.onclick=e=>{const b=e.target.closest('.ai-act');if(!b)return;const k=b.dataset.a;
-        if(k==='copy'){navigator.clipboard&&navigator.clipboard.writeText(m.text).then(()=>{b.innerHTML=IC.check;setTimeout(()=>b.innerHTML=IC.copy,1400)})}
-        else if(k==='redo'){if(!busy)regenerate()}
-        else{const on=b.getAttribute('aria-pressed')!=='true';a.querySelectorAll('[data-a=up],[data-a=down]').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on);m.rating=on?k:null}};
-      el.querySelector('.ai-body').appendChild(a);
-    }
-    async function answer(){
-      busy=true;ctrl=new AbortController();setMode();welcome.hidden=true;
-      const el=botShell();msgs.appendChild(el);setLast();stick=true;toEnd(true);
-      const body=el.querySelector('.ai-body'),m={role:'bot',text:''};hist.push(m);
-      let txt=null,step=null,stopped=false;
-      try{
-        for await(const ev of respond(hist.slice(0,-1),ctrl.signal)){
-          if(ev.type==='step'){body.innerHTML=`<div class="ai-step"><span class="ai-spin"></span>${esc(ev.text)}…</div><div class="ai-think"><span class="ai-dots"><i></i><i></i><i></i></span>Thinking…</div>`;step=ev.text}
-          if(ev.type==='token'){
-            if(!txt){body.innerHTML=(step?`<div class="ai-step">${IC.check.replace('width="15" height="15"','width="12" height="12"')}${esc(step)}</div>`:'')+'<div class="ai-text live"></div>';txt=body.querySelector('.ai-text')}
-            m.text+=ev.text;txt.innerHTML=md(m.text)}
-          if(ev.type==='done'){m.cards=ev.cards;m.chips=ev.chips}
-          toEnd();
-        }
-        stopped=ctrl.signal.aborted;
-      }catch(err){console.error(err);body.innerHTML='<div class="ai-text">Something went wrong. Please try again.</div>'}
-      if(txt){txt.classList.remove('live');if(stopped)txt.insertAdjacentHTML('beforeend','<span class="ai-stopped">Stopped</span>')}
-      else if(stopped){body.innerHTML='<div class="ai-text"><span class="ai-stopped">Stopped</span></div>'}
-      if(txt){body.insertAdjacentHTML('beforeend',cardsHTML(m.cards)+(stopped?'':chipsHTML(m.chips)));actions(el,m);live.textContent=m.text}
-      busy=false;ctrl=null;setMode();setLast();toEnd();
-    }
-    function ask(text){
-      text=text.trim();if(!text||busy)return;
-      msgs.querySelectorAll('.ai-chips').forEach(c=>c.remove());
-      hist.push({role:'user',text});
-      const el=document.createElement('div');el.className='ai-msg user';el.innerHTML='<div class="ai-b"></div>';el.firstChild.textContent=text;msgs.appendChild(el);
-      ta.value='';grow();answer();
-    }
-    function regenerate(){const bots=msgs.querySelectorAll('.ai-msg.bot');const last=bots[bots.length-1];if(!last)return;last.remove();hist.pop();answer()}
-    function reset(){if(ctrl)ctrl.abort();hist=[];busy=false;msgs.innerHTML='';welcome.hidden=false;down.hidden=true;setMode();ta.value='';grow();scroll.scrollTop=0;ta.focus()}
-
-    /* ---- composer ---- */
-    function setMode(){send.classList.toggle('stop',busy);send.innerHTML=busy?IC.stop:IC.arrow;send.setAttribute('aria-label',busy?'Stop generating':'Send message');send.disabled=!busy&&!ta.value.trim()}
-    function grow(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,144)+'px';setMode()}
-    ta.addEventListener('input',grow);
-    ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();form.requestSubmit()}});
-    form.addEventListener('submit',e=>{e.preventDefault();if(busy){ctrl&&ctrl.abort();return}ask(ta.value)});
-    $('#aiNew').onclick=reset;
-    dlg.addEventListener('click',e=>{
-      if(e.target===dlg||e.target.closest('[data-ai-close]')){dlg.close();return}
-      const q=e.target.closest('[data-q]');if(q){ask(q.dataset.q);return}
-      const go=e.target.closest('a[data-go]');if(go){e.preventDefault();const t=document.getElementById(go.getAttribute('href').slice(1));dlg.close();if(t)setTimeout(()=>pfGoTo(t.getBoundingClientRect().top+scrollY-8),60)}
-    });
-
-    /* ---- open / close ---- */
-    function open(from){opener=from||document.activeElement;if(!dlg.open)dlg.showModal();grow();toEnd(true);setTimeout(()=>ta.focus(),30)}
-    document.querySelectorAll('[data-ai-open]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();open(a)}));
-    dlg.addEventListener('close',()=>{if(opener&&opener.focus)opener.focus()});
-    addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='j'){e.preventDefault();dlg.open?dlg.close():open()}});
-    setMode();
-  })();
 </script>
 </body>
 </html>

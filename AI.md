@@ -8,14 +8,21 @@
 ## Which file does what
 | File | Responsibility |
 |---|---|
-| `worker/chat.js` | **The brain.** Model list, the instructions given to the AI (`systemPrompt`), the knowledge it is given (`siteFacts`), saving every chat, error handling |
+| `worker/chat.js` | **The brain.** Model list, the instructions given to the AI (`systemPrompt`), the knowledge it is given (`buildFacts`), visitor awareness, saving every chat, error handling |
 | `assets/data/profile.json`, `projects.json`, `certifications.json` | **What the AI knows** about you. Edit these and redeploy; the AI learns the changes (cached 5 minutes) |
 | `wrangler.jsonc` | The `AI` binding and the limits (`DAILY_LIMIT`, `GLOBAL_DAILY_CAP`, `MAX_INPUT_CHARS`, `MAX_OUTPUT_TOKENS`, optional `AI_MODELS`) |
 | `worker/lib.js` | Per-visitor daily limit counters (10 messages per IP per day) |
 | `worker/index.js` | Routes `/api/chat` and `/api/quota` to `chat.js` |
-| `assets/js/chat.js` | The chat window (popup on the home page and the `/ai` page). If the server can't be reached it shows scripted "Demo mode" answers |
+| `assets/js/ai-core.js` | **Shared brain for both sides** (browser and Worker): turns the visit trail into interests, decides which cards fit a question, builds personalised starter questions. Edit the keyword rules here |
+| `assets/js/chat.js` | The `/ai` page (every "ASQ Ai" button on the site links here; there is no popup). Draws the cards and streams the answer. If the server can't be reached it shows cards only ("Offline") |
+| `assets/js/track.js` | Also keeps a small local "visit trail" (pages, searches, sections) that the chat can use |
 | `assets/css/chat.css` | How the chat looks |
 | Admin > AI chats / System | Every conversation, and (for failures) the reason; today's usage |
+
+## Cards and visitor awareness
+- **Cards.** Each reply starts with one event `{ui, step, chips}` naming which cards to show (project, projects, certs, skills, profile, contact, resume, link), then the AI's text streams in. The cards are drawn by the browser from your JSON files, so they can't contain invented facts. The AI is told which cards are showing and writes only a short lead-in. Add or change a card in `chat.js` (`uiHTML` and the `*Card` functions) and its trigger words in `route()` in `ai-core.js`.
+- **Visit awareness.** `track.js` keeps the last ~30 things the visitor did in this browser (pages, project pages, searches, categories, sections, resume download) for 3 hours. When they send a chat message, that list goes along with it. The Worker checks every entry against your real data (unknown ids are dropped), turns it into a few lines under `VISITOR ACTIVITY`, puts the most relevant projects first in the AI's facts, and orders the cards the same way. The prompt tells the AI to use it quietly, only for things that are listed, and never to say it is tracking anyone.
+- **Opt-out.** Nothing is sent when Do Not Track / Global Privacy Control is on, or when the visitor clicks **Turn off** under "Picking up from your visit" on the empty chat screen. The trail is not stored with the chat in the database.
 
 ## Common changes
 **Switch model (no code edit).** Add to the `"vars"` block in `wrangler.jsonc`, then run `npm run deploy`:
@@ -39,7 +46,7 @@ Comma-separated, tried in order. Pick text-generation models from https://develo
 | `No such model` / model not found / deprecated | Cloudflare retired that model | Set `AI_MODELS` to a current model (above) and deploy |
 | mentions your **free allocation** / 3036 | Today's 10,000 neurons are used | Wait for 00:00 UTC; lower the limits if it keeps happening |
 | `Cannot read properties of undefined (reading 'run')` | The `AI` binding is missing from the deployed Worker | Check `"ai": { "binding": "AI" }` in `wrangler.jsonc`, then `npm run deploy` |
-| Chat shows **Demo mode** | The page couldn't reach `/api/quota` | Reload the page (Ctrl+Shift+R); check `/api/quota` opens in your browser |
+| Chat shows **Offline** | The page couldn't reach `/api/quota` | Reload the page (Ctrl+Shift+R); check `/api/quota` opens in your browser |
 | "limit reached" | The visitor used 10 messages today (or the global cap hit) | Normal; resets at 00:00 UTC |
 
 Cloudflare's status of any model is on its page in the model catalogue; retirements are announced in the Workers AI changelog: https://developers.cloudflare.com/workers-ai/changelog/

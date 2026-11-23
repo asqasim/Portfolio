@@ -53,7 +53,7 @@ Columns: `id, ts, sid, vid, type, path, label, target, section, value, meta` (`m
 | error | JavaScript error message | | | | src, line |
 | perf | `page` | | | LCP in ms | ttfb, fcp, dcl, load, cls, kb |
 | leave | | | | active ms since last report | scroll %, total ms on page |
-| ai_open | `popup` | | | | |
+| ai_open | `page` | | | | sent when the `/ai` page opens |
 
 `path` is the page (`/`, `/projects`, `/project?id=termflix`, `/certifications`, `/ai`). Marketing parameters are removed from it.
 

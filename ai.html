@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <link rel="icon" href="assets/favicons/favicon.ico" sizes="48x48">
 <link rel="icon" href="assets/favicons/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicons/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -23,13 +23,13 @@
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/chat.css">
 <style>
-html,body{height:100%;overflow:hidden}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 :focus-visible{outline:2px solid var(--ring);outline-offset:2px}
 </style>
 <script src="assets/js/track.js" defer></script>
 </head>
 <body>
 <main id="aiRoot"><noscript><p style="padding:2rem;text-align:center">ASQ Ai needs JavaScript. <a href="index.html">Back to the portfolio</a></p></noscript></main>
-<script src="assets/js/chat.js" defer></script>
+<script type="module" src="assets/js/chat.js"></script>
 </body>
 </html>

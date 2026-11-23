@@ -118,6 +118,6 @@ Known limits: pages still allow inline scripts (the site uses them); IP limits a
 - **Locked out:** wait 15 minutes. If you lost the key or authenticator, run `node tools/setup-secrets.mjs` again.
 - **"AI is resting" / AI not answering:** open admin > AI chats: a failed attempt shows the reason in red (or run `npx wrangler tail` and send a message). Retired model, used-up daily allowance and missing binding each have a fix in `AI.md`.
 - **Deploy says database not found:** the `database_id` in `wrangler.jsonc` is wrong, or Phase 4 step 3 wasn't run with `--remote`.
-- **Chat says "Demo mode":** you opened the files locally. Use the deployed URL, or `wrangler dev`.
+- **Chat says "Offline":** you opened the files locally. Use the deployed URL, or `wrangler dev`.
 - **No visits show up:** you may have "Ignore this browser" on, or Do Not Track enabled (both stop tracking by design). Try a private window with `?asq_ignore=0`.
 - **Page looks stale after deploy:** hard refresh (Ctrl+Shift+R).

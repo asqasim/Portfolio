@@ -20,23 +20,39 @@
   };
   session();
 
-  const api = { off, vid, get sid() { return sid }, ctx: () => (off ? { ignore: true } : { vid, sid, page: pagePath(), ignore: false }), event: () => { } };
+  const api = { off, vid, get sid() { return sid }, ctx: () => (off ? { ignore: true } : { vid, sid, page: pagePath(), ignore: false }), event: () => { }, trail: () => [] };
   window.asqTrack = api;
   if (off) return;
 
   /* ---------- helpers ---------- */
+
   const DROP = /^(utm_|fbclid|gclid|ref$|asq_)/;
   function pagePath() {
     const q = new URLSearchParams(location.search); for (const k of [...q.keys()]) if (DROP.test(k)) q.delete(k);
     const s = q.toString(); return location.pathname + (s ? '?' + s : '');
   }
   const clip = (s, n) => String(s == null ? '' : s).replace(/\s+/g, ' ').trim().slice(0, n);
+
+  /* ---------- the visit trail: a short list of what this visitor looked at, kept only in this browser ----------
+     ASQ Ai reads it (api.trail()) so it can put relevant projects first. It is sent only with a chat message, and not at all when
+     tracking is off. It expires 3 hours after the last entry. */
+  const TRAIL = 'asq_trail', TRAIL_KINDS = { pageview: 1, search: 1, filter: 1, section: 1, outbound: 1, download: 1 };
+  const readTrail = () => { try { const o = JSON.parse(LS.get(TRAIL)); return o && Date.now() - o.t < 3 * 3600e3 && Array.isArray(o.e) ? o.e : [] } catch (e) { return [] } };
+  function remember(type, label, target) {
+    if (!TRAIL_KINDS[type]) return;
+    const path = pagePath(); if (/^\/ai(\.html)?\/?(\?|$)/.test(path)) return;      // the chat page itself says nothing about interests
+    const e = { k: type, p: type === 'pageview' ? path : '', l: clip(label, 60), g: target ? clip(target, 120) : '', t: Date.now() }, list = readTrail(), last = list[list.length - 1];
+    if (last && last.k === e.k && last.p === e.p && last.l === e.l && last.g === e.g) return;
+    list.push(e); LS.set(TRAIL, JSON.stringify({ t: Date.now(), e: list.slice(-30) }));
+  }
+  api.trail = () => readTrail();
   const t0 = Date.now();
   let queue = [], first = true, activeMs = 0, sentActive = 0, sentScroll = 0, lastInput = Date.now(), maxScroll = 0, count = 0, perfSent = false, errors = 0;
 
   function push(type, label, meta, target, section, at, value) {
     if (count++ > 400) return;
     session();
+    remember(type, label, target);
     queue.push({ t: type, at: at || Date.now(), p: pagePath(), l: label == null ? undefined : clip(label, 120), tg: target ? clip(target, 200) : undefined, s: section || undefined, v: value, m: meta });
     if (queue.length >= 15) flush();
   }
