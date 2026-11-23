@@ -116,7 +116,7 @@ Known limits: pages still allow inline scripts (the site uses them); IP limits a
 - **/admin says "Admin is not set up yet":** run `node tools/setup-secrets.mjs` (Phase 6) after deploying.
 - **Sign-in says invalid:** check your phone's clock is automatic; codes change every 30 seconds and each can be used once, so wait for the next one.
 - **Locked out:** wait 15 minutes. If you lost the key or authenticator, run `node tools/setup-secrets.mjs` again.
-- **"AI is resting" for everyone:** today's free AI allowance is used (resets 00:00 UTC) or the model was retired. Check Logs (dashboard > your project), pick a current text model from https://developers.cloudflare.com/workers-ai/models/ and change `MODEL` in `worker/chat.js`.
+- **"AI is resting" / AI not answering:** open admin > AI chats: a failed attempt shows the reason in red (or run `npx wrangler tail` and send a message). Retired model, used-up daily allowance and missing binding each have a fix in `AI.md`.
 - **Deploy says database not found:** the `database_id` in `wrangler.jsonc` is wrong, or Phase 4 step 3 wasn't run with `--remote`.
 - **Chat says "Demo mode":** you opened the files locally. Use the deployed URL, or `wrangler dev`.
 - **No visits show up:** you may have "Ignore this browser" on, or Do Not Track enabled (both stop tracking by design). Try a private window with `?asq_ignore=0`.

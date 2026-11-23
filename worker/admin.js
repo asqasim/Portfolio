@@ -2,6 +2,7 @@
 import { num, day, json, empty, SEC, sameOrigin, hashKey, geo, sha256hex, rid, b64url, timingSafeEq, secLog, consume, peek, clip } from './lib.js';
 import { verifyTotp } from './totp.js';
 import { notifyWebhook, sendNotification } from './contact.js';
+import { modelList } from './chat.js';
 
 const COOKIE = '__Host-asq_admin', SESSION_MS = 12 * 3600e3, WINDOW_MS = 15 * 60e3, MAX_FAILS_IP = 5, MAX_FAILS_ALL = 30;
 const DAY = 864e5;
@@ -203,7 +204,7 @@ async function system(q, env) {
     today: { chats: chatsToday, chat_cap: num(env.GLOBAL_DAILY_CAP, 150), est_neurons: chatsToday * 25, neuron_free: 10000, events: eventsToday, event_cap: num(env.GLOBAL_EVENT_CAP, 8000),
       d1_reads: reads, read_budget: num(env.ADMIN_READ_BUDGET, 3000000), d1_read_free: 5000000 },
     contact: { email_notifications: !!(env.CONTACT_WEBHOOK_URL && env.CONTACT_WEBHOOK_SECRET), daily_limit: num(env.CONTACT_DAILY_LIMIT, 3), retention_days: num(env.MESSAGE_RETENTION_DAYS, 365) },
-    config: { daily_limit: num(env.DAILY_LIMIT, 10), retention_days: num(env.RETENTION_DAYS, 90), model: '@cf/meta/llama-3.1-8b-instruct-fp8' } };
+    config: { daily_limit: num(env.DAILY_LIMIT, 10), retention_days: num(env.RETENTION_DAYS, 90), model: modelList(env).join(', ') } };
 }
 
 async function purge(q, request, env) {

@@ -1,7 +1,10 @@
 /* POST /api/chat (answer from Workers AI, 10 messages per visitor per day) and GET /api/quota. Every turn is also saved to the chats table. */
 import { num, day, resetAt, clip, json, SEC, sameOrigin, optedOut, geo, hashKey, consume, refund, peek } from './lib.js';
 
-export const MODEL = '@cf/meta/llama-3.1-8b-instruct-fp8';
+/* AI models, tried in this order (the first that answers wins). Cloudflare retires models from time to time (e.g. the plain llama-3.1-8b-instruct
+   on 30 May 2026), so there are fallbacks. Override without editing code: set "AI_MODELS" in wrangler.jsonc, comma-separated. */
+export const DEFAULT_MODELS = ['@cf/meta/llama-3.1-8b-instruct-fp8', '@cf/meta/llama-3.1-8b-instruct-fast', '@cf/meta/llama-3.2-3b-instruct'];
+export const modelList = env => { const l = String((env && env.AI_MODELS) || '').split(',').map(x => x.trim()).filter(x => /^@(cf|hf)\/[\w.\-\/]+$/.test(x)); return l.length ? l : DEFAULT_MODELS };
 const MAX_HISTORY = 6, MAX_BODY = 16000;
 
 /* ---------- what the model knows: built from your own JSON files ---------- */
@@ -107,18 +110,21 @@ export async function chat(request, env, ctx, url) {
   try {
     const facts = await siteFacts(env, url.origin);
     const name = (facts.match(/^NAME: (.+)$/m) || [])[1] || 'Qasim';
-    const stream = await env.AI.run(MODEL, {
-      messages: [{ role: 'system', content: systemPrompt(facts, name) }, ...msgs],
-      max_tokens: num(env.MAX_OUTPUT_TOKENS, 350), temperature: 0.4, stream: true
-    });
+    const input = { messages: [{ role: 'system', content: systemPrompt(facts, name) }, ...msgs], max_tokens: num(env.MAX_OUTPUT_TOKENS, 350), temperature: 0.4, stream: true };
+    let stream = null, model = null; const errors = [];
+    for (const m of modelList(env)) {
+      try { stream = await env.AI.run(m, input); model = m; break }
+      catch (e) { errors.push(`${m.split('/').pop()}: ${String((e && e.message) || e).slice(0, 160)}`); console.error('AI model failed', m, e && e.message) }
+    }
+    if (!stream) throw new Error(errors.join(' | '));
     const [toClient, toLog] = stream.tee();
-    ctx.waitUntil(collect(toLog, t0).then(r => saveChat(env, request, c, { question, answer: r.text, status: r.text ? 'ok' : 'ai_error', model: MODEL, ttfb: r.ttfb, total: r.total, used })));
+    ctx.waitUntil(collect(toLog, t0).then(r => saveChat(env, request, c, { question, answer: r.text || '[error] the model returned an empty answer', status: r.text ? 'ok' : 'ai_error', model, ttfb: r.ttfb, total: r.total, used })));
     return new Response(toClient, { headers: { 'content-type': 'text/event-stream; charset=utf-8', ...SEC,
       'X-Quota-Limit': limit, 'X-Quota-Remaining': Math.max(limit - used, 0), 'X-Quota-Reset': reset } });
   } catch (err) {                                                      // e.g. today's free AI allowance is used up
     console.error('AI call failed', err && err.message);
     await Promise.allSettled([refund(env, d, key), refund(env, d, 'GLOBAL')]);   // a failed answer doesn't cost the visitor a message
-    ctx.waitUntil(saveChat(env, request, c, { question, status: 'ai_error', model: MODEL, total: Date.now() - t0 }));
+    ctx.waitUntil(saveChat(env, request, c, { question, answer: '[error] ' + String((err && err.message) || err).slice(0, 600), status: 'ai_error', total: Date.now() - t0 }));   // the reason is visible in admin > AI chats
     return json({ error: 'ai_unavailable', message: 'ASQ Ai is resting for now. Please try again later.' }, 503);
   }
 }
