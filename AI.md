@@ -19,6 +19,9 @@
 | `assets/css/chat.css` | How the chat looks |
 | Admin > AI chats / System | Every conversation, and (for failures) the reason; today's usage |
 
+## What it knows
+Besides `profile.json`, `projects.json` and `certifications.json`, the AI reads `assets/data/about.json` (how you work, interests, what you are learning). Questions like "how does he work?" get a card linking to the right part of the About page.
+
 ## Cards and visitor awareness
 - **Cards.** Each reply starts with one event `{ui, step, chips}` naming which cards to show (project, projects, certs, skills, profile, contact, resume, link), then the AI's text streams in. The cards are drawn by the browser from your JSON files, so they can't contain invented facts. The AI is told which cards are showing and writes only a short lead-in. Add or change a card in `chat.js` (`uiHTML` and the `*Card` functions) and its trigger words in `route()` in `ai-core.js`.
 - **Visit awareness.** `track.js` keeps the last ~30 things the visitor did in this browser (pages, project pages, searches, categories, sections, resume download) for 3 hours. When they send a chat message, that list goes along with it. The Worker checks every entry against your real data (unknown ids are dropped), turns it into a few lines under `VISITOR ACTIVITY`, puts the most relevant projects first in the AI's facts, and orders the cards the same way. The prompt tells the AI to use it quietly, only for things that are listed, and never to say it is tracking anyone.

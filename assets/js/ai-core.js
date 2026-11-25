@@ -25,7 +25,7 @@ export function normalizeData(raw) {
   const c = raw.certs || {};
   const certs = [...(c.certificates || []).map(x => ({ ...x, isBadge: false })), ...(c.badges || []).map(x => ({ ...x, isBadge: true }))];
   const cats = uniq([...((raw.projects && raw.projects.categories) || []).map(x => x.name), ...projects.map(p => p.cat)]).filter(n => projects.some(p => p.cat === n));
-  return { profile: raw.profile || {}, projects, categories: cats, certs, certsUrl: c.profileUrl || '' };
+  return { profile: raw.profile || {}, about: raw.about || {}, projects, categories: cats, certs, certsUrl: c.profileUrl || '' };
 }
 export const firstName = d => (d.profile && (d.profile.short || String(d.profile.name || '').split(' ').pop())) || 'Qasim';
 
@@ -135,6 +135,10 @@ export function route(question, data, v = emptyVisitor()) {
     kind = 'skills';
     const g = GROUP_RX.filter(([re]) => re.test(t)).map(x => x[1]).filter(n => data.profile.skills && data.profile.skills[n]);
     ui.push({ t: 'skills', groups: g.length ? uniq(g) : Object.keys(data.profile.skills || {}) }); step = 'Read the toolbox';
+  } else if (aboutRx(t)) {
+    kind = 'about';
+    const anchor = / (how (do|does|did) (you|he) work|working style|work style|work habits|approach|values|philosoph\w*) /.test(t) ? '#how-i-work' : / (curious|curiosity|learning|exploring|studying) /.test(t.replace(/ (machine|deep|transfer) learning /g, ' ml ')) ? '#learning' : / (hobbies|hobby|interests?|passions?|free time|enjoy\w*|like to do|likes to do|fun) /.test(t) ? '#interests' : '';
+    ui.push({ t: 'link', label: `About ${first}`, text: 'How he works, what he enjoys and what he is learning', href: 'about.html' + anchor }); step = 'Opened the About page';
   } else if (T(/ (projects?|built|build|made|created|portfolio|apps?|dashboards?|demos?|github|repos?|repositories|examples?|best work|most impressive|recommend\w*|where to start|show me|work|worked) /) || findTerm(t, data)) {
     kind = 'projects';
     const cat = CAT_RX.map(([re, c]) => (re.test(t) && data.categories.includes(c) ? c : null)).find(Boolean), term = findTerm(t, data);
@@ -151,6 +155,12 @@ export function route(question, data, v = emptyVisitor()) {
   else if (T(/ (experience|intern|internship|job|jobs|career|education|degree|university|studied|study) /)) { kind = 'experience'; ui.push({ t: 'link', label: 'Experience & education', text: 'See the full timeline on the home page', href: 'index.html#experience' }); step = 'Pointed to the timeline' }
 
   return { ui, step, kind, chips: followups(kind, data, v, shown), personal: shown.some(p => visitorScore(p, v) > 0) };
+}
+
+/* "how does he work", hobbies, what he is curious about or learning (checked before the project rules; "machine learning" is not a hobby) */
+function aboutRx(t) {
+  t = t.replace(/ (machine|deep|transfer|reinforcement) learning /g, ' ml ');
+  return /( how (do|does|did) (you|he) work | working style | work style | work habits | hobbies | hobby | interests? | passions? | free time | curious | curiosity | what (is|are) (he|you) (learning|exploring|studying) | currently learning | like to do | likes to do | what (do|does) (he|you) (like|enjoy) | values | philosophy | personality | his story | your story | journey )/.test(t);
 }
 
 /* a technology / tool the visitor named, taken from the real data vocabulary (project languages, tags and skills) */
@@ -171,6 +181,7 @@ export function followups(kind, data, v, shown = []) {
   if (kind === 'projects' || kind === 'project') { if (shown[0]) push(`Which tools were used in ${shown[0].name}?`); if (next) push(`Tell me about ${next.name}`); push('Which certificates does he have?'); push('How can I contact him?') }
   else if (kind === 'certs') { push(`What projects has ${first} built?`); push('What is in his toolbox?'); push('How can I contact him?') }
   else if (kind === 'skills') { push(`Which projects use Python?`); push('Which certificates does he have?'); push('How can I contact him?') }
+  else if (kind === 'about') { push(`What projects has ${first} built?`); push('What is in his toolbox?'); push('How can I contact him?') }
   else if (kind === 'contact' || kind === 'resume') { push(`What projects has ${first} built?`); push('What is in his toolbox?'); push(kind === 'contact' ? 'Can I see his resume?' : 'How can I contact him?') }
   else { if (next && hasActivity(v)) push(`Tell me about ${next.name}`); for (const q of DEFAULTS(data)) push(q) }
   return out;

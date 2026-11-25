@@ -17,6 +17,7 @@ No third-party trackers, no ads, no cost.
 | `index.html`, `projects.html`, `project.html`, `certifications.html`, `ai.html`, `privacy.html`, `404.html` | Pages |
 | `admin.html` | Admin panel shell (data only loads after login) |
 | `assets/` | CSS, JS, images, documents and the JSON data files (`assets/data/`) that drive the pages and the AI |
+| `about.html` + `assets/data/about.json` | The About page. Edit the wording in `about.json`; counts, dates and links fill in themselves. ASQ Ai reads the same file |
 | `worker/` | Cloudflare Worker: chat + rate limit, event tracking, admin API |
 | `schema.sql` | D1 database tables |
 | `tools/setup-secrets.mjs` | Creates the admin key, authenticator secret and IP salt |

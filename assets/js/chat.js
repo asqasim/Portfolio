@@ -97,7 +97,7 @@ import { normalizeData, buildVisitor, emptyVisitor, hasActivity, route, suggest,
 
   /* ---------- tiny markdown: **bold**, `code`, [text](link), "- " lists ---------- */
   const link = (l, u) => u[0] === '#' ? `<a href="${ROOT}index.html${u}">${l}</a>`
-    : /^project\.html(\?|$)/.test(u) ? `<a href="${ROOT}${u}">${l}</a>` : `<a href="${u}" target="_blank" rel="noopener noreferrer">${l}</a>`;
+    : /^(project|about|projects|certifications|privacy)\.html(\?|#|$)/.test(u) ? `<a href="${ROOT}${u}">${l}</a>` : `<a href="${u}" target="_blank" rel="noopener noreferrer">${l}</a>`;
   const inline = t => t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, l, u) => link(l, u));
   function md(t) {
     let h = '', ul = false;
