@@ -27,6 +27,11 @@ No third-party trackers, no ads, no cost.
 | `DEPLOY.md` | Step-by-step deployment checklist |
 | `ANALYTICS.md` | Data dictionary and analysis tips |
 
+## Home page projects and role focus
+- `assets/data/projects.json` has a `focuses` list at the top (Data analytics, Data engineering, AI agents). Each project has a `focus` (the slug) and, if it should appear on the home page, `home: true`. A focus shows at most its own `home` number of projects (3 / 2 / 1 by default), so the page leads with analytics but still shows engineering and agents. Projects without a `focus` appear under "Other work" on the projects page.
+- Focus links for applications: `/?focus=data-engineering` (or `analytics`, `agentic-ai`) puts that group first and changes the hero role and line to match (set `role` and `tag` per focus). It is remembered for the visit. Combine with `?ref=companyname` to see in the admin panel which application a visit came from.
+- `projects.html?focus=...` opens the matching tab. Search lives only on the projects page (Ctrl+K from the home page goes there).
+
 ## Quick start
 
 ```bash

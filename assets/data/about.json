@@ -1,53 +1,189 @@
 {
   "_note": "Content for about.html. Edit the text freely; the page and ASQ Ai both read this file. 'projects' are project ids from projects.json (they become links). Counts, dates, the certificate timeline, contact details and social links are filled in automatically from the other data files.",
-
   "intro": {
     "lead": "I turn messy data and vague questions into things people can actually use: a dashboard, a model, a pipeline or a small tool.",
     "body": [
-      "I'm a data scientist from Lahore, working remotely. Most of my work sits where data science meets engineering: I like to take a problem from raw files all the way to something a person can open and use.",
+      "I'm a data analyst from Lahore, working remotely. I also build the pipelines and AI agents behind the numbers, so I like to take a problem from raw files all the way to something a person can open and use.",
       "Outside client-style work I build small tools for fun, because some of the best ideas start as \"I wonder if this is possible\"."
     ]
   },
-
   "now": {
     "updated": "2026-11",
     "items": [
-      { "text": "Building agents that call tools, retrieve from documents and show their steps.", "projects": ["research-agent"] },
-      { "text": "Going deeper on cloud data engineering with Databricks, Snowflake and Spark.", "projects": ["airflow-etl", "school-data-platform"] },
-      { "text": "Learning how AI fits into real product work, not just notebooks." }
+      {
+        "text": "Sharpening my analytics work: SQL, dashboards and telling the story behind the numbers.",
+        "projects": [
+          "techmart-dashboard",
+          "khaddi-sales-analysis"
+        ]
+      },
+      {
+        "text": "Going deeper on cloud data engineering with Databricks, Snowflake and Spark.",
+        "projects": [
+          "airflow-etl",
+          "school-data-platform"
+        ]
+      },
+      {
+        "text": "Building agents that call tools, retrieve from documents and show their steps.",
+        "projects": [
+          "research-agent"
+        ]
+      }
     ]
   },
-
   "principles": [
-    { "title": "Start from the question", "text": "Before I open a notebook I want to know what decision the work should support. A clear question saves more time than a clever model.", "projects": ["ai-education-analysis"] },
-    { "title": "Explain, don't just predict", "text": "A number nobody trusts doesn't get used. I put the \"why\" next to the result: explanations for models, and cited steps for agents.", "projects": ["churn-prediction", "research-agent"] },
-    { "title": "Build it end to end", "text": "I like owning the whole path from raw data to something a person opens: the database, the pipeline, the dashboard and the interface.", "projects": ["school-data-platform", "rooftop-detection"] },
-    { "title": "Automate the repeat work", "text": "If I do something twice, I look for a way to make the computer do it the third time. Scheduled, validated and logged beats manual.", "projects": ["airflow-etl", "ecommerce-data-warehouse"] },
-    { "title": "Keep interfaces clean", "text": "Small, clear APIs and honest names. Other people should be able to use my work without having to read my mind.", "projects": ["termflix"] },
-    { "title": "Communicate clearly, remotely", "text": "I work remotely, write things down and reply within a day. You always know where things stand." }
+    {
+      "title": "Start from the question",
+      "text": "Before I open a notebook I want to know what decision the work should support. A clear question saves more time than a clever model.",
+      "projects": [
+        "ai-education-analysis"
+      ]
+    },
+    {
+      "title": "Explain, don't just predict",
+      "text": "A number nobody trusts doesn't get used. I put the \"why\" next to the result: explanations for models, and cited steps for agents.",
+      "projects": [
+        "churn-prediction",
+        "research-agent"
+      ]
+    },
+    {
+      "title": "Build it end to end",
+      "text": "I like owning the whole path from raw data to something a person opens: the database, the pipeline, the dashboard and the interface.",
+      "projects": [
+        "school-data-platform",
+        "rooftop-detection"
+      ]
+    },
+    {
+      "title": "Automate the repeat work",
+      "text": "If I do something twice, I look for a way to make the computer do it the third time. Scheduled, validated and logged beats manual.",
+      "projects": [
+        "airflow-etl",
+        "ecommerce-data-warehouse"
+      ]
+    },
+    {
+      "title": "Keep interfaces clean",
+      "text": "Small, clear APIs and honest names. Other people should be able to use my work without having to read my mind.",
+      "projects": [
+        "termflix"
+      ]
+    },
+    {
+      "title": "Communicate clearly, remotely",
+      "text": "I work remotely, write things down and reply within a day. You always know where things stand."
+    }
   ],
-
   "strengths": [
-    { "group": "Data Science", "text": "Exploring data, building and checking models, computer vision and statistical analysis.", "projects": ["rooftop-detection", "churn-prediction", "ai-education-analysis"] },
-    { "group": "Core & Backend", "text": "Python and C++ tools, APIs with FastAPI, and a happy home on Linux and the command line.", "projects": ["termflix"] },
-    { "group": "Cloud & Data Eng", "text": "Warehouses, pipelines and containers on the cloud, with SQL, Spark and PostgreSQL.", "projects": ["school-data-platform", "ecommerce-data-warehouse", "airflow-etl"] },
-    { "group": "Agentic AI", "text": "Agents that use tools, retrieve from documents (RAG) and explain what they did.", "projects": ["research-agent"] },
-    { "group": "Analytics & BI", "chips": ["Power BI", "Statistics", "Excel", "Cognos"], "text": "Dashboards that compare, rank and track, so a team can see what is happening at a glance.", "projects": ["techmart-dashboard", "khaddi-sales-analysis", "novaretail-sales-analysis"] }
+    {
+      "group": "Analytics & BI",
+      "chips": [
+        "Power BI",
+        "Statistics",
+        "Excel",
+        "Cognos"
+      ],
+      "text": "Dashboards that compare, rank and track, so a team can see what is happening at a glance.",
+      "projects": [
+        "techmart-dashboard",
+        "khaddi-sales-analysis",
+        "novaretail-sales-analysis"
+      ]
+    },
+    {
+      "group": "Data Science",
+      "text": "Exploring data, building and checking models, computer vision and statistical analysis.",
+      "projects": [
+        "rooftop-detection",
+        "churn-prediction",
+        "ai-education-analysis"
+      ]
+    },
+    {
+      "group": "Core & Backend",
+      "text": "Python and C++ tools, APIs with FastAPI, and a happy home on Linux and the command line.",
+      "projects": [
+        "termflix"
+      ]
+    },
+    {
+      "group": "Cloud & Data Eng",
+      "text": "Warehouses, pipelines and containers on the cloud, with SQL, Spark and PostgreSQL.",
+      "projects": [
+        "school-data-platform",
+        "ecommerce-data-warehouse",
+        "airflow-etl"
+      ]
+    },
+    {
+      "group": "Agentic AI",
+      "text": "Agents that use tools, retrieve from documents (RAG) and explain what they did.",
+      "projects": [
+        "research-agent"
+      ]
+    }
   ],
-  "proof": ["Machine Learning Specialty", "Data Engineer Associate", "SnowPro Core Certification"],
-
+  "proof": [
+    "Data Visualization and Dashboards with Excel and Cognos",
+    "Data Engineer Associate",
+    "Machine Learning Specialty"
+  ],
   "interests": [
-    { "title": "Building small tools for fun", "text": "Some of my favourite projects have no business case. A media player that draws video in ASCII, and a tool that turns logic circuits into music, exist because I wanted to see them work.", "projects": ["termflix", "nero"] },
-    { "title": "Making data visible", "text": "I enjoy the moment a table of numbers becomes a chart that makes someone say \"oh, so that's what is going on\".", "projects": ["techmart-dashboard", "khaddi-sales-analysis", "novaretail-sales-analysis"] },
-    { "title": "Maps from the sky", "text": "Turning drone and satellite images into a digital map, with the rooftops found automatically, is the kind of problem I never get tired of.", "projects": ["rooftop-detection"] },
-    { "title": "Learning with other developers", "text": "I'm a Google Developer Group member, I keep my code public on GitHub and share work on Kaggle and Hugging Face." }
+    {
+      "title": "Building small tools for fun",
+      "text": "Some of my favourite projects have no business case. A media player that draws video in ASCII, and a tool that turns logic circuits into music, exist because I wanted to see them work.",
+      "projects": [
+        "termflix",
+        "nero"
+      ]
+    },
+    {
+      "title": "Making data visible",
+      "text": "I enjoy the moment a table of numbers becomes a chart that makes someone say \"oh, so that's what is going on\".",
+      "projects": [
+        "techmart-dashboard",
+        "khaddi-sales-analysis",
+        "novaretail-sales-analysis"
+      ]
+    },
+    {
+      "title": "Maps from the sky",
+      "text": "Turning drone and satellite images into a digital map, with the rooftops found automatically, is the kind of problem I never get tired of.",
+      "projects": [
+        "rooftop-detection"
+      ]
+    },
+    {
+      "title": "Learning with other developers",
+      "text": "I'm a Google Developer Group member, I keep my code public on GitHub and share work on Kaggle and Hugging Face."
+    }
   ],
-
   "learning": [
-    { "title": "Agentic AI", "status": "Building", "text": "Tool calling, retrieval (RAG) and vector search with pgvector and Pinecone.", "projects": ["research-agent"] },
-    { "title": "Lakehouses and cloud warehouses", "status": "Practising", "text": "Databricks and Snowflake, and the pipelines that feed them." },
-    { "title": "Machine learning on the cloud", "status": "Applying", "text": "Taking models from a notebook to something that runs reliably on AWS." },
-    { "title": "AI in product work", "status": "Learning", "text": "How AI features get planned, measured and shipped by product teams." }
+    {
+      "title": "Agentic AI",
+      "status": "Building",
+      "text": "Tool calling, retrieval (RAG) and vector search with pgvector and Pinecone.",
+      "projects": [
+        "research-agent"
+      ]
+    },
+    {
+      "title": "Lakehouses and cloud warehouses",
+      "status": "Practising",
+      "text": "Databricks and Snowflake, and the pipelines that feed them."
+    },
+    {
+      "title": "Machine learning on the cloud",
+      "status": "Applying",
+      "text": "Taking models from a notebook to something that runs reliably on AWS."
+    },
+    {
+      "title": "AI in product work",
+      "status": "Learning",
+      "text": "How AI features get planned, measured and shipped by product teams."
+    }
   ],
   "questions": [
     "How do you explain a model's decision to someone who isn't technical?",
@@ -55,21 +191,36 @@
     "How much of a school's daily paperwork can a pipeline quietly take over?",
     "Can a logic circuit sound good?"
   ],
-
   "together": {
     "text": "I'm happiest on problems where the data is messy and the goal is clear. Tell me what you are trying to find out or build and I will tell you honestly whether I can help.",
     "steps": [
-      { "title": "Tell me the problem", "text": "A few sentences is plenty. I reply within a day." },
-      { "title": "Agree what \"done\" looks like", "text": "A clear outcome and a rough plan before any work starts." },
-      { "title": "Share early, adjust often", "text": "You see work in progress, so there are no surprises at the end." }
+      {
+        "title": "Tell me the problem",
+        "text": "A few sentences is plenty. I reply within a day."
+      },
+      {
+        "title": "Agree what \"done\" looks like",
+        "text": "A clear outcome and a rough plan before any work starts."
+      },
+      {
+        "title": "Share early, adjust often",
+        "text": "You see work in progress, so there are no surprises at the end."
+      }
     ]
   },
-
   "faq": [
-    { "q": "What should I look at first?", "a": "The featured projects: Termflix, Nero and Rooftop detection show the range best. They are on the projects page." },
-    { "q": "Is ASQ Ai really answering for you?", "a": "ASQ Ai is an AI assistant that answers only from the information on this site: my projects, skills, certificates and this page. It can make mistakes, so for anything important, email me." },
-    { "q": "Do you track visitors?", "a": "I count visits in my own database to see which parts of the site are useful. There are no ads or third-party trackers, and you can switch it off. The privacy page has the details." }
+    {
+      "q": "What should I look at first?",
+      "a": "The featured projects: Termflix, Nero and Rooftop detection show the range best. They are on the projects page."
+    },
+    {
+      "q": "Is ASQ Ai really answering for you?",
+      "a": "ASQ Ai is an AI assistant that answers only from the information on this site: my projects, skills, certificates and this page. It can make mistakes, so for anything important, email me."
+    },
+    {
+      "q": "Do you track visitors?",
+      "a": "I count visits in my own database to see which parts of the site are useful. There are no ads or third-party trackers, and you can switch it off. The privacy page has the details."
+    }
   ],
-
   "site": "This site is plain HTML, CSS and a little JavaScript, served from Cloudflare. ASQ Ai runs on Cloudflare Workers AI, and the analytics live in my own small database. Type is set in Instrument Serif, Bricolage Grotesque, Geist and JetBrains Mono."
 }

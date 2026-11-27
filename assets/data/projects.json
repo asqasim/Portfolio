@@ -1,4 +1,30 @@
 {
+  "focuses": [
+    {
+      "name": "Data analytics",
+      "slug": "analytics",
+      "home": 3,
+      "role": "Data Analyst",
+      "tag": "I also build the pipelines and AI agents behind the numbers.",
+      "blurb": "Business questions answered with SQL, Python and dashboards people actually use."
+    },
+    {
+      "name": "Data engineering",
+      "slug": "data-engineering",
+      "home": 2,
+      "role": "Data Engineer",
+      "tag": "I also analyse the data I move, so pipelines answer real questions.",
+      "blurb": "Pipelines, warehouses and the plumbing that keeps data trustworthy."
+    },
+    {
+      "name": "AI agents",
+      "slug": "agentic-ai",
+      "home": 1,
+      "role": "Agentic AI Engineer",
+      "tag": "I also build the data foundations that keep agents grounded.",
+      "blurb": "Agents that use tools, retrieve from documents and show their work."
+    }
+  ],
   "categories": [
     {
       "name": "Developer Tools",
@@ -33,7 +59,6 @@
     {
       "id": "termflix",
       "name": "termflix",
-      "home": true,
       "cat": "Developer Tools",
       "lang": "Python",
       "featured": true,
@@ -52,7 +77,6 @@
     {
       "id": "nero",
       "name": "Nero",
-      "home": true,
       "cat": "Web Apps",
       "lang": "JavaScript",
       "featured": true,
@@ -70,7 +94,6 @@
     {
       "id": "rooftop-detection",
       "name": "Rooftop detection & map digitization",
-      "home": true,
       "cat": "Computer Vision",
       "lang": "Python",
       "featured": true,
@@ -89,8 +112,8 @@
     {
       "id": "techmart-dashboard",
       "name": "TechMart sales dashboard",
-      "home": true,
       "cat": "Analytics",
+      "focus": "analytics",
       "lang": "Power BI",
       "desc": "Power BI dashboard for a global Electronics and Furniture retailer: compares countries and teams, tracks sales trends, ranks top categories and products, evaluates salesperson efficiency and shows changes across periods.",
       "tags": [
@@ -101,12 +124,14 @@
         "Dashboards"
       ],
       "url": "https://github.com/asqasim/techmart-dashboard",
-      "thumb": "techmart-dashboard.png"
+      "thumb": "techmart-dashboard.png",
+      "home": true
     },
     {
       "id": "khaddi-sales-analysis",
       "name": "Khaddi brands historical sales analysis",
       "cat": "Analytics",
+      "focus": "analytics",
       "lang": "Power BI",
       "desc": "Power BI dashboard analysing the historical sales of Khaddi brands.",
       "tags": [
@@ -116,12 +141,14 @@
         "Dashboards"
       ],
       "url": "https://github.com/asqasim/khaddi-sales-analysis",
-      "thumb": "khaddi-sales-analysis.png"
+      "thumb": "khaddi-sales-analysis.png",
+      "home": true
     },
     {
       "id": "novaretail-sales-analysis",
       "name": "NovaRetail sales analysis",
       "cat": "Analytics",
+      "focus": "analytics",
       "lang": "Power BI",
       "desc": "Power BI dashboard analysing NovaRetail sales performance.",
       "tags": [
@@ -131,12 +158,14 @@
         "Dashboards"
       ],
       "url": "https://github.com/asqasim/novaretail-sales-analysis",
-      "thumb": "novaretail-sales-analysis.png"
+      "thumb": "novaretail-sales-analysis.png",
+      "home": true
     },
     {
       "id": "ai-education-analysis",
       "name": "AI impact on education: statistical analysis",
       "cat": "Analytics",
+      "focus": "analytics",
       "lang": "Statistics",
       "desc": "Statistical analysis of how AI affects learning, based on a survey of 150 university students.",
       "tags": [
@@ -151,8 +180,8 @@
     {
       "id": "school-data-platform",
       "name": "School database & dashboard pipeline",
-      "home": true,
       "cat": "Data Engineering",
+      "focus": "data-engineering",
       "lang": "SQL",
       "desc": "Database and automated dashboard pipeline built from scratch for schools: online attendance, a reporting system, dedicated student, teacher and principal portals, plus marks and attendance dashboards and reports.",
       "tags": [
@@ -164,12 +193,14 @@
         "Automation"
       ],
       "url": "https://github.com/asqasim/school-data-platform",
-      "thumb": "school-data-platform.png"
+      "thumb": "school-data-platform.png",
+      "home": true
     },
     {
       "id": "ecommerce-data-warehouse",
       "name": "E-commerce data warehouse template",
       "cat": "Data Engineering",
+      "focus": "data-engineering",
       "lang": "SQL",
       "desc": "Complete data warehouse design template that fits any e-commerce store.",
       "tags": [
@@ -185,6 +216,7 @@
       "id": "research-agent",
       "name": "research-agent",
       "cat": "AI Agents",
+      "focus": "agentic-ai",
       "lang": "Python",
       "stars": 23,
       "updated": "2026-10-18",
@@ -197,12 +229,14 @@
         "RAG"
       ],
       "url": "https://github.com/asqasim/research-agent",
-      "_dummy": true
+      "_dummy": true,
+      "home": true
     },
     {
       "id": "churn-prediction",
       "name": "churn-prediction",
       "cat": "ML",
+      "focus": "analytics",
       "lang": "Jupyter Notebook",
       "stars": 17,
       "updated": "2026-05-30",
@@ -221,6 +255,7 @@
       "id": "airflow-etl",
       "name": "airflow-etl",
       "cat": "Data Engineering",
+      "focus": "data-engineering",
       "lang": "Python",
       "stars": 9,
       "updated": "2026-09-03",
@@ -233,7 +268,8 @@
         "ETL"
       ],
       "url": "https://github.com/asqasim/airflow-etl",
-      "_dummy": true
+      "_dummy": true,
+      "home": true
     }
   ]
 }

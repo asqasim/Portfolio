@@ -25,7 +25,7 @@ export function normalizeData(raw) {
   const c = raw.certs || {};
   const certs = [...(c.certificates || []).map(x => ({ ...x, isBadge: false })), ...(c.badges || []).map(x => ({ ...x, isBadge: true }))];
   const cats = uniq([...((raw.projects && raw.projects.categories) || []).map(x => x.name), ...projects.map(p => p.cat)]).filter(n => projects.some(p => p.cat === n));
-  return { profile: raw.profile || {}, about: raw.about || {}, projects, categories: cats, certs, certsUrl: c.profileUrl || '' };
+  return { profile: raw.profile || {}, about: raw.about || {}, focuses: (raw.projects && raw.projects.focuses) || [], projects, categories: cats, certs, certsUrl: c.profileUrl || '' };
 }
 export const firstName = d => (d.profile && (d.profile.short || String(d.profile.name || '').split(' ').pop())) || 'Qasim';
 
@@ -80,7 +80,7 @@ export const hasActivity = v => !!(v && (v.projects.length || v.searches.length 
 
 /* How well a project fits this visitor (and, optionally, the words of their question). */
 export function scoreProject(p, v, qw = []) {
-  let s = p.featured ? 1 : 0;
+  let s = (p.featured ? 1 : 0) + (p.home ? 2 : 0);   // the projects picked for the home page rank first by default
   const i = v.projects.indexOf(p.id); if (i >= 0) s += 6 - Math.min(i, 3);
   if (v.cats.includes(p.cat)) s += 3;
   const h = hay(p);
@@ -88,7 +88,7 @@ export function scoreProject(p, v, qw = []) {
   for (const w of qw) if (w.length >= 3 && h.includes(w)) s += 4;
   return s;
 }
-const visitorScore = (p, v) => scoreProject(p, v) - (p.featured ? 1 : 0);
+const visitorScore = (p, v) => scoreProject(p, v) - (p.featured ? 1 : 0) - (p.home ? 2 : 0);
 export function orderProjects(data, v, qw = []) {
   return data.projects.map((p, i) => ({ p, i, s: scoreProject(p, v, qw) })).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.p);
 }
@@ -98,6 +98,7 @@ const DEFAULTS = d => [`What projects has ${firstName(d)} built?`, 'What is in h
 const CAT_RX = [[/computer vision|\bvision\b|detect|segment|\bcv\b/, 'Computer Vision'], [/analytic|dashboard|power bi|statistic|sales/, 'Analytics'], [/data engineer|\betl\b|pipeline|warehouse|airflow|spark/, 'Data Engineering'],
   [/\bagent|\bllm\b|\brag\b/, 'AI Agents'], [/\bml\b|machine learning|predict|churn|model/, 'ML'], [/web app|browser|javascript/, 'Web Apps'], [/developer tool|library|pypi|\bcli\b|package|\btui\b/, 'Developer Tools']];
 const GROUP_RX = [[/data science|machine learning|\bml\b|deep learning|pytorch|tensorflow/, 'Data Science'], [/backend|core|\bapi\b|fastapi|linux|c\+\+/, 'Core & Backend'], [/cloud|devops|data eng|docker|kubernetes|spark|\bsql\b|gcp/, 'Cloud & Data Eng'], [/agent|\bllm\b|\brag\b|\bai\b/, 'Agentic AI']];
+const FOCUS_RX = [[/ (data analy\w*|analyst|analytics|power bi|dashboards?|business intelligence) /, 'analytics'], [/ (data engineer\w*|etl|pipelines?|warehouses?|airflow|spark|snowflake|databricks) /, 'data-engineering'], [/ (agents?|agentic|llm|rag) /, 'agentic-ai']];
 const SKIP_NAME = new Set(['research', 'school', 'sales', 'data']);
 
 function findNamed(t, data) {
@@ -141,14 +142,16 @@ export function route(question, data, v = emptyVisitor()) {
     ui.push({ t: 'link', label: `About ${first}`, text: 'How he works, what he enjoys and what he is learning', href: 'about.html' + anchor }); step = 'Opened the About page';
   } else if (T(/ (projects?|built|build|made|created|portfolio|apps?|dashboards?|demos?|github|repos?|repositories|examples?|best work|most impressive|recommend\w*|where to start|show me|work|worked) /) || findTerm(t, data)) {
     kind = 'projects';
-    const cat = CAT_RX.map(([re, c]) => (re.test(t) && data.categories.includes(c) ? c : null)).find(Boolean), term = findTerm(t, data);
+    const fslug = FOCUS_RX.map(([re, f]) => (re.test(t) && data.focuses.some(x => x.slug === f) ? f : null)).find(Boolean), fo = data.focuses.find(x => x.slug === fslug);
+    const cat = fo ? null : CAT_RX.map(([re, c]) => (re.test(t) && data.categories.includes(c) ? c : null)).find(Boolean), term = findTerm(t, data);
     let list = data.projects;
+    if (fo) list = list.filter(p => p.focus === fo.slug);
     if (cat) list = list.filter(p => p.cat === cat);
     if (term) { const f = list.filter(p => hay(p).includes(term)); if (f.length) list = f }
     const ranked = list.map((p, i) => ({ p, i, s: scoreProject(p, v, term ? [] : qw) })).sort((a, b) => b.s - a.s || a.i - b.i);
-    shown = ranked.slice(0, cat || term ? 4 : 3).map(x => x.p);
+    shown = ranked.slice(0, cat || term || fo ? 4 : 3).map(x => x.p);
     if (shown.length) {
-      ui.push({ t: 'projects', ids: shown.map(p => p.id), more: cat ? { label: `All ${cat} projects`, href: `projects.html?c=${slug(cat)}` } : { label: 'Browse all projects', href: 'projects.html' } });
+      ui.push({ t: 'projects', ids: shown.map(p => p.id), more: fo ? { label: `All ${fo.name} projects`, href: `projects.html?focus=${fo.slug}` } : cat ? { label: `All ${cat} projects`, href: `projects.html?c=${slug(cat)}` } : { label: 'Browse all projects', href: 'projects.html' } });
       step = `Searched ${data.projects.length} projects${personalNote(shown)}`;
     } else kind = 'none';
   } else if (T(/ (who|about|introduce|yourself|background|bio|person|based|location|country|live|lives|from) /) && !T(/ (who are you|are you) /)) { kind = 'profile'; ui.push({ t: 'profile' }); step = 'Read the profile' }

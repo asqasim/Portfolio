@@ -1,13 +1,14 @@
 {
   "name": "Ahmad Sohaib Qasim",
   "short": "Qasim",
-  "role": "Data Scientist",
+  "role": "Data Analyst",
+  "tagline": "I also build the pipelines and AI agents behind the numbers.",
   "location": "Lahore, Pakistan",
   "remote": true,
   "email": "qasim.datadev@gmail.com",
   "resume": "assets/docs/resume.pdf",
   "replyTime": "within a day",
-  "bio": "Ahmad Sohaib Qasim is a Data Scientist based in Pakistan, working remotely. He works across data science, backend, cloud data engineering and agentic AI.",
+  "bio": "Ahmad Sohaib Qasim is a Data Analyst based in Pakistan, working remotely. He also builds the data pipelines and AI agents behind the numbers, with skills across data science, backend, cloud data engineering and agentic AI.",
   "skills": {
     "Data Science": [
       "Python",

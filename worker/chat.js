@@ -23,11 +23,12 @@ function buildFacts(d, projects) {                                     // projec
   const P = d.profile, about = d.about || {}, certs = d.certs.filter(c => !c.isBadge), badges = d.certs.filter(c => c.isBadge);
   const list = a => (Array.isArray(a) ? a : []).map(x => `- ${x.role || x.degree || x.title || ''}${x.org || x.school ? ' at ' + (x.org || x.school) : ''}${x.date || x.years ? ' (' + (x.date || x.years) + ')' : ''}${x.text || x.desc ? ': ' + cut(x.text || x.desc, 200) : ''}`).join('\n');
   return [
-    `NAME: ${P.name || 'Qasim'}`, P.role && `ROLE: ${P.role}`, P.location && `LOCATION: ${P.location}${P.remote ? ' (works remotely)' : ''}`,
+    `NAME: ${P.name || 'Qasim'}`, P.role && `ROLE: ${P.role}${P.tagline ? ' (' + P.tagline + ')' : ''}`, P.location && `LOCATION: ${P.location}${P.remote ? ' (works remotely)' : ''}`,
     P.email && `EMAIL: ${P.email}`, P.replyTime && `REPLY TIME: ${P.replyTime}`, P.resume && `RESUME: ${P.resume}`, P.bio && `BIO: ${cut(P.bio, 700)}`,
     P.skills && `SKILLS:\n${Object.entries(P.skills).map(([k, a]) => `- ${k}: ${a.join(', ')}`).join('\n')}`,
     P.experience && `EXPERIENCE:\n${list(P.experience)}`, P.education && `EDUCATION:\n${list(P.education)}`,
-    projects.length && `PROJECTS (most relevant to this visitor first; page link in brackets):\n${projects.map(p => `- ${p.name} | ${p.cat || ''} | ${p.lang || ''} | ${cut(p.desc, 200)} [project.html?id=${p.id}]`).join('\n')}`,
+    d.focuses.length && `FOCUS AREAS (main first): ${d.focuses.map(f => f.name).join(', ')}`,
+    projects.length && `PROJECTS (most relevant to this visitor first; page link in brackets):\n${projects.map(p => `- ${p.name} | ${p.cat || ''}${p.focus ? ' | focus: ' + ((d.focuses.find(f => f.slug === p.focus) || {}).name || p.focus) : ''} | ${p.lang || ''} | ${cut(p.desc, 200)} [project.html?id=${p.id}]`).join('\n')}`,
     about.intro && `ABOUT HIM (the About page, about.html): ${cut(about.intro.lead, 300)}`,
     about.principles && `HOW HE WORKS:\n${about.principles.map(p => `- ${p.title}: ${cut(p.text, 200)}`).join('\n')}`,
     about.interests && `WHAT HE LIKES TO DO:\n${about.interests.map(p => `- ${p.title}: ${cut(p.text, 220)}`).join('\n')}`,

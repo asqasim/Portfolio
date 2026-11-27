@@ -70,10 +70,12 @@
       ${years.length ? `<div class="ab-tl rv"><h3>Learning timeline <small>from my certificates</small></h3>${years.map(y => `<div class="ab-ty"><b>${y}</b><ul>${recent.filter(c => c.date.startsWith(y)).map(c => `<li><span>${esc(mon(c.date).split(' ')[0])}</span>${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">${esc(c.title)}</a>` : esc(c.title)}<em>${esc(c.issuer)}</em></li>`).join('')}</ul></div>`).join('')}<a class="ab-more" href="certifications.html">All certificates ${OUT}</a></div>` : ''}</section>`;
 
     /* ---- working together ---- */
-    const cats = (PJ && PJ.categories || []).map(c => ({ name: c.name, n: projects.filter(p => p.cat === c.name).length })).filter(c => c.n);
+    const F = (PJ && PJ.focuses) || [];
+    const cats = F.length ? F.map(f => ({ name: f.name, n: projects.filter(p => p.focus === f.slug).length, href: 'projects.html?focus=' + f.slug })).filter(c => c.n)
+      : (PJ && PJ.categories || []).map(c => ({ name: c.name, n: projects.filter(p => p.cat === c.name).length, href: 'projects.html?c=' + slug(c.name) })).filter(c => c.n);
     const together = `<section id="together" class="ab-sec">${head('together', '05', 'Working <em>together</em>', esc(A.together.text))}
       <div class="ab-grid g3">${A.together.steps.map((s, i) => `<article class="ab-card rv"><span class="ab-n">${i + 1}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></article>`).join('')}</div>
-      <div class="ab-help rv"><p>Things I have built</p><span class="ab-chips">${cats.map(c => `<a href="projects.html?c=${slug(c.name)}">${esc(c.name)}<b>${c.n}</b></a>`).join('')}</span></div>
+      <div class="ab-help rv"><p>Things I have built</p><span class="ab-chips">${cats.map(c => `<a href="${c.href}">${esc(c.name)}<b>${c.n}</b></a>`).join('')}</span></div>
       <div class="ab-cta center rv">${btn('index.html#contact', 'Send a message', true)}${btn('mailto:' + P.email, P.email)}${P.resume ? btn(P.resume, 'Resume', false, true) : ''}</div></section>`;
 
     /* ---- FAQ ---- */

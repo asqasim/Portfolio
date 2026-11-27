@@ -31,10 +31,11 @@
   const featCard = p => `<a class="fp-card"${open(p)} style="--h:${hash(p.name) % 360}" aria-label="${esc(p.name)}">
     <div class="fp-in"><div class="fp-thumb">${thumb(p)}</div>
     <div class="fp-body"><div><span class="fp-cat">${esc(p.cat)}</span><h3>${esc(p.name)}</h3></div><span class="fp-go">${ext}</span></div></div></a>`;
+  let hasFocus = false;                 /* set once the data loads: with role tabs, the technical category moves onto the card as a badge */
   const card = (p, i) => `<article class="pc" style="--h:${hash(p.name) % 360};--i:${i}">
     <div class="pc-thumb">${thumb(p)}</div>
     <div class="pc-body">
-      <div class="pc-badges">${p.featured ? '<span class="pc-badge feat">Featured</span>' : ''}${p.lang ? `<span class="pc-badge">${esc(p.lang)}</span>` : ''}</div>
+      <div class="pc-badges">${p.featured ? '<span class="pc-badge feat">Featured</span>' : ''}${hasFocus && p.cat ? `<span class="pc-badge">${esc(p.cat)}</span>` : ''}${p.lang ? `<span class="pc-badge">${esc(p.lang)}</span>` : ''}</div>
       <h3><a class="pc-link"${open(p)}>${esc(p.name)}</a></h3>
       <p class="pc-desc">${esc(p.desc || '')}</p>
       ${(p.tags || []).length ? `<div class="pc-tags">${p.tags.slice(0, 4).map(t => `<span>${esc(t)}</span>`).join('')}${p.tags.length > 4 ? `<span>+${p.tags.length - 4}</span>` : ''}</div>` : ''}
@@ -43,11 +44,19 @@
 
   fetch('assets/data/projects.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json() }).then(d => {
     const P = d.projects || [];
-    const order = [...(d.categories || []).map(c => c.name), ...[...new Set(P.map(p => p.cat))].sort()];
-    const cats = [...new Set(order)].filter(n => P.some(p => p.cat === n));
+    /* tabs = the "focuses" in projects.json (data analytics, data engineering, AI agents, plus "Other work" for the rest).
+       Without focuses it falls back to the technical categories. */
+    const F = d.focuses || [], OTHER = 'Other work', byName = new Map(F.map(f => [f.name, f.slug]));
+    hasFocus = F.length > 0;
+    const inCat = (p, c) => F.length ? (c === OTHER ? !F.some(f => f.slug === p.focus) : p.focus === byName.get(c)) : p.cat === c;
+    const keyOf = c => byName.get(c) || slug(c);
+    let cats;
+    if (F.length) cats = [...F.map(f => f.name), OTHER].filter(n => P.some(p => inCat(p, n)));
+    else { const order = [...(d.categories || []).map(c => c.name), ...[...new Set(P.map(p => p.cat))].sort()]; cats = [...new Set(order)].filter(n => P.some(p => p.cat === n)) }
     const q = $('#ppQ'), tabs = $('#ppCats'), main = $('#ppMain'), feat = $('#ppFeat'), bar = $('#ppBar');
     const params = new URLSearchParams(location.search);
-    let cur = cats.find(c => slug(c) === params.get('c')) || cats[0];
+    const wantTab = params.get('focus') || params.get('c'), wantSearch = location.hash === '#search';
+    let cur = cats.find(c => keyOf(c) === wantTab) || cats[0];
 
     /* featured: pinned above everything, never filtered */
     const top = P.filter(p => p.featured).slice(0, 3);
@@ -60,9 +69,9 @@
     const matches = (p, w) => { const hay = [p.name, p.desc, p.cat, p.lang, ...(p.tags || [])].join(' ').toLowerCase(); return w.every(x => hay.includes(x)) };
 
     function render() {
-      const w = words(), counts = Object.fromEntries(cats.map(c => [c, P.filter(p => p.cat === c && matches(p, w)).length]));
+      const w = words(), counts = Object.fromEntries(cats.map(c => [c, P.filter(p => inCat(p, c) && matches(p, w)).length]));
       btns.forEach(b => { const c = b.dataset.c; b.setAttribute('aria-selected', c === cur); b.tabIndex = c === cur ? 0 : -1; b.classList.toggle('none', !counts[c]); b.querySelector('em').textContent = counts[c] });
-      const list = P.filter(p => p.cat === cur && matches(p, w));
+      const list = P.filter(p => inCat(p, cur) && matches(p, w));
       if (list.length) { main.innerHTML = `<div class="pp-grid">${list.map(card).join('')}</div>` }
       else {
         const elsewhere = cats.filter(c => c !== cur && counts[c]);
@@ -70,7 +79,7 @@
           (elsewhere.length ? `<br>Found in:<br>${elsewhere.map(c => `<button type="button" data-go="${esc(c)}">${esc(c)} (${counts[c]})</button>`).join('')}` : '') +
           (w.length ? '<br><button type="button" data-clear>Clear search</button>' : '') + '</div>';
       }
-      const u = new URLSearchParams(); if (cur !== cats[0]) u.set('c', slug(cur)); if (q.value.trim()) u.set('q', q.value.trim());
+      const u = new URLSearchParams(); if (cur !== cats[0]) u.set(F.length ? 'focus' : 'c', keyOf(cur)); if (q.value.trim()) u.set('q', q.value.trim());
       history.replaceState(null, '', location.pathname + (u.toString() ? '?' + u : ''));
     }
     /* when the category row is stuck to the top, jump back up so the new grid starts right under it */
@@ -95,6 +104,7 @@
     });
     if (params.get('q')) q.value = params.get('q');
     render();
+    if (wantSearch) q.focus();
 
     /* soft background + border appear once the category row sticks */
     if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => bar.classList.toggle('stuck', !e.isIntersecting && e.boundingClientRect.top < 0)).observe($('#ppSentinel'));

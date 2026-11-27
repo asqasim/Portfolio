@@ -118,30 +118,25 @@ button.pill{background:none;cursor:pointer;flex:none;transition:background .2s,c
 .tl-card p:last-child{margin:0;font-size:.875rem;line-height:1.65;color:var(--muted)}
 
 
-/* ---- project filter ribbon: horizontal, minimal, not sticky. Row 1: search + dropdowns (+ count). Row 2: category tabs ---- */
-.pf{max-width:calc(64rem - 40px);margin:40px auto 0}
-.ribbon{position:relative;z-index:5;display:flex;flex-direction:column;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:.9375rem;letter-spacing:-.01em;line-height:1.25}
-.rb-row{display:flex;align-items:center;justify-content:space-between;gap:12px 24px}
-.rb-search{position:relative;flex:none;width:200px;transition:width .3s var(--ease)}
-.rb-search:focus-within{width:230px}
-.rb-search>svg.si{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;transition:color .2s}
-.rb-search input{width:100%;height:36px;border:1px solid var(--border);background:transparent;border-radius:8px;padding:0 32px 0 36px;font-size:inherit;letter-spacing:inherit;transition:border-color .2s,background .2s}
-.rb-search input::placeholder{color:var(--muted)}
-.rb-search input::-webkit-search-cancel-button{display:none}
-.rb-search input:hover{border-color:color-mix(in srgb,var(--fg) 22%,var(--border))}
-.rb-search input:focus{outline:0;border-color:color-mix(in srgb,var(--fg) 55%,var(--border));background:var(--card)}
-.rb-search:focus-within>svg.si{color:var(--fg)}
-.rb-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%) scale(.6);width:22px;height:22px;border:0;border-radius:6px;background:none;color:var(--muted);display:grid;place-items:center;padding:0;opacity:0;pointer-events:none;transition:opacity .2s,transform .25s var(--ease),color .2s,background .2s}
-.rb-clear:hover{color:var(--fg);background:var(--hover)}
-.rb-search.has-text .rb-clear{opacity:1;transform:translateY(-50%);pointer-events:auto}
-.rb-tabs{position:relative;flex:1 1 auto;min-width:0;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-.rb-tabs::-webkit-scrollbar{display:none}
-.rb-ind{position:absolute;top:0;bottom:0;left:0;border-radius:8px;background:var(--sec);box-shadow:inset 0 0 0 1px var(--border);transition:transform .45s var(--ease),width .45s var(--ease);pointer-events:none}
-.rt{position:relative;flex:none;display:inline-flex;align-items:center;gap:6px;border:0;background:none;border-radius:8px;padding:9px 11px;color:var(--muted);font-size:inherit;font-weight:500;letter-spacing:inherit;line-height:1.25;transition:color .25s,opacity .25s}
-.rt:hover,.rt[aria-pressed="true"]{color:var(--fg)}
-.rt[data-zero="true"]:not([aria-pressed="true"]){opacity:.38}
-.rt em{font-style:normal;font-size:.75rem;opacity:.55;font-variant-numeric:tabular-nums}
-@media (max-width:760px){.rb-row{flex-wrap:wrap}.rb-tabs{flex:1 1 100%}.rb-search,.rb-search:focus-within{width:100%}}
+/* ---- home projects: grouped by focus (analytics, engineering, agents), then "browse by focus" and a View all button ---- */
+.grid{gap:76px}
+.fg{display:flex;flex-direction:column;gap:28px}
+.fg-h{display:flex;align-items:flex-end;justify-content:space-between;gap:10px 24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.fg-t{margin:0;font-size:1.5rem;font-weight:600;letter-spacing:-.025em;line-height:1.2}
+.fg-h p{margin:6px 0 0;max-width:38rem;font-size:.9375rem;line-height:1.5;color:var(--muted)}
+.fg-all{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:.875rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.fg-all svg{transition:transform .3s var(--ease)}.fg-all:hover{color:var(--fg)}.fg-all:hover svg{transform:translateX(3px)}
+.fg-list{display:grid;gap:44px}
+.fs{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding-top:8px}
+.fs-l{flex:0 0 100%;text-align:center;font:600 11px/1.4 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.fs-chip{display:inline-flex;align-items:center;gap:10px;padding:9px 10px 9px 18px;border:1px solid var(--border);border-radius:9999px;color:var(--fg);font-size:.9375rem;text-decoration:none;transition:background-color .2s,border-color .2s}
+.fs-chip b{font-weight:500}
+.fs-chip em{min-width:24px;padding:2px 8px;border-radius:9999px;background:var(--sec);box-shadow:inset 0 0 0 1px var(--border);font-style:normal;font-size:.75rem;text-align:center;font-variant-numeric:tabular-nums}
+.fs-chip:hover{background:var(--hover);border-color:color-mix(in srgb,var(--fg) 24%,var(--border))}
+.pf-all{display:flex;justify-content:center;margin:34px 0 0}
+.all-btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 26px;border:1px solid var(--fg);border-radius:9999px;background:var(--fg);color:var(--bg);font-size:.9375rem;font-weight:500;text-decoration:none;transition:opacity .2s,transform .3s var(--ease)}
+.all-btn svg{transition:transform .3s var(--ease)}.all-btn:hover{opacity:.88}.all-btn:hover svg{transform:translateX(3px)}
+@media (max-width:640px){.grid{gap:56px}.fg-h{align-items:flex-start;flex-direction:column;gap:8px}}
 
 /* ---- certifications: 4 featured (large) + 10 compact ---- */
 .certs{max-width:96rem;margin:0 auto;padding:56px 20px 72px}
@@ -258,6 +253,7 @@ button.pill{background:none;cursor:pointer;flex:none;transition:background .2s,c
 .hero-grain{position:absolute;inset:0;opacity:.25;mix-blend-mode:overlay}
 .hero-edge{position:absolute;inset:0;border-radius:1.375rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 0 0 1px rgba(0,0,0,.15)}
 .hero-id{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;min-width:0}
+.hero-tag{margin:0;max-width:28rem;font-size:.8125rem;line-height:1.5;color:color-mix(in srgb,var(--h-ink) 58%,transparent)}
 .hero-name{margin:0;font-family:"Instrument Serif","Instrument Serif Fallback",Georgia,serif;font-size:2.25rem;font-weight:400;line-height:1.25;letter-spacing:1.5px;text-wrap:balance;color:var(--h-ink)}
 .hero-role{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .75rem;font-size:.875rem;line-height:1.43;color:color-mix(in srgb,var(--h-ink) 75%,transparent)}
 .hero-dot{width:.25rem;height:.25rem;border-radius:9999px;background:color-mix(in srgb,var(--h-ink) 25%,transparent)}
@@ -299,6 +295,7 @@ button.pill{background:none;cursor:pointer;flex:none;transition:background .2s,c
   .hero-id{align-self:flex-end}
   .hero-name{font-size:60px;line-height:75px}
   .hero-role{font-size:16px;line-height:24px}
+  .hero-tag{font-size:14px;line-height:21px}
   .hero-tag{grid-column:span 2;grid-row-start:2;align-self:flex-start}
   .hero-contact{grid-column:span 2}
 }
@@ -566,7 +563,7 @@ html:has(.ct-modal[open]){overflow:hidden}
 html{cursor:var(--cur-default)}
 p,h1,h2,h3,h4,h5,h6,blockquote,figcaption,dt,dd,time,pre,code,small{cursor:var(--cur-text)}
 a,button,summary,select,label[for],[role="button"],[role="tab"],.card,.ct-mini,.rt{cursor:var(--cur-pointer)}
-:is(a,button,summary,select,label[for],[role="button"],[role="tab"],.card,.ct-mini,.rt) *{cursor:inherit}
+:is(a,button,summary,select,label[for],[role="button"],[role="tab"],.card,.ct-mini,.fs-chip,.all-btn) *{cursor:inherit}
 input,textarea,[contenteditable="true"]{cursor:var(--cur-text)}
 input:is([type="button"],[type="submit"],[type="checkbox"],[type="radio"]){cursor:var(--cur-pointer)}
 abbr[title]{cursor:var(--cur-help)}
@@ -641,7 +638,8 @@ button:disabled,[aria-disabled="true"]{cursor:var(--cur-not-allowed)}
 
       <div class="hero-id">
         <h1 class="hero-name" id="hero-h">Ahmad Sohaib Qasim</h1>
-        <p class="hero-role">Data Scientist<span class="hero-dot" aria-hidden="true"></span><span class="hero-loc"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,24a80,80,0,0,0-80,80c0,72,80,128,80,128s80-56,80-128A80,80,0,0,0,128,24Zm0,112a32,32,0,1,1,32-32A32,32,0,0,1,128,136Z" opacity="0.2"></path><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path></svg>Pakistan · Remote</span></p>
+        <p class="hero-role">Data Analyst<span class="hero-dot" aria-hidden="true"></span><span class="hero-loc"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,24a80,80,0,0,0-80,80c0,72,80,128,80,128s80-56,80-128A80,80,0,0,0,128,24Zm0,112a32,32,0,1,1,32-32A32,32,0,0,1,128,136Z" opacity="0.2"></path><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path></svg>Pakistan · Remote</span></p>
+        <p class="hero-tag" id="heroTag">I also build the pipelines and AI agents behind the numbers.</p>
       </div>
 
       <div class="hero-contact">
@@ -769,19 +767,9 @@ button:disabled,[aria-disabled="true"]{cursor:var(--cur-not-allowed)}
     <div class="sec-more"><a class="sec-link" href="projects.html">View all projects <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>   <!-- future dedicated page -->
   </div>
   <div class="pf">
-    <div class="ribbon" role="search" aria-label="Filter projects">
-      <div class="rb-row">
-        <div class="rb-tabs" id="tabs" role="group" aria-label="Category"><span class="rb-ind" id="ind"></span></div>
-        <div class="rb-search" id="rbSearch">
-          <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden">Search projects</label>
-          <svg class="si" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" type="search" name="q" placeholder="Search projects" autocomplete="off" spellcheck="false">
-          <button class="rb-clear" id="qclear" type="button" aria-label="Clear search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-        </div>
-      </div>
-    </div>
     <div class="grid" id="grid"></div>
-    <div class="empty" id="empty" hidden><b>No projects found</b>Try a different search or category. <button class="clear" id="clear" type="button">Reset</button></div>
+    <nav class="fs" id="focusStrip" aria-label="Browse projects by focus"></nav>
+    <p class="pf-all"><a class="all-btn" id="allBtn" href="projects.html">View all projects</a></p>
   </div>
   <div class="tagpop" id="tagpop" role="dialog" aria-label="All tags"></div>
 </section>
@@ -883,55 +871,58 @@ const I={chev:ic('<path d="m6 9 6 6 6-6"/>'),check:ic('<path d="M20 6 9 17l-5-5"
   gh:ic('<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>'),
   x:ic('<path d="M18 6 6 18M6 6l12 12"/>',14)};
 
-const S={q:'',cat:'all',sort:'order'};   /* 'order' = the order in projects.json */
 function closeAll(){$('#tagpop').classList.remove('open')}
 
-/* cards (built once, then shown, hidden and reordered with FLIP) */
+/* cards */
 const fmt=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
 const thumbHTML=p=>`<div class="ph" style="--h:${hash(p.name)%360}"><div class="win"><i></i><i></i><i></i></div><b>${esc(p.cat)}</b>${thumbImgs(p)?`<div class="shot">${thumbImgs(p)}</div>`:''}</div>`;
-function initProjects(){
-  P.forEach((p,i)=>{p.tags=p.tags||[];p.lang=p.lang||'';p.desc=p.desc||'';p.url=p.url||'#';p.page='project.html?id='+encodeURIComponent(p.id||p.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''));if(!p.thumb&&DUMMY.length)p.thumb=DUMMY[i%DUMMY.length]});
-  cats=[...new Set(P.map(p=>p.cat))].sort();
-$('#grid').innerHTML=P.map((p,i)=>`<article class="card" data-i="${i}">
-  <span class="num" aria-hidden="true">00</span>
+const ARR=ic('<path d="M5 12h14M13 6l6 6-6 6"/>',14);
+const cardHTML=(p,i,n)=>`<article class="card" data-i="${i}">
+  <span class="num" aria-hidden="true">${String(n).padStart(2,'0')}</span>
   <div class="main"><div class="badges"><span class="badge sec">${esc(p.cat)}</span>${p.lang?`<span class="badge out">${esc(p.lang)}</span>`:''}${p.featured?'<span class="badge pri">Featured</span>':''}</div>
     <h3 class="name"><a href="${p.page}"><span>${esc(p.name)}</span>${I.out}</a></h3>
     <p class="desc">${esc(p.desc)}</p>
     <div class="tags">${p.tags.slice(0,3).map(t=>`<span class="pill" title="${esc(t)}">${esc(t)}</span>`).join('')}${p.tags.length>3?`<button type="button" class="pill" data-tags aria-haspopup="dialog" aria-label="Show ${p.tags.length-3} more tags">+${p.tags.length-3}</button>`:''}</div>
     <div class="foot"><div class="stat">${p.stars!=null?`<span>${I.star}${p.stars}</span>`:''}${p.updated?`<span>Updated ${fmt(p.updated)}</span>`:''}</div>
       <a class="btn" href="${p.page}" aria-label="Open ${esc(p.name)}"><span>Open</span>${I.out}</a></div></div>
-  <a class="thumb" href="${p.page}" aria-label="Open ${esc(p.name)} (preview image)" tabindex="-1">${thumbHTML(p)}</a></article>`).join('');
-cards=[...document.querySelectorAll('.card')];
-$('#tabs').insertAdjacentHTML('beforeend',['all',...cats].map(c=>`<button class="rt" type="button" data-cat="${esc(c)}" aria-pressed="false">${c==='all'?'All':esc(c)}<em></em></button>`).join(''));
-}
-function moveInd(){const a=document.querySelector('.rt[aria-pressed="true"]'),i=$('#ind'),t=$('#tabs');if(!a)return;
-  i.style.width=a.offsetWidth+'px';i.style.transform=`translateX(${a.offsetLeft}px)`;
-  if(a.offsetLeft<t.scrollLeft||a.offsetLeft+a.offsetWidth>t.scrollLeft+t.clientWidth)t.scrollTo({left:Math.max(0,a.offsetLeft-16),behavior:'smooth'})}
-$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.rt');if(!b)return;S.cat=b.dataset.cat;update()});
-function renumber(){cards.filter(c=>!c.hidden).sort((a,b)=>a.style.order-b.style.order).forEach((c,i)=>{c.querySelector('.num').textContent=String(i+1).padStart(2,'0')})}
+  <a class="thumb" href="${p.page}" aria-label="Open ${esc(p.name)} (preview image)" tabindex="-1">${thumbHTML(p)}</a></article>`;
 
-const match=(p,skip)=>(!S.q||S.q.toLowerCase().split(/\s+/).every(w=>(p.name+' '+p.desc+' '+p.cat+' '+p.lang+' '+p.tags.join(' ')).toLowerCase().includes(w)))
-  &&(skip==='cat'||S.cat==='all'||p.cat===S.cat);
-const cmp={order:(a,b)=>P.indexOf(a)-P.indexOf(b),stars:(a,b)=>(b.stars||0)-(a.stars||0)||a.name.localeCompare(b.name),updated:(a,b)=>new Date(b.updated||0)-new Date(a.updated||0),name:(a,b)=>a.name.localeCompare(b.name)}
-const EASE='cubic-bezier(.2,.8,.2,1)';let first=true;
-function update(){
-  const before=new Map(cards.filter(c=>!c.hidden).map(c=>[c,c.getBoundingClientRect()]));
-  const rank=[...P].sort(cmp[S.sort]);let n=0;
-  cards.forEach(c=>{const p=P[c.dataset.i],show=match(p);c.hidden=!show;c.style.order=rank.indexOf(p);if(show)n++});
-  $('#empty').hidden=n>0;renumber();
-  document.querySelectorAll('.rt').forEach(b=>{const c=b.dataset.cat,n=P.filter(p=>match(p,'cat')&&(c==='all'||p.cat===c)).length;b.setAttribute('aria-pressed',S.cat===c);b.dataset.zero=n===0;b.querySelector('em').textContent=n});moveInd();
-  let i=0;
-  cards.forEach(c=>{if(c.hidden)return;const r=c.getBoundingClientRect(),f=before.get(c);
-    if(f){const dx=f.left-r.left,dy=f.top-r.top;if(dx||dy)c.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:450,easing:EASE})}
-    else c.animate([{opacity:0,transform:'translateY(16px) scale(.98)'},{opacity:1,transform:'none'}],{duration:500,easing:EASE,delay:(first?i:0)*50,fill:'backwards'});i++});
-  first=false;
+/* Home shows a short, grouped selection: each focus in assets/data/projects.json ("focuses") shows up to its "home" count of projects
+   marked home:true (3 analytics, 2 engineering, 1 agents by default). Everything else lives on projects.html.
+   ?focus=data-engineering (or analytics, agentic-ai) puts that group first and swaps the hero role; it is remembered for this visit. */
+function focusWant(F){
+  let w='';
+  try{const u=new URLSearchParams(location.search).get('focus');if(u){w=u;sessionStorage.setItem('asq_focus',u)}else w=sessionStorage.getItem('asq_focus')||''}catch(e){}
+  return F.some(f=>f.slug===w)?w:'';
+}
+function initProjects(F){
+  P.forEach((p,i)=>{p.tags=p.tags||[];p.lang=p.lang||'';p.desc=p.desc||'';p.url=p.url||'#';p.page='project.html?id='+encodeURIComponent(p.id||p.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''));if(!p.thumb&&DUMMY.length)p.thumb=DUMMY[i%DUMMY.length]});
+  const want=focusWant(F);
+  let groups;
+  if(F.length){
+    groups=F.map(f=>{const all=P.filter(p=>p.focus===f.slug);let items=all.filter(p=>p.home);if(!items.length)items=all.slice(0,f.home||2);return{f,all,items:items.slice(0,f.home||3)}}).filter(g=>g.items.length);
+    if(want)groups.sort((a,b)=>(b.f.slug===want)-(a.f.slug===want));   /* stable: the rest keep their order */
+  }else{const fl=P.filter(p=>p.home);groups=[{f:null,all:P,items:(fl.length?fl:P).slice(0,6)}]}
+  let n=0;
+  $('#grid').innerHTML=groups.map(g=>`<section class="fg"${g.f?` data-focus="${esc(g.f.slug)}" aria-labelledby="fg-${esc(g.f.slug)}"`:''}>${g.f?`
+    <header class="fg-h"><div><h3 class="fg-t" id="fg-${esc(g.f.slug)}">${esc(g.f.name)}</h3>${g.f.blurb?`<p>${esc(g.f.blurb)}</p>`:''}</div><a class="fg-all" href="projects.html?focus=${encodeURIComponent(g.f.slug)}">All ${g.all.length}${ARR}</a></header>`:''}
+    <div class="fg-list">${g.items.map(p=>cardHTML(p,P.indexOf(p),++n)).join('')}</div></section>`).join('');
+
+  /* "Browse by focus" + the big View all button */
+  const chips=F.filter(f=>P.some(p=>p.focus===f.slug)).map(f=>({name:f.name,href:'projects.html?focus='+encodeURIComponent(f.slug),n:P.filter(p=>p.focus===f.slug).length}));
+  const other=P.filter(p=>!F.some(f=>f.slug===p.focus)).length;
+  if(F.length&&other)chips.push({name:'Other work',href:'projects.html?focus=other-work',n:other});
+  $('#focusStrip').innerHTML=F.length?`<span class="fs-l">Browse by focus</span>${chips.map(c=>`<a class="fs-chip" href="${c.href}"><b>${esc(c.name)}</b><em>${c.n}</em></a>`).join('')}`:'';
+  const all=$('#allBtn');all.href=want?'projects.html?focus='+encodeURIComponent(want):'projects.html';all.innerHTML=`View all ${P.length} projects${ARR}`;
+
+  /* a ?focus= link also says what I am applying for: swap the hero role and line */
+  const lead=F.find(f=>f.slug===want),role=document.querySelector('.hero-role'),tag=$('#heroTag');
+  if(lead&&lead.role&&role&&role.firstChild&&role.firstChild.nodeType===3)role.firstChild.nodeValue=lead.role;
+  if(lead&&lead.tag&&tag)tag.textContent=lead.tag;
 }
 
 /* events */
-$('#q').addEventListener('input',e=>{S.q=e.target.value.trim();$('#rbSearch').classList.toggle('has-text',!!e.target.value);update()});
-$('#qclear').onclick=()=>{$('#q').value='';S.q='';$('#rbSearch').classList.remove('has-text');$('#q').focus();update()};
-$('#clear').onclick=()=>{Object.assign(S,{q:'',cat:'all'});$('#q').value='';$('#rbSearch').classList.remove('has-text');update()};
 document.addEventListener('click',e=>{
   const tb=e.target.closest('[data-tags]');
   if(tb){e.stopPropagation();const pop=$('#tagpop'),p=P[tb.closest('.card').dataset.i],was=pop.classList.contains('open')&&pop.dataset.i===tb.closest('.card').dataset.i;
@@ -939,12 +930,9 @@ document.addEventListener('click',e=>{
     const r=tb.getBoundingClientRect();pop.style.left=Math.min(r.left,innerWidth-312)+'px';pop.style.top=(r.bottom+8)+'px';pop.classList.add('open');return}
   if(!e.target.closest('.tagpop'))closeAll();
 });
-addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeAll();if(document.activeElement===$('#q')&&$('#q').value)$('#qclear').click()}
-});
-addEventListener('resize',moveInd);document.fonts&&document.fonts.ready.then(moveInd);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 addEventListener('scroll',()=>$('#tagpop').classList.remove('open'),{passive:true});
-fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{P=d.projects||[];initProjects();update()}).catch(err=>{
+fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{P=d.projects||[];initProjects(d.focuses||[])}).catch(err=>{
   console.error('projects.json could not be loaded',err);
   $('#grid').innerHTML='<p class="ct-err">Projects could not be loaded. If you opened index.html straight from a folder, serve the site instead (for example <code>python3 -m http.server</code>) so the browser can read <code>assets/data/projects.json</code>.</p>';
 });
@@ -1067,7 +1055,7 @@ fetch('assets/data/projects.json').then(r=>{if(!r.ok)throw new Error(r.status);r
   document.querySelectorAll('.nav-links a,.nav-menu a,.hero-call').forEach(a=>a.addEventListener('click',e=>{
     const h=a.getAttribute('href');if(h[0]!=='#')return;const t=document.getElementById(h.slice(1));if(!t)return;
     e.preventDefault();setMenu(false);pfGoTo(t.getBoundingClientRect().top+scrollY-8);history.replaceState(null,'','#'+t.id)}));
-  const openSearch=()=>{const t=document.getElementById('projects');if(!t)return;pfGoTo(t.getBoundingClientRect().top+scrollY-8);setTimeout(()=>$('#q').focus({preventScroll:true}),reduced()?0:650)};
+  const openSearch=()=>{location.href='projects.html#search'};   /* search lives on the projects page */
   addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch()}});
   if('IntersectionObserver' in window){                        /* the link of the section you are in keeps the hover look */
     const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
