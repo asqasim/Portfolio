@@ -13,8 +13,8 @@ let dataCache = null;
 async function siteData(env, origin) {                                // the three JSON files, cached for 5 minutes
   if (dataCache && Date.now() - dataCache.t < 300000) return dataCache.v;
   const get = async f => { try { const r = await env.ASSETS.fetch(`${origin}/assets/data/${f}`); return r.ok ? await r.json() : null } catch { return null } };
-  const [profile, projects, certs, about] = await Promise.all([get('profile.json'), get('projects.json'), get('certifications.json'), get('about.json')]);
-  const v = normalizeData({ profile, projects, certs, about });
+  const [profile, projects, certs, about, skills] = await Promise.all([get('profile.json'), get('projects.json'), get('certifications.json'), get('about.json'), get('skills.json')]);
+  const v = normalizeData({ profile, projects, certs, about, skills });
   dataCache = { t: Date.now(), v };
   return v;
 }
@@ -29,6 +29,7 @@ function buildFacts(d, projects) {                                     // projec
     P.experience && `EXPERIENCE:\n${list(P.experience)}`, P.education && `EDUCATION:\n${list(P.education)}`,
     d.focuses.length && `FOCUS AREAS (main first): ${d.focuses.map(f => f.name).join(', ')}`,
     projects.length && `PROJECTS (most relevant to this visitor first; page link in brackets):\n${projects.map(p => `- ${p.name} | ${p.cat || ''}${p.focus ? ' | focus: ' + ((d.focuses.find(f => f.slug === p.focus) || {}).name || p.focus) : ''} | ${p.lang || ''} | ${cut(p.desc, 200)} [project.html?id=${p.id}]`).join('\n')}`,
+    d.skillMap.stages && `HOW HE USES HIS SKILLS (the steps of a data project; "learning" means still learning):\n${d.skillMap.stages.map(s => `- ${s.title}: ${(s.skills || []).map(k => k.name + (k.learning ? ' (learning)' : '')).join(', ')}`).join('\n')}`,
     about.intro && `ABOUT HIM (the About page, about.html): ${cut(about.intro.lead, 300)}`,
     about.principles && `HOW HE WORKS:\n${about.principles.map(p => `- ${p.title}: ${cut(p.text, 200)}`).join('\n')}`,
     about.interests && `WHAT HE LIKES TO DO:\n${about.interests.map(p => `- ${p.title}: ${cut(p.text, 220)}`).join('\n')}`,

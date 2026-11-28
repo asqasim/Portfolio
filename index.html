@@ -382,28 +382,62 @@ html[data-theme-wave] .grad,html[data-theme-wave] .xt-tab{animation-play-state:p
 .tk-stage{--ck-bg:#17171a;--ck-bg-h:#1d1d20;--ck-bd:rgba(255,255,255,.1);--ck-sh:inset 0 1px 0 rgba(255,255,255,.05);position:relative;overflow:hidden;border:1px solid var(--border);border-radius:20px;background:var(--card);color:var(--fg)}
 :root[data-theme="light"] .tk-stage{--ck-bg:#f7f7f8;--ck-bg-h:#fff;--ck-bd:rgba(10,10,10,.09);--ck-sh:inset 0 1px 0 rgba(255,255,255,.6)}
 .tk-bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:var(--fg);-webkit-mask-image:radial-gradient(75% 85% at 65% 75%,#000,transparent);mask-image:radial-gradient(75% 85% at 65% 75%,#000,transparent)}
-.tk-rows{position:relative;display:flex;flex-direction:column;gap:26px;padding:34px 0 36px 28px}
-.tk-row{display:grid;grid-template-columns:150px minmax(0,1fr);align-items:center;gap:8px 20px}
-.tk-row h3{margin:0;text-align:left;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);line-height:1.5}
-.mq-track{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0 28px 0 0;list-style:none}
-.chip{display:inline-flex;flex:none;align-items:center;gap:8px;height:30px;padding:0 12px;border:1px solid var(--ck-bd);border-radius:4px;background:var(--ck-bg);box-shadow:var(--ck-sh);font:400 12.5px/1 "Bricolage Grotesque","Bricolage Grotesque Fallback",var(--font);color:color-mix(in srgb,var(--fg) 68%,transparent);white-space:nowrap;transition:background-color .3s,border-color .3s,color .3s}
-.chip i{font-size:15px;line-height:1}.chip i.mono-icon{color:var(--muted)}
-.chip img{flex:none;width:15px;height:15px;display:block}
-@media (hover:hover){.tk-row:hover .chip:hover{background:var(--ck-bg-h);border-color:color-mix(in srgb,var(--fg) 22%,transparent);color:var(--fg)}}
-/* dark theme only: near-black or deep-blue marks would vanish on a dark chip */
-:root:not([data-theme="light"]) .chip .ic-inv{filter:invert(.88) hue-rotate(180deg)}
-:root:not([data-theme="light"]) .chip .ic-lift{filter:brightness(1.45) saturate(1.1)}
-/* live marquee (JS adds .tk-live; without it, or with reduced motion, the chips simply wrap) */
-.tk-live .mq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
-.tk-live .mq-track{flex-wrap:nowrap;width:max-content;gap:0;padding:0;animation:mq 60s linear infinite}
-.tk-live .mq-track .chip{margin-right:6px}
-.tk-live .mq-track.rev{animation-direction:reverse}
-.tk-live .tk-row:hover .mq-track{animation-play-state:paused}
-@keyframes mq{to{transform:translateX(-50%)}}
-.tk-live:not(.is-in) .tk-row{opacity:0;transform:translateY(14px)}
-.tk-live .tk-row{transition:opacity .7s var(--ease) var(--d,0ms),transform .7s var(--ease) var(--d,0ms)}
-@media (max-width:760px){.tk-rows{padding:26px 0 28px 18px;gap:22px}.tk-row{grid-template-columns:minmax(0,1fr)}}
-@media (prefers-reduced-motion:reduce){.tk-live .tk-row{transition:none}}
+/* ---- toolbox: the steps of a data project, each with its skills and proof ---- */
+#tech-stack .tb-title{margin-bottom:14px}
+#tech-stack .sec-more{margin-bottom:14px}
+.sk-lead{max-width:36rem;margin:0 auto 22px;text-align:center;font-size:1.0625rem;line-height:1.6;color:var(--muted)}
+.sk{position:relative;display:flex;flex-direction:column;gap:24px;padding:26px 28px 24px}
+.sk-lens{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.sk-lens>span{margin-right:8px;font:600 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.sk-lens button{height:30px;padding:0 14px;border:1px solid var(--ck-bd);border-radius:9999px;background:transparent;color:var(--muted);font:inherit;font-size:.8125rem;cursor:pointer;transition:color .2s,border-color .2s,background-color .2s}
+.sk-lens button:hover{color:var(--fg);border-color:color-mix(in srgb,var(--fg) 30%,transparent)}
+.sk-lens button[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.sk-path{position:relative;display:flex;margin:0;padding:6px 0 10px;list-style:none;overflow-x:auto;scrollbar-width:none}
+.sk-path::-webkit-scrollbar{display:none}
+.sk-path>li{position:relative;flex:1 1 0;min-width:5.4rem;display:flex}
+/* the line the steps sit on, filled up to the chosen step */
+.sk-path>li::before,.sk-path>li::after{content:"";position:absolute;top:28px;height:2px;background:var(--ck-bd);transition:background-color .4s}
+.sk-path>li::before{left:0;right:50%}.sk-path>li::after{left:50%;right:0}
+.sk-path>li:first-child::before,.sk-path>li:last-child::after{display:none}
+.sk-path>li.on::before{background:var(--fg)}.sk-path>li.on:not(.sel)::after{background:var(--fg)}
+.sk-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:0 4px;border:0;background:none;color:var(--muted);font:inherit;cursor:pointer;transition:opacity .3s,color .2s}
+.sk-dot{display:grid;place-items:center;width:56px;height:56px;border:1px solid var(--ck-bd);border-radius:50%;background:var(--ck-bg);color:var(--muted);transition:transform .4s var(--ease),background-color .25s,color .25s,border-color .25s,box-shadow .35s}
+.sk-node b{font-size:.9375rem;font-weight:600;letter-spacing:-.01em}
+.sk-node small{font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;opacity:.65}
+@media (hover:hover){.sk-node:hover .sk-dot{border-color:color-mix(in srgb,var(--fg) 32%,transparent);color:var(--fg)}}
+.sk-node[aria-selected="true"]{color:var(--fg)}
+.sk-node[aria-selected="true"] .sk-dot{transform:scale(1.08);border-color:var(--fg);background:var(--fg);color:var(--bg);box-shadow:0 0 0 7px color-mix(in srgb,var(--fg) 10%,transparent)}
+.sk-node:focus-visible .sk-dot{outline:2px solid var(--fg);outline-offset:4px}
+.sk-path>li.dim .sk-node{opacity:.36}
+.sk-panel{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px 36px;padding:26px 28px;border:1px solid var(--ck-bd);border-radius:14px;background:color-mix(in srgb,var(--ck-bg) 72%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:skIn .45s var(--ease)}
+.sk-panel:focus-visible{outline:2px solid color-mix(in srgb,var(--fg) 50%,transparent);outline-offset:3px}
+@keyframes skIn{from{opacity:0;transform:translateY(8px)}}
+.sk-n{margin:0 0 10px;font:600 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.sk-panel h3{margin:0;font-family:"Instrument Serif","Instrument Serif Fallback",Georgia,serif;font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.08;font-weight:400;color:var(--head)}
+.sk-t{margin:12px 0 0;font-size:1rem;line-height:1.65;color:var(--muted)}
+.sk-how{margin:14px 0 0;padding-left:14px;border-left:2px solid var(--ck-bd);font-size:.9375rem;line-height:1.6;font-style:italic}
+.sk-chips{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0 0;padding:0;list-style:none}
+.sk-chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px 0 10px;border:1px solid var(--ck-bd);border-radius:6px;background:var(--ck-bg);font-size:.875rem;color:var(--fg);transition:border-color .2s,background-color .2s}
+@media (hover:hover){.sk-chip:hover{background:var(--ck-bg-h);border-color:color-mix(in srgb,var(--fg) 22%,transparent)}}
+.sk-chip img{flex:none;width:15px;height:15px;display:block}
+.sk-chip small{font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;color:var(--muted)}
+.sk-chip em{font-style:normal;font-size:.6875rem;color:var(--muted)}
+.sk-m{flex:none;display:inline-block;width:8px;height:8px;box-sizing:border-box;border-radius:50%}
+.sk-m.go{background:var(--fg)}.sk-m.used{border:1.5px solid var(--fg)}.sk-m.learn{border:1.5px dashed var(--muted)}.sk-m.none{width:0;margin-left:-4px;visibility:hidden}
+:root:not([data-theme="light"]) .sk-chip .ic-inv{filter:invert(.88) hue-rotate(180deg)}
+:root:not([data-theme="light"]) .sk-chip .ic-lift{filter:brightness(1.45) saturate(1.1)}
+.sk-side{display:flex;flex-direction:column;gap:20px;min-width:0}
+.sk-side h4{margin:0 0 9px;font:600 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.sk-side ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.sk-side li>*{display:flex;flex-direction:column;gap:2px;padding:10px 13px;border:1px solid var(--ck-bd);border-radius:8px;background:var(--ck-bg);color:var(--fg);font-size:.9rem;font-weight:500;text-decoration:none;transition:border-color .2s,background-color .2s}
+.sk-side a:hover{background:var(--ck-bg-h);border-color:color-mix(in srgb,var(--fg) 24%,transparent)}
+.sk-side small{font-size:.75rem;font-weight:400;color:var(--muted)}
+.sk-legend{display:flex;flex-wrap:wrap;gap:6px 20px;margin:0;font-size:.78rem;color:var(--muted)}
+.sk-legend span{display:inline-flex;align-items:center;gap:8px}
+.tk-stage.sk-live .sk{transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.tk-stage.sk-live:not(.is-in) .sk{opacity:0;transform:translateY(14px)}
+@media (max-width:760px){.sk{padding:20px 14px 18px;gap:20px}.sk-path>li{flex:0 0 5.6rem}.sk-panel{grid-template-columns:1fr;padding:20px 18px}}
+@media (prefers-reduced-motion:reduce){.sk-panel{animation:none}.sk-dot,.sk-path>li::before,.sk-path>li::after,.tk-stage.sk-live .sk{transition:none}}
 html,body{overflow-x:clip}   /* the full-width fade below is 100vw, which counts the scrollbar and would otherwise scroll sideways */
 /* certificates: clickable card, big viewer with a View PDF button */
 .ct-open{display:block;width:100%;padding:0;border:0;border-radius:11px;background:none;color:inherit;text-align:inherit}
@@ -455,7 +489,6 @@ html:has(.ct-modal[open]){overflow:hidden}
 @media (max-width:640px){.ct-mini{gap:11px;padding:10px 12px}.ct-mark{width:46px;height:46px;border-radius:10px;font-size:.8rem}}
 /* section links: "view all" page links sit at the right of the heading; Credly sits with the badges */
 .sec-more{display:flex;justify-content:center;margin:8px 0 0}
-.tb-title:has(+.sec-more){margin-bottom:0}.tb-title+.sec-more{margin-bottom:36px}
 .sec-link{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;letter-spacing:.01em;color:var(--muted);text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:5px;transition:color .2s,text-decoration-color .2s}
 .sec-link svg{width:12px;height:12px;transition:transform .3s var(--ease)}
 .sec-link:hover{color:var(--fg);text-decoration-color:currentColor}.sec-link:hover svg{transform:translateX(3px)}
@@ -672,54 +705,17 @@ button:disabled,[aria-disabled="true"]{cursor:var(--cur-not-allowed)}
 <section class="tb-sec" id="tech-stack" aria-labelledby="tech-h">
   <p class="ct-eyebrow">Skills</p>
   <h2 class="tb-title" id="tech-h"><span class="grad">Toolbox</span></h2>
-  <div class="sec-more"><a class="sec-link" href="skills.html">View detailed skills <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>   <!-- future dedicated page -->
+  <p class="sk-lead" id="skLead">Not a pile of logos. These are the skills I use at each step of turning data into a decision, and where you can see them.</p>
+  <div class="sec-more"><a class="sec-link" href="about.html#strengths">More about my skills <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   <div class="tk-stage" id="tk">
     <svg class="tk-bg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" viewBox="0 0 500 288"><defs><pattern id="tk-floor" width="36" height="18" patternUnits="userSpaceOnUse"><path d="M0 9 L18 0 L36 9 M0 9 L18 18 L36 9" fill="none" stroke="currentColor" stroke-opacity="0.06" stroke-width="0.6"/></pattern></defs><rect width="100%" height="100%" fill="url(#tk-floor)"/><path d="M-20 250 L520 -20 M120 300 L520 100" fill="none" stroke="currentColor" stroke-dasharray="3 4" stroke-opacity="0.14" stroke-width="0.7"/></svg>
-    <div class="tk-rows">
-      <div class="tk-row" style="--d:0ms">
-        <h3>Data Science</h3>
-        <div class="mq"><ul class="mq-track" aria-label="Data Science tools">
-          <li class="chip"><img src="assets/icons/tech/python.svg" alt="" width="15" height="15" decoding="async" draggable="false">Python</li>
-          <li class="chip"><img src="assets/icons/tech/pytorch.svg" alt="" width="15" height="15" decoding="async" draggable="false">PyTorch</li>
-          <li class="chip"><img src="assets/icons/tech/tensorflow.svg" alt="" width="15" height="15" decoding="async" draggable="false">TensorFlow</li>
-          <li class="chip"><img class="ic-inv" src="assets/icons/tech/pandas.svg" alt="" width="15" height="15" decoding="async" draggable="false">Pandas</li>
-          <li class="chip"><img class="ic-inv" src="assets/icons/tech/numpy.svg" alt="" width="15" height="15" decoding="async" draggable="false">NumPy</li>
-          <li class="chip"><img src="assets/icons/tech/jupyter.svg" alt="" width="15" height="15" decoding="async" draggable="false">Jupyter</li>
-          <li class="chip"><img src="assets/icons/tech/opencv.svg" alt="" width="15" height="15" decoding="async" draggable="false">OpenCV</li>
-        </ul></div>
-      </div>
-      <div class="tk-row" style="--d:70ms">
-        <h3>Core &amp; Backend</h3>
-        <div class="mq"><ul class="mq-track" aria-label="Core and Backend tools">
-          <li class="chip"><img class="ic-lift" src="assets/icons/tech/cplusplus.svg" alt="" width="15" height="15" decoding="async" draggable="false">C++</li>
-          <li class="chip"><img src="assets/icons/tech/fastapi.svg" alt="" width="15" height="15" decoding="async" draggable="false">FastAPI</li>
-          <li class="chip"><img class="ic-inv" src="assets/icons/tech/bash.svg" alt="" width="15" height="15" decoding="async" draggable="false">Bash</li>
-          <li class="chip"><img class="ic-inv" src="assets/icons/tech/linux.svg" alt="" width="15" height="15" decoding="async" draggable="false">Linux</li>
-          <li class="chip"><img src="assets/icons/tech/ubuntu.svg" alt="" width="15" height="15" decoding="async" draggable="false">Ubuntu</li>
-          <li class="chip"><img src="assets/icons/tech/git.svg" alt="" width="15" height="15" decoding="async" draggable="false">Git</li>
-        </ul></div>
-      </div>
-      <div class="tk-row" style="--d:140ms">
-        <h3>Cloud &amp; Data Eng</h3>
-        <div class="mq"><ul class="mq-track" aria-label="Cloud and Data Eng tools">
-          <li class="chip"><img src="assets/icons/tech/googlecloud.svg" alt="" width="15" height="15" decoding="async" draggable="false">GCP</li>
-          <li class="chip"><img src="assets/icons/tech/docker.svg" alt="" width="15" height="15" decoding="async" draggable="false">Docker</li>
-          <li class="chip"><img class="ic-lift" src="assets/icons/tech/kubernetes.svg" alt="" width="15" height="15" decoding="async" draggable="false">Kubernetes</li>
-          <li class="chip"><img src="assets/icons/tech/spark.svg" alt="" width="15" height="15" decoding="async" draggable="false">Spark</li>
-          <li class="chip"><img class="ic-lift" src="assets/icons/tech/postgresql.svg" alt="" width="15" height="15" decoding="async" draggable="false">PostgreSQL</li>
-          <li class="chip"><i class="ti ti-table mono-icon"></i>SQL</li>
-        </ul></div>
-      </div>
-      <div class="tk-row" style="--d:210ms">
-        <h3>Agentic AI</h3>
-        <div class="mq"><ul class="mq-track" aria-label="Agentic AI tools">
-          <li class="chip"><i class="ti ti-webhook mono-icon"></i>Tool Calling</li>
-          <li class="chip"><i class="ti ti-file-search mono-icon"></i>RAG</li>
-          <li class="chip"><img class="ic-lift" src="assets/icons/tech/postgresql.svg" alt="" width="15" height="15" decoding="async" draggable="false">pgvector</li>
-          <li class="chip"><i class="ti ti-database mono-icon"></i>Pinecone</li>
-        </ul></div>
-      </div>
+    <div class="sk" id="sk">
+      <div class="sk-lens" id="skLens" role="group" aria-label="Highlight the steps that matter for a role"></div>
+      <ol class="sk-path" id="skPath" role="tablist" aria-label="The steps of a data project"></ol>
+      <div class="sk-panel" id="skPanel" role="tabpanel" tabindex="0" aria-live="polite"></div>
+      <p class="sk-legend" id="skLegend"></p>
     </div>
+    <noscript><p class="sk-lead" style="padding:28px 20px">Python, SQL, Power BI, Excel, Pandas, scikit-learn, Docker, Airflow, Spark, GCP, RAG and more. Turn on JavaScript to see how each skill is used.</p></noscript>
   </div>
 </section>
 
@@ -1124,34 +1120,71 @@ function switchTheme(src){
 }
 themeBtn.addEventListener('click',()=>switchTheme(themeBtn));
 
-  /* toolbox marquee: clone each row's chips so the loop is seamless at any width */
+  /* toolbox: the steps of a data project, each with its skills and proof. Content: assets/data/skills.json.
+     For every skill, the number of projects that use it (and the dot beside it) is worked out from projects.json. */
   (function(){
-    const stage=document.getElementById('tk'); if(!stage) return;
-    const tracks=[...stage.querySelectorAll('.mq-track')];
-    const originals=tracks.map(t=>[...t.children]);
-    const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-    function build(){
-      tracks.forEach((t,i)=>{
-        t.querySelectorAll('[data-clone]').forEach(n=>n.remove());
-        t.style.animationDuration='';
+    const stage=document.getElementById('tk'),root=document.getElementById('sk');if(!root)return;
+    const lensEl=document.getElementById('skLens'),pathEl=document.getElementById('skPath'),panel=document.getElementById('skPanel');
+    const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9+#.]+/g,' ').trim();
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const svg=p=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+    const SI={ask:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1.1 1-1.1 1.8"/><path d="M12 17h.01"/>',
+      get:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',
+      clean:'<path d="M3 4h18l-7 8v6l-4 2v-8z"/>',
+      analyse:'<path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-7"/>',
+      show:'<rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/>',
+      ship:'<path d="M12 3c3 2 5 5 5 9l-2 4H9l-2-4c0-4 2-7 5-9z"/><circle cx="12" cy="10" r="1.5"/><path d="M9 16l-2 4M15 16l2 4"/>',
+      agents:'<rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9 13h.01M15 13h.01M9.5 16.5h5"/>'};
+    const ICONS={python:'python',pytorch:'pytorch',tensorflow:'tensorflow',pandas:'pandas',numpy:'numpy',jupyter:'jupyter',opencv:'opencv','c++':'cplusplus',fastapi:'fastapi',bash:'bash',linux:'linux',ubuntu:'ubuntu',git:'git',gcp:'googlecloud',docker:'docker',kubernetes:'kubernetes',spark:'spark',postgresql:'postgresql',pgvector:'postgresql'};
+    const ICLS={pandas:'ic-inv',numpy:'ic-inv',bash:'ic-inv',linux:'ic-inv',cplusplus:'ic-lift',kubernetes:'ic-lift',postgresql:'ic-lift'};
+    const get=f=>fetch('assets/data/'+f).then(r=>r.ok?r.json():null).catch(()=>null);
+    Promise.all([get('skills.json'),get('projects.json'),get('certifications.json')]).then(([S,PJ,CE])=>{
+      if(!S||!S.stages||!S.stages.length){stage.classList.remove('sk-live');return}
+      const projects=(PJ&&PJ.projects)||[],F=(PJ&&PJ.focuses)||[],byId=new Map(projects.map(p=>[p.id,p]));
+      const certs=[...((CE&&CE.certificates)||[]),...((CE&&CE.badges)||[])];
+      const hay=projects.map(p=>({p,h:' '+norm([p.name,p.desc,p.cat,p.lang,...(p.tags||[])].join(' '))+' '}));
+      const uses=n=>{const k=' '+norm(n)+' ';return hay.filter(x=>x.h.includes(k)).map(x=>x.p)};
+      if(S.lead)document.getElementById('skLead').textContent=S.lead;
+
+      /* work out each step's skills (with usage) and proof */
+      const stages=S.stages.map(s=>{
+        const skills=(s.skills||[]).map(k=>{const u=uses(k.name);return{name:k.name,n:u.length,lv:k.learning?'learn':u.length>=3?'go':u.length?'used':'none'}});
+        const ids=(s.projects||[]).filter(id=>byId.has(id));
+        if(ids.length<3){projects.map(p=>({p,n:skills.filter(k=>uses(k.name).includes(p)).length})).filter(x=>x.n>=2&&!ids.includes(x.p.id)).sort((a,b)=>b.n-a.n).forEach(x=>{if(ids.length<3)ids.push(x.p.id)})}
+        const cs=[];(s.certs||[]).forEach(k=>{const c=certs.find(c=>norm(c.title).includes(norm(k)));if(c&&!cs.includes(c))cs.push(c)});
+        return{...s,skills,pr:ids.map(id=>byId.get(id)),cs};
       });
-      if(reduce.matches){stage.classList.remove('tk-live');return}
-      stage.classList.add('tk-live');
-      tracks.forEach((t,i)=>{
-        t.classList.toggle('rev',i%2===1);
-        const setW=t.offsetWidth, boxW=t.parentElement.clientWidth;
-        if(!setW) return;
-        const k=Math.max(1,Math.ceil(boxW/setW));
-        for(let c=0;c<2*k-1;c++) originals[i].forEach(li=>{const n=li.cloneNode(true);n.setAttribute('aria-hidden','true');n.setAttribute('data-clone','');t.appendChild(n)});
-        t.style.animationDuration=(k*setW/(i%2?34:28))+'s';
-      });
-    }
-    let tm;const again=()=>{clearTimeout(tm);tm=setTimeout(build,150)};
-    (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(build);
-    addEventListener('resize',again);reduce.addEventListener&&reduce.addEventListener('change',build);
-    if('IntersectionObserver' in window){
-      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){stage.classList.add('is-in');io.disconnect()}}),{threshold:.15});io.observe(stage);
-    }else stage.classList.add('is-in');
+
+      /* "view as": a role lens dims the steps that matter less for it (nothing is hidden) */
+      const lenses=F.length?[{slug:'all',label:'Everything'},...F.map(f=>({slug:f.slug,label:f.role||f.name}))]:[];
+      let want='all';try{want=new URLSearchParams(location.search).get('focus')||sessionStorage.getItem('asq_focus')||'all'}catch(e){}
+      let lens=lenses.some(l=>l.slug===want)?want:'all',sel=0;
+      const lit=s=>lens==='all'||(s.focus||[]).includes(lens);
+      const chip=k=>{const f=ICONS[k.name.toLowerCase()],tip=k.lv==='learn'?'Still learning':k.n?`Used in ${k.n} project${k.n>1?'s':''}`:'';
+        return`<li class="sk-chip"${tip?` title="${E(tip)}"`:''}><i class="sk-m ${k.lv}"></i>${f?`<img class="${ICLS[f]||''}" src="assets/icons/tech/${f}.svg" alt="" width="15" height="15" loading="lazy">`:''}${E(k.name)}${k.n?`<small>${k.n}</small>`:''}${k.lv==='learn'?'<em>learning</em>':''}</li>`};
+      const paint=()=>{
+        lensEl.hidden=!lenses.length;
+        lensEl.innerHTML=lenses.length?`<span>View as</span>`+lenses.map(l=>`<button type="button" data-l="${E(l.slug)}" aria-pressed="${l.slug===lens}">${E(l.label)}</button>`).join(''):'';
+        pathEl.innerHTML=stages.map((s,i)=>`<li class="${i<=sel?'on':''}${i===sel?' sel':''}${lit(s)?'':' dim'}" role="presentation"><button class="sk-node" type="button" role="tab" id="sk-t-${E(s.id)}" aria-selected="${i===sel}" aria-controls="skPanel" tabindex="${i===sel?0:-1}" data-i="${i}"><span class="sk-dot">${svg(SI[s.id]||SI.get)}</span><b>${E(s.verb)}</b><small>${String(i+1).padStart(2,'0')}</small></button></li>`).join('');
+        const s=stages[sel];
+        panel.setAttribute('aria-labelledby','sk-t-'+s.id);
+        panel.innerHTML=`<div><p class="sk-n">Step ${String(sel+1).padStart(2,'0')} of ${String(stages.length).padStart(2,'0')}</p><h3>${E(s.title)}</h3><p class="sk-t">${E(s.text)}</p>${s.how?`<p class="sk-how">${E(s.how)}</p>`:''}<ul class="sk-chips" aria-label="Skills used in this step">${s.skills.map(chip).join('')}</ul></div>`+
+          (s.pr.length||s.cs.length?`<div class="sk-side">${s.pr.length?`<div><h4>Seen in</h4><ul>${s.pr.map(p=>`<li><a href="project.html?id=${encodeURIComponent(p.id)}">${E(p.name)}<small>${E([p.cat,p.lang].filter(Boolean).join(' · '))}</small></a></li>`).join('')}</ul></div>`:''}${s.cs.length?`<div><h4>Backed by</h4><ul>${s.cs.map(c=>`<li><span>${E(c.title)}<small>${E(c.issuer)}</small></span></li>`).join('')}</ul></div>`:''}</div>`:'');
+        panel.style.animation='none';panel.offsetWidth;panel.style.animation='';
+      };
+      document.getElementById('skLegend').innerHTML='<span><i class="sk-m go"></i>Go-to: used in 3 or more projects</span><span><i class="sk-m used"></i>Used in 1 or 2 projects</span><span><i class="sk-m learn"></i>Still learning</span><span>The number is how many projects use it</span>';
+      const pick=(i,user)=>{sel=i;paint();if(user){const b=pathEl.querySelector('[aria-selected="true"]');if(b){b.focus({preventScroll:true});b.scrollIntoView({inline:'center',block:'nearest',behavior:reduce?'auto':'smooth'})}}};
+      lensEl.addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(!b)return;lens=b.dataset.l;if(!lit(stages[sel])){const f=stages.findIndex(lit);if(f>=0)sel=f}paint()});
+      pathEl.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)pick(+b.dataset.i,true)});
+      pathEl.addEventListener('keydown',e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];let i=sel;if(k)i=(sel+k+stages.length)%stages.length;else if(e.key==='Home')i=0;else if(e.key==='End')i=stages.length-1;else return;e.preventDefault();pick(i,true)});
+      sel=Math.max(0,stages.findIndex(lit));paint();
+
+      /* fade in when scrolled to */
+      stage.classList.add('sk-live');
+      if(reduce||!('IntersectionObserver' in window))stage.classList.add('is-in');
+      else{const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){stage.classList.add('is-in');io.disconnect()}},{threshold:.12});io.observe(stage)}
+    });
   })();
 
 </script>

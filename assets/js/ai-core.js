@@ -25,7 +25,7 @@ export function normalizeData(raw) {
   const c = raw.certs || {};
   const certs = [...(c.certificates || []).map(x => ({ ...x, isBadge: false })), ...(c.badges || []).map(x => ({ ...x, isBadge: true }))];
   const cats = uniq([...((raw.projects && raw.projects.categories) || []).map(x => x.name), ...projects.map(p => p.cat)]).filter(n => projects.some(p => p.cat === n));
-  return { profile: raw.profile || {}, about: raw.about || {}, focuses: (raw.projects && raw.projects.focuses) || [], projects, categories: cats, certs, certsUrl: c.profileUrl || '' };
+  return { profile: raw.profile || {}, about: raw.about || {}, skillMap: raw.skills || {}, focuses: (raw.projects && raw.projects.focuses) || [], projects, categories: cats, certs, certsUrl: c.profileUrl || '' };
 }
 export const firstName = d => (d.profile && (d.profile.short || String(d.profile.name || '').split(' ').pop())) || 'Qasim';
 
