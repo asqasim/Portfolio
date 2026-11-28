@@ -32,8 +32,8 @@ No third-party trackers, no ads, no cost.
 - Focus links for applications: `/?focus=data-engineering` (or `analytics`, `agentic-ai`) puts that group first and changes the hero role and line to match (set `role` and `tag` per focus). It is remembered for the visit. Combine with `?ref=companyname` to see in the admin panel which application a visit came from.
 - `projects.html?focus=...` opens the matching tab. Search lives only on the projects page (Ctrl+K from the home page goes there).
 
-## Toolbox (skills map)
-The Toolbox on the home page shows the steps of a data project (Ask, Get, Clean, Analyse, Show, Ship, Delegate) and the skills used at each. Edit `assets/data/skills.json`. For every skill the page counts how many of your projects use it (from `projects.json`) and shows a dot: solid = 3 or more projects, ring = 1 or 2, dashed = still learning (set `"learning": true`). "Seen in" and "Backed by" come from the step's project ids and certificate title words. The "View as" buttons dim the steps that matter less for a role; `?focus=` links choose one automatically.
+## Toolbox
+The Toolbox on the home page shows one card per field (data analytics, data engineering, AI agents) with that field's skills. Edit `assets/data/skills.json`: each skill belongs to one field only, `"learning": true` shows a "Still learning" tag, and the first card is the main focus (a `?focus=` link makes that field first instead). The project count and link on each card come from `projects.json`.
 
 ## Quick start
 

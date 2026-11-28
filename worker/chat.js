@@ -29,7 +29,7 @@ function buildFacts(d, projects) {                                     // projec
     P.experience && `EXPERIENCE:\n${list(P.experience)}`, P.education && `EDUCATION:\n${list(P.education)}`,
     d.focuses.length && `FOCUS AREAS (main first): ${d.focuses.map(f => f.name).join(', ')}`,
     projects.length && `PROJECTS (most relevant to this visitor first; page link in brackets):\n${projects.map(p => `- ${p.name} | ${p.cat || ''}${p.focus ? ' | focus: ' + ((d.focuses.find(f => f.slug === p.focus) || {}).name || p.focus) : ''} | ${p.lang || ''} | ${cut(p.desc, 200)} [project.html?id=${p.id}]`).join('\n')}`,
-    d.skillMap.stages && `HOW HE USES HIS SKILLS (the steps of a data project; "learning" means still learning):\n${d.skillMap.stages.map(s => `- ${s.title}: ${(s.skills || []).map(k => k.name + (k.learning ? ' (learning)' : '')).join(', ')}`).join('\n')}`,
+    d.skillMap.fields && `SKILLS BY FIELD ("learning" means still learning):\n${d.skillMap.fields.map(f => `- ${f.title}${f.learning ? ' (still learning)' : ''}: ${(f.skills || []).join(', ')}`).join('\n')}`,
     about.intro && `ABOUT HIM (the About page, about.html): ${cut(about.intro.lead, 300)}`,
     about.principles && `HOW HE WORKS:\n${about.principles.map(p => `- ${p.title}: ${cut(p.text, 200)}`).join('\n')}`,
     about.interests && `WHAT HE LIKES TO DO:\n${about.interests.map(p => `- ${p.title}: ${cut(p.text, 220)}`).join('\n')}`,

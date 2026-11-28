@@ -1,71 +1,27 @@
 {
-  "_note": "Content for the Toolbox on the home page: the steps of a data project and the skills used at each one. 'focus' says which role a step matters for (slugs from projects.json). 'learning': true marks a skill you are still learning. For every skill the page works out, from projects.json, how many of your projects use it (shown as a number, and as the dot: solid = used in 3 or more, ring = used in 1 or 2, dashed = learning). 'projects' and 'certs' are the proof shown under a step: project ids, and words that appear in certificate titles. If 'projects' has fewer than 3, the page fills the rest with projects that use the step's skills.",
+  "_note": "Content for the Toolbox on the home page: one card per field. Each skill appears in only one card. 'slug' matches a focus in projects.json (it sets the project count and link). Set 'learning': true on a field you are still learning. The first card is the main focus; a ?focus= link makes that field the main focus instead.",
 
-  "lead": "Not a pile of logos. These are the skills I use at each step of turning data into a decision, and where you can see them.",
+  "lead": "Three areas I work in, and the tools I use in each.",
 
-  "stages": [
+  "fields": [
     {
-      "id": "ask", "verb": "Ask", "title": "Ask the right question",
-      "text": "Before any code, I pin down the decision the numbers should support and how success will be measured.",
-      "how": "A clear question and a few agreed metrics save more time than any clever model.",
-      "focus": ["analytics"],
-      "skills": [{ "name": "KPIs" }, { "name": "Statistics" }, { "name": "Survey data" }, { "name": "Excel" }],
-      "projects": ["ai-education-analysis", "techmart-dashboard"],
-      "certs": ["Data Science Methodology", "Data Analytics"]
+      "slug": "analytics",
+      "title": "Data analytics",
+      "line": "I turn business questions into clear answers and dashboards people actually use.",
+      "skills": ["SQL", "Excel", "Power BI", "Python", "Pandas", "Statistics", "scikit-learn", "Cognos"]
     },
     {
-      "id": "get", "verb": "Get", "title": "Get the data",
-      "text": "Pull data out of databases and APIs, and design the tables it lives in so it stays easy to use.",
-      "how": "Most of the work is knowing where the data is hiding and how the pieces fit together.",
-      "focus": ["analytics", "data-engineering"],
-      "skills": [{ "name": "SQL" }, { "name": "PostgreSQL" }, { "name": "Dimensional modelling" }, { "name": "Python" }, { "name": "FastAPI" }, { "name": "Snowflake" }],
-      "projects": ["ecommerce-data-warehouse", "school-data-platform"],
-      "certs": ["SnowPro"]
+      "slug": "data-engineering",
+      "title": "Data engineering",
+      "line": "I build the pipelines and warehouses that keep data fresh and trustworthy.",
+      "skills": ["PostgreSQL", "Airflow", "Spark", "Snowflake", "Databricks", "Docker", "Kubernetes", "GCP"]
     },
     {
-      "id": "clean", "verb": "Clean", "title": "Make it trustworthy",
-      "text": "Clean, join and check the data so the numbers can be believed.",
-      "how": "I look for gaps, duplicates and odd values before anything else.",
-      "focus": ["analytics", "data-engineering"],
-      "skills": [{ "name": "Pandas" }, { "name": "NumPy" }, { "name": "Jupyter" }, { "name": "ETL" }, { "name": "Git" }],
-      "projects": ["churn-prediction", "airflow-etl"],
-      "certs": ["Python project for Data Science", "Data Analysis Bootcamp"]
-    },
-    {
-      "id": "analyse", "verb": "Analyse", "title": "Find the answer",
-      "text": "Explore patterns, test ideas and build models that explain what is going on, not just what will happen.",
-      "how": "I would rather hand you a model you understand than one that scores a point higher.",
-      "focus": ["analytics"],
-      "skills": [{ "name": "Time series" }, { "name": "scikit-learn" }, { "name": "XGBoost" }, { "name": "SHAP" }, { "name": "PyTorch" }, { "name": "TensorFlow" }, { "name": "OpenCV" }],
-      "projects": ["churn-prediction", "rooftop-detection"],
-      "certs": ["Machine Learning Specialty"]
-    },
-    {
-      "id": "show", "verb": "Show", "title": "Show it clearly",
-      "text": "Turn the findings into dashboards and charts that let a team see what is happening at a glance.",
-      "how": "If someone needs me to explain a chart, the chart is not finished.",
-      "focus": ["analytics"],
-      "skills": [{ "name": "Power BI" }, { "name": "Dashboards" }, { "name": "Excel" }, { "name": "Cognos" }],
-      "projects": ["techmart-dashboard", "khaddi-sales-analysis", "novaretail-sales-analysis"],
-      "certs": ["Dashboards with Excel", "Dashboard Essentials"]
-    },
-    {
-      "id": "ship", "verb": "Ship", "title": "Keep it running",
-      "text": "Schedule, containerise and deploy the work so it keeps running without me pressing a button.",
-      "how": "Scheduled, checked and logged beats manual every time.",
-      "focus": ["data-engineering", "agentic-ai"],
-      "skills": [{ "name": "Airflow" }, { "name": "Docker" }, { "name": "Kubernetes" }, { "name": "Spark" }, { "name": "GCP" }, { "name": "Databricks" }, { "name": "Linux" }, { "name": "Bash" }],
-      "projects": ["airflow-etl", "school-data-platform"],
-      "certs": ["Data Engineer Associate", "Cloud Innovator"]
-    },
-    {
-      "id": "agents", "verb": "Delegate", "title": "Let AI do the legwork",
-      "text": "Build agents that call tools, look things up in documents and show the steps they took.",
-      "how": "I am still learning this one, so I build small, test often and keep humans in the loop.",
-      "focus": ["agentic-ai"],
-      "skills": [{ "name": "Tool use", "learning": true }, { "name": "RAG", "learning": true }, { "name": "LangChain", "learning": true }, { "name": "pgvector", "learning": true }, { "name": "Pinecone", "learning": true }],
-      "projects": ["research-agent"],
-      "certs": ["AI for Product Management", "Ai Explorer"]
+      "slug": "agentic-ai",
+      "title": "AI agents",
+      "line": "I'm learning to build agents that use tools and documents to get real work done.",
+      "learning": true,
+      "skills": ["LangChain", "RAG", "Tool use", "pgvector", "Pinecone"]
     }
   ]
 }
